@@ -33,7 +33,7 @@ export default class Index extends Component {
       <View className='index'>
 
         <Text>Hello world!6</Text>
-        <AtButton>444444</AtButton>
+        <AtButton>77777799999</AtButton>
         <AtForm>
           <AtInput
             name='value1'
@@ -44,7 +44,7 @@ export default class Index extends Component {
             onChange={this.handleChange.bind(this)}
           />
         </AtForm>
-        
+
       </View>
     )
   }
