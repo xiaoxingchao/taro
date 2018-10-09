@@ -33,7 +33,7 @@ export default class Index extends Component {
       <View className='index'>
 
         <Text>Hello world!6</Text>
-        <AtButton>77777799999</AtButton>
+        <AtButton>77</AtButton>
         <AtForm>
           <AtInput
             name='value1'
