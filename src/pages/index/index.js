@@ -24,7 +24,7 @@ export default class Index extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { 
+  componentDidMount () {
     let _this = this;
     Taro.getSystemInfo({
       success: function (res) {
@@ -124,7 +124,7 @@ export default class Index extends Component {
           </View>
           11111111111
         </View>
-        
+
 
       </View>
     )
