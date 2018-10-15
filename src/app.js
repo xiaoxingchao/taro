@@ -6,13 +6,15 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/test/index'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'black',
+      navigationStyle:'custom'
     }
   }
 
