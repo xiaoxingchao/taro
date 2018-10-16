@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtButton,AtForm,AtInput,AtAvatar } from 'taro-ui'
+import { AtButton } from 'taro-ui'
 import './index.less'
 
 

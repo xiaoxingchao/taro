@@ -3,15 +3,6 @@
   height:100vh;
   overflow: hidden;
 }
-.avatar{
-  width:100px;
-  height:100px;
-  border-radius: 50%;
-  .img{
-    width:100%;
-    height:100%;
-  }
-}
 .header_bg{
   height:300px;
   background:#08c;
@@ -28,23 +19,90 @@
   background:#08c;
   color:#fff;
   // line-height: 44px;
-  padding-left:50px;
+  padding-left:30px;
   position: absolute;
   // top:0;
   left:0;
   width:100%;
   z-index: 10;
+  font-size:16PX;
 }
 .con{
   position: absolute;
   z-index: 2;
-  top:150px;
   left:0;
-  width:80%;
-  padding:0 10%;
-  height:calc(100vh - 207px);
+  width:90%;
+  padding:0 5%;
   overflow-y: auto;
 }
-.con_h{
-  height:2000px;
+// .con_h{
+//   // height:2000px;
+// }
+.pri_info{
+  border-radius: 5PX;
+  width:100%;
+  background:#0077CC;
+  overflow: hidden;
+  // padding-left:10PX;
+  position: relative;
+  .pri_top{
+    overflow: hidden;
+    .avatar{
+      height:46PX;
+      width:46PX;
+      border-radius: 50%;
+      background:#fff;
+      margin-top: 10PX;
+      margin-left:10PX;
+      float:left;
+      .avatar_img{
+        margin-top:3PX;
+        margin-left:3PX;
+      }
+    }
+    .name{
+      float:left;
+      margin-top: 10PX;
+      margin-left:10PX;
+      color:#fff;
+      font-size:12PX;
+      .name_n{
+        margin-bottom:3PX;
+        margin-top:2PX;
+      }
+    }
+    .sign{
+      float:right;
+      .info_icon{
+        margin-top:5PX;
+        margin-left:35Px;
+        margin-bottom: 10PX;
+      }
+    }
+  }
+  .pri_bottom{
+    color:#fff;
+    text-align: center;
+    margin-top:30px;
+    margin-bottom:30px;
+    .apply{
+      border-right:1px solid #fff;
+    }
+    .service{
+      border-right:1px solid #fff;
+    }
+
+  }
+}
+
+.model_left{
+  padding-right:10px;
+}
+.model_right{
+  padding-left:10px;
+}
+.copyright{
+  text-align: center;
+  margin:10PX 0;
+
 }

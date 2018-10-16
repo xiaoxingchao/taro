@@ -1,6 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Button } from '@tarojs/components'
-import { AtButton,AtForm,AtInput,AtAvatar,AtToast  } from 'taro-ui'
+import { View, Text } from '@tarojs/components'
+import { AtAvatar  } from 'taro-ui'
+import InfoIcon from '../component/InfoIcon/index'
+import Sign from '../component/Sign/index'
+import Model from '../component/Model/index'
 import './index.less'
 
 export default class Index extends Component {
@@ -16,22 +19,23 @@ export default class Index extends Component {
     super(props);
     this.state={
       url:'',
-      info:'',
-      open:false,
-      statusBarHeight:20
+      statusBarHeight:20,
+      screenHeight:500,
+      name:''
     }
   }
 
   componentWillMount () { }
 
-  componentDidMount () {
+  componentDidMount () { 
     let _this = this;
     Taro.getSystemInfo({
       success: function (res) {
         console.log(res);
-        let height = res.statusBarHeight*100/res.screenHeight+'vh';
+        let height = res.statusBarHeight;
         _this.setState({
-          statusBarHeight:height
+          statusBarHeight:height,
+          screenHeight:res.screenHeight,
         })
       },
     })
@@ -39,6 +43,7 @@ export default class Index extends Component {
       success: function (res) {
         _this.setState({
           url:res.userInfo.avatarUrl,
+          name:res.userInfo.nickName,
           info:JSON.stringify(res),
           open:true
         })
@@ -82,50 +87,70 @@ export default class Index extends Component {
       <View className='index'>
         <View className='header_bg'>
         </View>
-        <View className='header' style={{top:this.state.statusBarHeight,height:'44px',lineHeight: '44px'}}>
-          京环之声
+        <View className='header' style={{top:this.state.statusBarHeight+'px',height:'44px',lineHeight: '44px'}}>
+          <Text>京环之声</Text>
         </View>
-        <View className='con'>
+        <View className='con' style={{top:this.state.statusBarHeight+44+'px',height:this.state.screenHeight-this.state.statusBarHeight-44+'px'}}>
           <View className='con_h' >
-            <View className=''>
-
+            <View className='pri_info'>
+              <View className='pri_top'>
+                <View className='avatar'>
+                  <AtAvatar
+                    circle
+                    size='small'
+                    className='avatar_img'
+                    customStyle='width:40px; height:40px;'
+                    image={this.state.url}
+                  />
+                </View>
+                <View className='name'>
+                  <View className='name_n'><Text>{this.state.name}</Text></View>
+                  <Text>积分: {60000}</Text>
+                </View>
+                <View className='sign'>
+                  <View className='info_icon'>
+                    <InfoIcon />
+                  </View>
+                  <View className='info_sign'>
+                    <Sign />
+                  </View>
+                </View>
+              </View>
+              <View className='pri_bottom'>
+                <View className='at-row'>
+                  <View className='at-col apply'>冠名申请</View>
+                  <View className='at-col service'>微信客服</View>
+                  <View className='at-col'>答题规则</View>
+                </View>
+              </View>
             </View>
-            <AtToast
-              isOpened={this.state.open}
-              text={this.state.info}
-            >
-            </AtToast>
-            <Button onClick={this.login.bind(this)}>login</Button>
-            <Button open-type='contact' >77777777</Button>
-            <Button open-type='getUserInfo' >2222</Button>
-            <AtButton type='primary' onClick={this.button.bind(this)} >返回</AtButton>
-            <AtAvatar
-              circle
-              size='small'
-              className='avatar'
-              customStyle='width:80px; height:80px;'
-              image={this.state.url}
-            />
-            <Text>
-              怎了
-            </Text>
-            {/* <AtButton>77</AtButton> */}
-            <AtButton type='primary' onClick={this.button.bind(this)} >按钮文案</AtButton>
-            {/* <AtForm>
-              <AtInput
-                name='value1'
-                title='文本'
-                type='text'
-                placeholder='单行文本'
-                value={this.state.value1}
-                onChange={this.handleChange.bind(this)}
-              />
-            </AtForm> */}
+            <View className='madel'>
+              <View className='at-row'>
+                <View className='at-col at-col-6 model_left'>
+                  <Model name='经典答题' url='a' bg='test' />
+                  <Model name='夺宝答题' url='a' bg='test' />
+                  <Model name='竞技答题' url='a' bg='test' />
+                  <Model name='公益答题' url='a' bg='test' />
+                </View>
+                <View className='at-col at-col-6 model_right'>
+                  <Model bg='test' name='幸运抽奖' url='c' />
+                  <Model name='专题答题' url='a' bg='test' />
+                  <Model name='积分兑换' url='a' bg='test' />
+                  <Model name='京环森林' url='a' bg='test' />
+                </View>
+                
+              </View>
+              <View className='at-row'>
+                <View className='at-col at-col-12'>
+                  <Model name='排行榜' url='a' bg='test' />
+                </View>
+              </View>
+            </View>
+            <View className='copyright'>
+              <Text>版权:aaaa</Text>
+            </View>
           </View>
-          11111111111
         </View>
-
-
       </View>
     )
   }
