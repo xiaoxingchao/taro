@@ -3,7 +3,7 @@ import Index from './pages/index'
 import './app.less'
 
 class App extends Component {
-  
+
 
   config = {
     pages: [
@@ -11,6 +11,7 @@ class App extends Component {
       'pages/test/index',
       'pages/setup/index',
       'pages/nameapplication/index',
+      'pages/answerrule/index',
       'pages/addaddress/index'
     ],
     window: {

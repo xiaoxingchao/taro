@@ -26,7 +26,7 @@ export default class Index extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { 
+  componentDidMount () {
     let _this = this;
     Taro.getUserInfo({
       success: function (res) {
@@ -76,9 +76,9 @@ export default class Index extends Component {
     console.log(res)
     // if (res.from === 'button') {
     //   // 来自页面内转发按钮
-      
+
     // }
-   
+
   }
   render () {
     return (
@@ -90,7 +90,7 @@ export default class Index extends Component {
             <View className='pri_info'>
               <Image
                 src={bg}
-                className='img' 
+                className='img'
               >
               </Image>
               <View className='pri_top'>
@@ -107,7 +107,7 @@ export default class Index extends Component {
                   <View className='name_n'><Text>{this.state.name}</Text></View>
                   <Text>积分: {60000}</Text>
                 </View>
-                <View className='sign'> 
+                <View className='sign'>
                   <View className='info_icon'>
                     {/* <Navigator url='../setup/index'> */}
                       <AtIcon value='user' size='30' color='#fff' onClick={this.button.bind(this)}></AtIcon>
@@ -121,16 +121,16 @@ export default class Index extends Component {
               <View className='pri_bottom'>
                 <View className='at-row'>
                   <View className='at-col apply'>
-                    <Navigator url='../nameapplication/index'> 
+                    <Navigator url='../nameapplication/index'>
                       冠名申请
-                    </Navigator> 
+                    </Navigator>
                   </View>
-                  <View className='at-col service'>  
+                  <View className='at-col service'>
                     微信客服
                     <Button openType='contact' className='kefu'></Button>
                   </View>
                   <View className='at-col'>
-                    <Navigator url='../test/index'>
+                    <Navigator url='../answerrule/index'>
                       答题规则
                     </Navigator>
                   </View>
@@ -151,7 +151,7 @@ export default class Index extends Component {
                   <Model name='积分兑换' url='a' bg='jifen' />
                   <Model name='京环森林' url='a' bg='senlin' />
                 </View>
-                
+
               </View>
               <View className='at-row'>
                 <View className='at-col at-col-12'>

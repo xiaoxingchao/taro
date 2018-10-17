@@ -24,7 +24,7 @@ export default class Index extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { 
+  componentDidMount () {
     let _this = this;
     Taro.getUserInfo({
       success: function (res) {
@@ -82,7 +82,7 @@ export default class Index extends Component {
         <View className='pri_info'>
           <Image
             src={bg}
-            className='img' 
+            className='img'
           >
           </Image>
           <View className='pri_top'>
@@ -122,7 +122,7 @@ export default class Index extends Component {
             /> */}
           </AtList>
         </View>
-        
+
         <Bottom></Bottom>
       </View>
     )
