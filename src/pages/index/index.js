@@ -121,7 +121,7 @@ export default class Index extends Component {
               <View className='pri_bottom'>
                 <View className='at-row'>
                   <View className='at-col apply'>
-                    <Navigator url='../test/index'> 
+                    <Navigator url='../nameapplication/index'> 
                       冠名申请
                     </Navigator> 
                   </View>
@@ -130,7 +130,7 @@ export default class Index extends Component {
                     <Button openType='contact' className='kefu'></Button>
                   </View>
                   <View className='at-col'>
-                    <Navigator url='../test/index'> 
+                    <Navigator url='../test/index'>
                       答题规则
                     </Navigator>
                   </View>

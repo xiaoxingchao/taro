@@ -1,9 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Image  } from '@tarojs/components'
-import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
+import { View  } from '@tarojs/components'
+import { AtForm,AtInput,AtButton  } from 'taro-ui'
 import Bottom from '../component/Bottom/index'
 import './index.less'
-import bg from '../image/indexheadimg.png'
 
 export default class Index extends Component {
 
@@ -67,49 +66,40 @@ export default class Index extends Component {
   render () {
     return (
       <View className='con'>
-        <View className='pri_info'>
-          <Image
-            src={bg}
-            className='img' 
-          >
-          </Image>
-          <View className='pri_top'>
-            <View className='avatar'>
-              <AtAvatar
-                circle
-                size='small'
-                className='avatar_img'
-                customStyle='width:40px; height:40px;'
-                image={this.state.url}
-              />
-            </View>
-            <View className='name'>
-              <View className='name_n'><Text>{this.state.name}</Text></View>
-              <Text>积分: {60000}</Text>
-            </View>
+        <AtForm
+          onSubmit={this.onSubmit.bind(this)}
+          onReset={this.onReset.bind(this)}
+        >
+          <AtInput
+            name='value1'
+            title='公司名称'
+            type='text'
+            placeholder='请输入...'
+            value={this.state.value1}
+            onChange={this.handleChange.bind(this)}
+          />
+          <AtInput
+            name='value2'
+            title='联系人'
+            type='text'
+            placeholder='请输入...'
+            value={this.state.value1}
+            onChange={this.handleChange.bind(this)}
+          />
+          <AtInput
+            name='value3'
+            title='联系方式'
+            type='text'
+            placeholder='请输入...'
+            value={this.state.value1}
+            onChange={this.handleChange.bind(this)}
+          />
+          <View style={{paddingLeft:'10px',color:'#aaa'}}>注意:</View>
+          <View className='submit'>
+            <AtButton type='primary' size='normal'>提交申请</AtButton>
           </View>
-        </View>
-        <View className='list'>
-          <AtList >
-            <AtListItem
-              title='个人信息'
-              thumb={require('../image/personalinfor.png')}
-              onClick={this.personalinfor.bind(this)}
-            />
-            <AtListItem
-              title='积分详情'
-              thumb={require('../image/personalint.png')}
-              onClick={this.personalint.bind(this)}
-            />
-            {/* <AtListItem
-              title='标题文字'
-              note='描述信息'
-              extraText='详细信息'
-              arrow='right'
-              thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-            /> */}
-          </AtList>
-        </View>
+          
+        </AtForm>
         
         <Bottom></Bottom>
       </View>
