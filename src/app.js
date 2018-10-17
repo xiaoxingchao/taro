@@ -8,14 +8,17 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
-      'pages/test/index'
+      'pages/test/index',
+      'pages/setup/index',
+      'pages/nameapplication/index',
+      'pages/addaddress/index'
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#4CA1FF',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black',
-      navigationStyle:'custom'
+      navigationBarTextStyle: '#fff',
+      // navigationStyle:'custom'
     }
   }
 

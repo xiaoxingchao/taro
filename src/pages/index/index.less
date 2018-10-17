@@ -4,28 +4,15 @@
   overflow: hidden;
 }
 .header_bg{
-  height:300px;
-  background:#08c;
-  border-bottom-left-radius:50px;
-  border-bottom-right-radius:50px;
   position: absolute;
   top:0;
   left:0;
+  z-index:-1;
   width:100%;
-  z-index: -1;
-}
-.header{
-  // height:44px;
-  background:#08c;
-  color:#fff;
-  // line-height: 44px;
-  padding-left:30px;
-  position: absolute;
-  // top:0;
-  left:0;
-  width:100%;
-  z-index: 10;
-  font-size:16PX;
+  height:130px;
+  background:#4CA1FF;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 .con{
   position: absolute;
@@ -34,17 +21,26 @@
   width:90%;
   padding:0 5%;
   overflow-y: auto;
+  top:0;
+  height:100vh;
 }
 // .con_h{
-//   // height:2000px;
+//   height:2000px;
 // }
 .pri_info{
   border-radius: 5PX;
   width:100%;
-  background:#0077CC;
+  // background:#07c;
   overflow: hidden;
   // padding-left:10PX;
   position: relative;
+  .img{
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: -1;
+    width:100%;
+  }
   .pri_top{
     overflow: hidden;
     .avatar{
@@ -83,6 +79,8 @@
   .pri_bottom{
     color:#fff;
     text-align: center;
+    height:30px;
+    line-height: 30px;
     margin-top:30px;
     margin-bottom:30px;
     .apply{
@@ -90,19 +88,23 @@
     }
     .service{
       border-right:1px solid #fff;
+      position: relative;
     }
 
   }
 }
-
+.kefu{
+  width:100%;
+  height:100%;
+  position:absolute; 
+  width: 100%; 
+  top:0;
+  left:0;
+  opacity:0;
+}
 .model_left{
   padding-right:10px;
 }
 .model_right{
   padding-left:10px;
-}
-.copyright{
-  text-align: center;
-  margin:10PX 0;
-
 }
