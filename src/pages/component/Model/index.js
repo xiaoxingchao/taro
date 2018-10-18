@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Text,Image } from '@tarojs/components'
+import { View,Text,Image,Navigator } from '@tarojs/components'
 // import { AtIcon } from 'taro-ui'
 
 import './index.less'
@@ -65,32 +65,32 @@ export default class Index extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
-  model=()=>{
-    console.log(this.props.url);
-  }
   render () {
     const bg = this.background;
     const bg2 = this.background2;
     return (
-      <View 
-        className='model' 
-        onClick={this.model.bind(this)}
-        style={{height:this.props.height||'80px',lineHeight:this.props.height||'80px'}}
-      >
-        <Image
-          src={bg}
-          className='model_img'
-          style={{height:this.props.height||'80px'}}
-        > 
-        </Image>
-        <Image
-          src={bg2}
-          className='img2'
-          style={{ width:'63px',height:'42px'}}
-        > 
-        </Image>
-        <Text>{this.props.name}</Text>
-      </View>
+      <Navigator url={this.props.url}>
+        <View 
+          className='model' 
+          style={{height:this.props.height||'80px',lineHeight:this.props.height||'80px'}}
+        >
+
+          <Image
+            src={bg}
+            className='model_img'
+            style={{height:this.props.height||'80px'}}
+          > 
+          </Image>
+          <Image
+            src={bg2}
+            className='img2'
+            style={{ width:'63px',height:'42px'}}
+          > 
+          </Image>
+          <Text>{this.props.name}</Text>
+        </View>
+      </Navigator>
+      
     )
   }
 }

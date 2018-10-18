@@ -12,6 +12,7 @@ class App extends Component {
       'pages/setup/index',
       'pages/nameapplication/index',
       'pages/answerrule/index',
+      'pages/luckdraw/index',
       'pages/addaddress/index'
     ],
     window: {

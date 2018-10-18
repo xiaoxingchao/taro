@@ -140,16 +140,16 @@ export default class Index extends Component {
             <View className='madel'>
               <View className='at-row'>
                 <View className='at-col at-col-6 model_left'>
-                  <Model name='经典答题' url='a' bg='jingdian' />
-                  <Model name='夺宝答题' url='a' bg='duobao' />
-                  <Model name='竞技答题' url='a' bg='jingji' />
-                  <Model name='公益答题' url='a' bg='gongyi' />
+                  <Model name='经典答题' url='../luckdraw/index' bg='jingdian' />
+                  <Model name='夺宝答题' url='../luckdraw/index' bg='duobao' />
+                  <Model name='竞技答题' url='../luckdraw/index' bg='jingji' />
+                  <Model name='公益答题' url='../luckdraw/index' bg='gongyi' />
                 </View>
                 <View className='at-col at-col-6 model_right'>
-                  <Model name='幸运抽奖' url='c' bg='xingyun' />
-                  <Model name='专题答题' url='a' bg='zhuanti' />
-                  <Model name='积分兑换' url='a' bg='jifen' />
-                  <Model name='京环森林' url='a' bg='senlin' />
+                  <Model name='幸运抽奖' url='../luckdraw/index' bg='xingyun' />
+                  <Model name='专题答题' url='../luckdraw/index' bg='zhuanti' />
+                  <Model name='积分兑换' url='../luckdraw/index' bg='jifen' />
+                  <Model name='京环森林' url='../luckdraw/index' bg='senlin' />
                 </View>
 
               </View>
