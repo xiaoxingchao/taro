@@ -59,7 +59,7 @@ export default class Index extends Component {
           title:tit,
           content:'nizhongjiangle',
           showCancel:false,
-          confirmText:'hah',
+          confirmText:'确定',
           success:function(){
             // _this.animation.rotate(0).step();
             // _this.setState({

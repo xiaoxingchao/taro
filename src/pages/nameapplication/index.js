@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View  } from '@tarojs/components'
+import { View,Form,Button,Input } from '@tarojs/components'
 import { AtForm,AtInput,AtButton  } from 'taro-ui'
 import Bottom from '../component/Bottom/index'
 import './index.less'
@@ -56,49 +56,57 @@ export default class Index extends Component {
   }
   getinfo=()=>{
   }
-  personalint=()=>{
-
-  }
-  personalinfor=()=>{
-
+  formSubmit=(event)=>{
+    console.log('000');
+    console.log('a: ', event);
   }
   render () {
     return (
       <View className='con'>
-        <AtForm
-          onSubmit={this.onSubmit.bind(this)}
+        {/* <Form onSubmit={this.formSubmit} onReset={this.formReset} >
+          <AtInput
+            name='value1'
+            title='公司名称'
+            type='text'
+            placeholder='请输入...'
+            // value={this.state.value1}
+            // onChange={this.handleChange.bind(this)}
+          />
+          <Button type='primary' size='normal' circle formType='submit' >提交申请</Button>
+        </Form> */}
+        <Form
+          onSubmit={this.formSubmit.bind(this)}
           onReset={this.onReset.bind(this)}
+          className='form'
         >
           <AtInput
             name='value1'
             title='公司名称'
             type='text'
             placeholder='请输入...'
-            value={this.state.value1}
-            onChange={this.handleChange.bind(this)}
+            // value={this.state.value1}
+            // onChange={this.handleChange.bind(this)}
           />
           <AtInput
             name='value2'
             title='联系人'
             type='text'
             placeholder='请输入...'
-            value={this.state.value1}
-            onChange={this.handleChange.bind(this)}
+            // value={this.state.value1}
+            // onChange={this.handleChange.bind(this)}
           />
           <AtInput
             name='value3'
             title='联系方式'
             type='text'
             placeholder='请输入...'
-            value={this.state.value1}
-            onChange={this.handleChange.bind(this)}
+            // value={this.state.value1}
+            // onChange={this.handleChange.bind(this)}
           />
           <View style={{paddingLeft:'10px',color:'#aaa'}}>注意:</View>
-          <View className='submit'>
-            <AtButton type='primary' size='normal'>提交申请</AtButton>
-          </View>
+          <Button size='normal' formType='submit' className='nalsubmitapply'>提交申请</Button>
 
-        </AtForm>
+        </Form>
 
         <Bottom></Bottom>
       </View>

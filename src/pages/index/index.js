@@ -109,9 +109,13 @@ export default class Index extends Component {
                 </View>
                 <View className='sign'>
                   <View className='info_icon'>
-                    {/* <Navigator url='../setup/index'> */}
-                      <AtIcon value='user' size='30' color='#fff' onClick={this.button.bind(this)}></AtIcon>
-                    {/* </Navigator> */}
+                    <AtIcon 
+                      value='user' 
+                      size='30'
+                      color='#fff' 
+                      onClick={this.button.bind(this)}
+                    >
+                    </AtIcon>
                   </View>
                   <View className='info_sign'>
                     <Sign />
