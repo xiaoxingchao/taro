@@ -9,7 +9,7 @@ import bg from '../image/indexheadimg.png'
 export default class Index extends Component {
 
   config = {
-    navigationBarTitleText: '个人中心',
+    navigationBarTitleText: '签到',
     // 定义需要引入的第三方组件
     // usingComponents: {
     //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径

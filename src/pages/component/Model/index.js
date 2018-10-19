@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Text,Image,Navigator } from '@tarojs/components'
-// import { AtIcon } from 'taro-ui'
+import { View,Text,Image } from '@tarojs/components'
+// import { AtModal } from 'taro-ui'
 
 import './index.less'
 import jingdian from '../../image/jindian.png'
@@ -65,13 +65,17 @@ export default class Index extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
+  button=()=>{
+    
+    
+  }
   render () {
     const bg = this.background;
     const bg2 = this.background2;
     return (
-      <Navigator url={this.props.url}>
+      <View>
         <View 
-          className='model' 
+          className='model'
           style={{height:this.props.height||'80px',lineHeight:this.props.height||'80px'}}
         >
 
@@ -89,7 +93,7 @@ export default class Index extends Component {
           </Image>
           <Text>{this.props.name}</Text>
         </View>
-      </Navigator>
+      </View>
       
     )
   }
@@ -98,6 +102,7 @@ Index.defaultProps={
   name:'',
   url:'',
   bg:'',
-  height:''
+  height:'',
+  num:''
 };
 

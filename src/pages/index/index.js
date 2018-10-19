@@ -1,9 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Navigator,Button,Image  } from '@tarojs/components'
-import { AtAvatar,AtIcon  } from 'taro-ui'
+import { AtAvatar,AtIcon,AtModal  } from 'taro-ui'
 import Sign from '../component/Sign/index'
 import Model from '../component/Model/index'
 import Bottom from '../component/Bottom/index'
+import Avatar from '../component/Avatar/index'
 import './index.less'
 import bg from '../image/indexheadimg.png'
 
@@ -20,8 +21,10 @@ export default class Index extends Component {
     super(props);
     this.state={
       url:'',
-      name:''
+      name:'',
+      openModel:false
     }
+    this.num = 0;
   }
 
   componentWillMount () { }
@@ -80,6 +83,22 @@ export default class Index extends Component {
     // }
 
   }
+  clickModel=(a)=>{
+    if(this.num){
+      this.setState({
+        openModel:true
+      })
+    }else{
+      Taro.navigateTo({
+        url:a
+      })
+    }
+  }
+  handleConfirm=()=>{
+    this.setState({
+      openModel:false
+    })
+  }
   render () {
     return (
       <View className='index'>
@@ -95,16 +114,12 @@ export default class Index extends Component {
               </Image>
               <View className='pri_top'>
                 <View className='avatar'>
-                  <AtAvatar
-                    circle
-                    size='small'
-                    className='avatar_img'
-                    customStyle='width:40px; height:40px;'
-                    image={this.state.url}
-                  />
+                  <View className='avatar_img'>
+                    <Avatar />
+                  </View>
                 </View>
                 <View className='name'>
-                  <View className='name_n'><Text>{this.state.name}</Text></View>
+                  <View className='name_n'><open-data type="userNickName" ></open-data></View>
                   <Text>积分: {60000}</Text>
                 </View>
                 <View className='sign'>
@@ -118,7 +133,9 @@ export default class Index extends Component {
                     </AtIcon>
                   </View>
                   <View className='info_sign'>
-                    <Sign />
+                    <Navigator url='../signin/index'>
+                      <Sign />
+                    </Navigator>
                   </View>
                 </View>
               </View>
@@ -144,28 +161,56 @@ export default class Index extends Component {
             <View className='madel'>
               <View className='at-row'>
                 <View className='at-col at-col-6 model_left'>
-                  <Model name='经典答题' url='../luckdraw/index' bg='jingdian' />
-                  <Model name='夺宝答题' url='../luckdraw/index' bg='duobao' />
-                  <Model name='竞技答题' url='../luckdraw/index' bg='jingji' />
-                  <Model name='公益答题' url='../luckdraw/index' bg='gongyi' />
+                  <View onClick={this.clickModel.bind(this,'../answerjd/index')} className='v'>
+                    <Model name='经典答题' url='../answerjd/index' bg='jingdian' />
+                  </View>
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='夺宝答题' url='../luckdraw/index' bg='duobao' />
+                  </View>
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='竞技答题' url='../luckdraw/index' bg='jingji' />
+                  </View>
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='公益答题' url='../luckdraw/index' bg='gongyi' />
+                  </View>
                 </View>
                 <View className='at-col at-col-6 model_right'>
-                  <Model name='幸运抽奖' url='../luckdraw/index' bg='xingyun' />
-                  <Model name='专题答题' url='../luckdraw/index' bg='zhuanti' />
-                  <Model name='积分兑换' url='../luckdraw/index' bg='jifen' />
-                  <Model name='京环森林' url='../luckdraw/index' bg='senlin' />
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='幸运抽奖' url='../luckdraw/index' bg='xingyun' />
+                  </View>
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='专题答题' url='../luckdraw/index' bg='zhuanti' />
+                  </View>
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='积分兑换' url='../luckdraw/index' bg='jifen' />
+                  </View>
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='京环森林' url='../luckdraw/index' bg='senlin' />
+                  </View>
                 </View>
 
               </View>
               <View className='at-row'>
                 <View className='at-col at-col-12'>
-                  <Model name='排行榜' url='a' bg='paihang' />
+                  <View onClick={this.clickModel.bind(this,'../luckdraw/index')} className='v'>
+                    <Model name='排行榜' bg='paihang' />
+                  </View>
+                 
                 </View>
               </View>
             </View>
             <Bottom />
           </View>
         </View>
+        <AtModal
+          isOpened={this.state.openModel}
+          title='标题'
+          // cancelText='取消'
+          confirmText='确认'
+          // onCancel={ this.handleCancel }
+          onConfirm={ this.handleConfirm.bind(this) }
+          content='超过三次'
+        />
       </View>
     )
   }

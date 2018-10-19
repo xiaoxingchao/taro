@@ -10,9 +10,11 @@ class App extends Component {
       'pages/index/index',
       'pages/test/index',
       'pages/setup/index',
+      'pages/signin/index',
       'pages/nameapplication/index',
       'pages/answerrule/index',
       'pages/luckdraw/index',
+      'pages/answerjd/index',
       'pages/addaddress/index'
     ],
     window: {
