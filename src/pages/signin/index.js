@@ -125,10 +125,10 @@ export default class Index extends Component {
                 cla+=' grey';
               }
               if(item.now){
-                clai+=' nowbg';
+                cla+=' nowbg';
               }
               return <View className={clai} key={index}>
-                {item.active?<Image class='item-content' src={require('../image/pmlogo.png')}  style='width:2rem;height:2rem'></Image>:<View className={cla}>{item.date}</View>} 
+                {item.active?<Image className='item-content' src={require('../image/pmlogo.png')}  style='width:1.5rem;height:1.5rem'></Image>:<View className={cla}>{item.date}</View>} 
               </View>
             })}
           </View>

@@ -60,7 +60,7 @@ function request(method = "GET", relativeUrl, param = {}, showLog = false, showL
     }
     return new Promise((resolve, reject) => {
         Taro.request({
-          url: rootUrl + relativeUrl +"?XDEBUG_SESSION_START=18987",
+          url: rootUrl + relativeUrl,
             method: method,
             header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': 'PHPSESSID=' + Taro.getStorageSync('PHPSESSID')},//按实际需求修改header
             data: param || {},
