@@ -1,7 +1,6 @@
-
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Navigator,Button,Image  } from '@tarojs/components'
-import { AtAvatar,AtIcon,AtModal  } from 'taro-ui'
+import {AtIcon,AtModal} from 'taro-ui'
 import Sign from '../component/Sign/index'
 import Model from '../component/Model/index'
 import Bottom from '../component/Bottom/index'
@@ -21,8 +20,6 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
-      url:'',
-      name:'',
       openModel:false
     }
     this.num = 0;
@@ -31,25 +28,25 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    let _this = this;
-    Taro.getUserInfo({
-      success: function (res) {
-        _this.setState({
-          url:res.userInfo.avatarUrl,
-          name:res.userInfo.nickName,
-          info:JSON.stringify(res),
-          open:true
-        })
-        console.log(res);
-      },
-      fail:function (res) {
-        _this.setState({
-          info:JSON.stringify(res),
-          open:true
-        })
-        console.log(res);
-      },
-    })
+    // let _this = this;
+    // Taro.getUserInfo({
+    //   success: function (res) {
+    //     _this.setState({
+    //       url:res.userInfo.avatarUrl,
+    //       name:res.userInfo.nickName,
+    //       info:JSON.stringify(res),
+    //       open:true
+    //     })
+    //     console.log(res);
+    //   },
+    //   fail:function (res) {
+    //     _this.setState({
+    //       info:JSON.stringify(res),
+    //       open:true
+    //     })
+    //     console.log(res);
+    //   },
+    // })
   }
   componentWillUnmount () { }
 
@@ -120,7 +117,7 @@ export default class Index extends Component {
                   </View>
                 </View>
                 <View className='name'>
-                  <View className='name_n'><open-data type="userNickName" ></open-data></View>
+                  <View className='name_n'><open-data type='userNickName' ></open-data></View>
                   <Text>积分: {60000}</Text>
                 </View>
                 <View className='sign'>
@@ -209,7 +206,7 @@ export default class Index extends Component {
           // cancelText='取消'
           confirmText='确认'
           // onCancel={ this.handleCancel }
-          onConfirm={ this.handleConfirm.bind(this) }
+          onConfirm={this.handleConfirm.bind(this)}
           content='超过三次'
         />
       </View>

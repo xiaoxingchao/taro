@@ -1,127 +1,142 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Image  } from '@tarojs/components'
-import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
+import { View,Image  } from '@tarojs/components'
+// import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
 import Bottom from '../component/Bottom/index'
-import Avatar from '../component/Avatar/index'
 import './index.less'
-import bg from '../image/indexheadimg.png'
+import {getCurrentDayString,getPreMonth} from '../../utils/tools'
 
+const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
 export default class Index extends Component {
 
   config = {
     navigationBarTitleText: '签到',
     // 定义需要引入的第三方组件
     // usingComponents: {
-    //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径
+    //   'van-button': '../../components/vant-weapp/dist/button/index' // 书写第三方组件的相对路径
     // }
   }
   constructor(props){
     super(props);
     this.state={
-      url:'',
-      name:''
-    }
+      currentDayList:[],
+      active:[11,12,13]
+    };
   }
 
   componentWillMount () { }
 
   componentDidMount () {
-    let _this = this;
-    Taro.getUserInfo({
-      success: function (res) {
-        _this.setState({
-          url:res.userInfo.avatarUrl,
-          name:res.userInfo.nickName,
-          info:JSON.stringify(res),
-          open:true
-        })
-        console.log(res);
-      },
-      fail:function (res) {
-        _this.setState({
-          info:JSON.stringify(res),
-          open:true
-        })
-        console.log(res);
-      },
-    })
+    this.setSchedule();
   }
   componentWillUnmount () { }
 
   componentDidShow () { }
 
   componentDidHide () { }
-  button=()=>{
-    Taro.navigateTo({
-      title:"goback",
-      url: '/pages/test/index'
-    })
-  }
-  getinfo=()=>{
-  }
-  login=()=>{
-    let _this = this;
-    Taro.login({
-      success: function (res) {
-        console.log(res);
-        _this.setState({
-          info:JSON.stringify(res),
-          open:true
-        })
+  //显示签到信息
+  setSign=()=>{
+    
+    let { active, currentDayList } = this.state;
+    console.log(currentDayList);
+    for (let i = 0; i < currentDayList.length; i++) {
+      for (let j = 0; j < active.length; j++) {
+        var date = currentDayList[i]['date'];
+        if (date === active[j] && !currentDayList[i]['other']) {
+          currentDayList[i]['active'] = 1;
+        }
+        
       }
+    }
+    this.setState({
+      currentDayList: currentDayList,
     })
   }
-  personalint=()=>{
+  //输出日历
+  setSchedule=()=>{
+    var _this=this;
+    var currentObj = getCurrentDayString();
+    var m = currentObj.getMonth() + 1
+    var Y = currentObj.getFullYear()
+    var d = currentObj.getDate();
+    var dayString = Y + '/' + m + '/' + currentObj.getDate();
+    var currentDayNum = new Date(Y, m, 0).getDate()
+    var currentDayWeek = currentObj.getUTCDay() + 1;
+    var result = currentDayWeek - (d % 7 - 1);
+    var firstKey = result <= 0 ? 7 + result : result;
+    var currentDayList = [];
+    var f = 0;
+    var pre_d = getPreMonth(dayString) - firstKey+1;//上一个月的天数
+    var next_d=1;
+    for (var i = 0; i < 42; i++) {
+      if (i < firstKey) {
+        currentDayList[i] = { date: pre_d, other: 1};
+        pre_d++;
+      } else {
+        if (f < currentDayNum) {
+          
+          currentDayList[i] = { date: f + 1};
+          if(d===(f + 1)){
+            currentDayList[i].now = 1;
+          }
+          f = currentDayList[i]['date'];
+        } else if (f >= currentDayNum) {
+          currentDayList[i] = { date: next_d,other:1};
+          next_d++;
+        }
+      }
+    }
+    console.log(currentDayList);
+    this.setState({
+      currentDayList:currentDayList,
+      Y: Y,
+      m: m,
+      d: d,
 
-  }
-  personalinfor=()=>{
-
+    },()=>{
+      _this.setSign();
+    })
+    // that.setData({
+    //   currentDayList: currentDayList,
+    //   Y: Y,
+    //   m: m,
+    //   d: d,
+    //   currentDay: currentObj.getDate(),
+    // })
   }
   render () {
+    let {Y,m,d}=this.state;
     return (
-      <View className='con'>
-        <View className='pri_info'>
-          <Image
-            src={bg}
-            className='img'
-          >
-          </Image>
-          <View className='pri_top'>
-            <View className='avatar'>
-              <View className='avatar_img'>
-                <Avatar />
+      <View className='all'>
+        <View className='day-title'>{Y}年{m}月{d}日</View>
+        <View className='day-list'>
+          {/* 显示星期 */}
+          <View className='week'>
+            {weeks_ch.map((item,index)=>{
+              return <View className='flex-item' key={index}>
+              <View className='item-content'>{item}</View>
+            </View>
+            })}
+          </View>
+          <View className='days'>
+            {this.state.currentDayList.map((item,index)=>{
+              let  cla='item-content';
+              let clai = 'flex-item';
+              if(item.other){
+                cla+=' grey';
+              }
+              if(item.now){
+                clai+=' nowbg';
+              }
+              return <View className={clai} key={index}>
+                {item.active?<Image class='item-content' src={require('../image/pmlogo.png')}  style='width:2rem;height:2rem'></Image>:<View className={cla}>{item.date}</View>} 
               </View>
-            </View>
-            <View className='name'>
-              <View className='name_n'><open-data type="userNickName" ></open-data></View>
-              <Text>积分: {60000}</Text>
-            </View>
+            })}
           </View>
         </View>
-        <View className='list'>
-          <AtList >
-            <AtListItem
-              title='个人信息'
-              thumb={require('../image/personalinfor.png')}
-              onClick={this.personalinfor.bind(this)}
-            />
-            <AtListItem
-              title='积分详情'
-              thumb={require('../image/personalint.png')}
-              onClick={this.personalint.bind(this)}
-            />
-            {/* <AtListItem
-              title='标题文字'
-              note='描述信息'
-              extraText='详细信息'
-              arrow='right'
-              thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-            /> */}
-          </AtList>
-        </View>
-
-        <Bottom></Bottom>
+        <Bottom />
+        <View className='signin_info'></View>
       </View>
+      
     )
   }
 }
