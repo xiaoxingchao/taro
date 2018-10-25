@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import './index.less'
 
 
@@ -18,7 +18,7 @@ export default class App extends Component {
     return (
       <View className='avatar'>
         <View className='avatar_img'>
-          <open-data type="userAvatarUrl" ></open-data>
+          <open-data type='userAvatarUrl' ></open-data>
         </View>
       </View>
     )

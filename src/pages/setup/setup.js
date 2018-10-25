@@ -1,10 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Image  } from '@tarojs/components'
-import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
+import { AtList, AtListItem  } from 'taro-ui'
 import Bottom from '../component/Bottom/index'
 import Avatar from '../component/Avatar/index'
-import './index.less'
 import bg from '../image/indexheadimg.png'
+import './setup.less'
+
+
 
 export default class Index extends Component {
 
@@ -18,33 +20,13 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
-      url:'',
-      name:''
     }
   }
 
   componentWillMount () { }
 
   componentDidMount () {
-    let _this = this;
-    Taro.getUserInfo({
-      success: function (res) {
-        _this.setState({
-          url:res.userInfo.avatarUrl,
-          name:res.userInfo.nickName,
-          info:JSON.stringify(res),
-          open:true
-        })
-        console.log(res);
-      },
-      fail:function (res) {
-        _this.setState({
-          info:JSON.stringify(res),
-          open:true
-        })
-        console.log(res);
-      },
-    })
+    
   }
   componentWillUnmount () { }
 
@@ -59,18 +41,7 @@ export default class Index extends Component {
   }
   getinfo=()=>{
   }
-  login=()=>{
-    let _this = this;
-    Taro.login({
-      success: function (res) {
-        console.log(res);
-        _this.setState({
-          info:JSON.stringify(res),
-          open:true
-        })
-      }
-    })
-  }
+  
   personalint=()=>{
 
   }
@@ -93,7 +64,7 @@ export default class Index extends Component {
               </View>
             </View>
             <View className='name'>
-              <View className='name_n'><open-data type="userNickName" ></open-data></View>
+              <View className='name_n'><open-data type='userNickName' ></open-data></View>
               <Text>积分: {60000}</Text>
             </View>
           </View>

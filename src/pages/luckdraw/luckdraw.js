@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View,Image} from '@tarojs/components'
 // import { AtButton } from 'taro-ui'
 import Luck from '../component/LuckDraw/index'
-import './index.less'
+import './luckdraw.less'
 
 
 export default class Index extends Component {

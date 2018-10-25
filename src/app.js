@@ -1,21 +1,25 @@
 import Taro, { Component } from '@tarojs/taro'
+import { Provider } from '@tarojs/redux'
 import Index from './pages/index'
 import './app.less'
+import configStore from './store'
 
+
+const store = configStore()
 class App extends Component {
 
 
   config = {
     pages: [
       'pages/index/index',
-      'pages/test/index',
-      'pages/setup/index',
-      'pages/signin/index',
-      'pages/nameapplication/index',
-      'pages/answerrule/index',
-      'pages/luckdraw/index',
-      'pages/answerjd/index',
-      'pages/addaddress/index'
+      'pages/test/test',
+      'pages/setup/setup',
+      'pages/signin/signin',
+      'pages/nameapplication/nameapplication',
+      'pages/answerrule/answerrule',
+      'pages/luckdraw/luckdraw',
+      'pages/answerjd/answerjd',
+      'pages/addaddress/addaddress'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -42,7 +46,9 @@ class App extends Component {
 
   render () {
     return (
-      <Index />
+      <Provider store={store}>
+        <Index />
+      </Provider>
     )
   }
 }

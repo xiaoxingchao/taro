@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View,Text } from '@tarojs/components'
 // import { AtForm,AtInput,AtButton  } from 'taro-ui'
 import Bottom from '../component/Bottom/index'
-import './index.less'
+import './answerrule.less'
 
 export default class Index extends Component {
 

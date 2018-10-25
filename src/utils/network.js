@@ -10,12 +10,14 @@
  */
 import Taro from '@tarojs/taro' 
 
+export const defaultColor = "#4CA1FF";
 /**
  * 服务器根路径
  * todo  替换成你自己的
  * @type {string}
  */
 // export let rootUrl = "http://www.dati.com/";
+
 export const rootUrl = "https://contest.sinoartisan.com/";
 /**
  * 发送get 请求

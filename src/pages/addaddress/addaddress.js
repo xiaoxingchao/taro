@@ -1,13 +1,13 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
-import './index.less'
+import './addaddress.less'
 
 
 export default class Index extends Component {
   
   config = {
-    navigationBarTitleText: 'test',
+    navigationBarTitleText: 'add',
     // 定义需要引入的第三方组件
     // usingComponents: {
     //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径
@@ -24,14 +24,10 @@ export default class Index extends Component {
 
   componentDidHide () { }
   button=()=>{
-    // Taro.navigateBack()
+    Taro.navigateBack()
     // Taro.redirectTo({
     //   url: '/pages/index/index'
     // })
-    Taro.navigateTo({
-      title:"goback",
-      url: '/pages/addaddress/index'
-    })
   }
   render () {
     return (

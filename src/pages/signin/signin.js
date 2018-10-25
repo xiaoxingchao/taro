@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View,Image  } from '@tarojs/components'
 // import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
 import Bottom from '../component/Bottom/index'
-import './index.less'
+import './signin.less'
 import {getCurrentDayString,getPreMonth} from '../../utils/tools'
 
 const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
