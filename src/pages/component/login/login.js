@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View,Button } from '@tarojs/components'
 import {post} from '../../../utils/network'
 import {showModel} from '../../../utils/tools'
-import './index.less'
+import './login.less'
 
 
 export default class Index extends Component {

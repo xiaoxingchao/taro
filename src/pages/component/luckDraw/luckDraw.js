@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text ,Image} from '@tarojs/components'
-import { AtButton } from 'taro-ui'
-import './index.less'
+// import { AtButton } from 'taro-ui'
+import './luckDraw.less'
 
 
 export default class Index extends Component {
@@ -45,7 +45,7 @@ export default class Index extends Component {
         randomNum.push(i*360/this.awards.length);
         
       }
-      this.initDeg += (-randomNum[index-1]+720);
+      this.initDeg += (-randomNum[index-1]+720*2);
       for(let j=0;j<this.awards.length;j++){
         if(this.awards[j].deg===(this.initDeg%360)){
           tit=this.awards[j].name;

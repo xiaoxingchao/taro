@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View,Image } from '@tarojs/components'
 // import { AtModal } from 'taro-ui'
 
-import './index.less'
+import './model.less'
 import jingdian from '../../image/jindian.png'
 import jingdian2 from '../../image/1.png'
 import duobao from '../../image/duobao.png'

@@ -1,8 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Image  } from '@tarojs/components'
 import { AtList, AtListItem  } from 'taro-ui'
-import Bottom from '../component/Bottom/index'
-import Avatar from '../component/Avatar/index'
+import Bottom from '../component/bottom/bottom'
+import Avatar from '../component/avatar/avatar'
 import bg from '../image/indexheadimg.png'
 import './setup.less'
 

@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
-import './index.less'
+import './loading.less'
 
 
 export default class Index extends Component {

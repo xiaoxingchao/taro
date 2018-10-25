@@ -1,10 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, ScrollView,Image  } from '@tarojs/components'
 import { AtAvatar,AtList, AtProgress   } from 'taro-ui'
-import Bottom from '../component/Bottom/index'
-import Avatar from '../component/Avatar/index'
+import Bottom from '../component/bottom/bottom'
+import Avatar from '../component/avatar/avatar'
 import './answerjd.less'
 import bg from '../image/indexheadimg.png'
+
 const data = {
   "code": 0,
   "message": "成功",

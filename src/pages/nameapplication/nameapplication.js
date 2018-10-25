@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Form,Button,Input } from '@tarojs/components'
 import { AtForm,AtInput,AtButton  } from 'taro-ui'
-import Bottom from '../component/Bottom/index'
+import Bottom from '../component/bottom/bottom'
 import './nameapplication.less'
 
 export default class Index extends Component {

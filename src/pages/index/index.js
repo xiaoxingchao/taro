@@ -1,13 +1,13 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Navigator,Button,Image  } from '@tarojs/components'
 import {AtIcon,AtModal} from 'taro-ui'
-import Sign from '../component/Sign/index'
-import Model from '../component/Model/index'
-import Bottom from '../component/Bottom/index'
-import Avatar from '../component/Avatar/index'
+import Sign from '../component/sign/sign'
+import Model from '../component/model/model'
+import Bottom from '../component/bottom/bottom'
+import Avatar from '../component/avatar/avatar'
 import './index.less'
 import bg from '../image/indexheadimg.png'
-import Login from '../component/login/index'
+import Login from '../component/login/login'
 
 export default class Index extends Component {
 

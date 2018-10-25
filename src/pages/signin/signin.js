@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Image  } from '@tarojs/components'
 // import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
-import Bottom from '../component/Bottom/index'
+import Bottom from '../component/bottom/bottom'
 import './signin.less'
 import {getCurrentDayString,getPreMonth} from '../../utils/tools'
 
