@@ -1,14 +1,23 @@
-.sign{
-  width:60PX;
-  background:#fff;
-  color:#08c;
-  height:25PX;
-  padding-left:15PX;
-  border-bottom-left-radius: 25PX;
-  border-top-left-radius: 25PX;
-  font-size:12PX;
-  line-height: 25PX;
-  .text{
-    margin-left:5PX;
-  }
+/*载入动画*/
+.container-load{
+	background-color:#FFFFFF;
+	width:100%;
+	height:100%;
+	position:fixed;
+	z-index:999;
+	top:0;
+	left:0;
+}
+.loadBox{position: fixed; top: 20%; left: 50%; margin-left: -2.5rem; width: 5rem; height: 5.5rem; text-align: center;z-index: 9999}
+.load{overflow: hidden; position: absolute; left: 0; top: 0; width: 100%; height: 100%;}
+.load img{display: inline-block; width: 100%;}
+.loading{animation: load 3s linear infinite; -webkit-animation:load 3s linear infinite;}
+@keyframes load{
+	0%{height: 0;}
+	100%{height: 5.5rem;}
+}
+
+.load image{
+	width:5rem;
+	height:5.5rem;
 }

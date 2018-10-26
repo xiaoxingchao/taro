@@ -1,5 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Navigator,Button,Image  } from '@tarojs/components'
+
+// import { connect } from '@tarojs/redux'
+// import { bindActionCreators } from 'redux'
+
 import {AtIcon,AtModal} from 'taro-ui'
 import Sign from '../component/sign/sign'
 import Model from '../component/model/model'
@@ -8,9 +12,23 @@ import Avatar from '../component/avatar/avatar'
 import './index.less'
 import bg from '../image/indexheadimg.png'
 import Login from '../component/login/login'
+import Loading from '../component/loading/loading'
 
+// import * as Actions from '../../actions/counter'
+// import { isload } from './../../actions/counter';
+
+// function mapStateToProps(state) {
+//   return {
+//     counter: state.counter.toJS()
+//   }
+// }
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     ...bindActionCreators(Actions, dispatch)
+//   }
+// }
+// @connect(mapStateToProps, mapDispatchToProps)
 export default class Index extends Component {
-
   config = {
     navigationBarTitleText: '京环之声',
     // 定义需要引入的第三方组件
@@ -21,7 +39,8 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
-      openModel:false
+      openModel:false,
+      isload:true,
     }
     this.num = 0;
   }
@@ -29,7 +48,12 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    
+    let _this = this;
+    setTimeout(function () {
+      _this.setState({
+        isload:false
+      })
+    }, 6000)
   }
   componentWillUnmount () { }
 
@@ -181,6 +205,7 @@ export default class Index extends Component {
           content='超过三次'
         />
         <Login />
+        <Loading load={this.state.isload} />
       </View>
     )
   }

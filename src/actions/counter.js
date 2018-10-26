@@ -1,6 +1,7 @@
 import {
   ADD,
-  MINUS
+  MINUS,
+  ISLOAD
 } from '../constants/counter'
 
 export const add = () => {
@@ -13,7 +14,11 @@ export const minus = () => {
     type: MINUS
   }
 }
-
+export const isload = () => {
+  return {
+    type: ISLOAD
+  }
+}
 // 异步的action
 export function asyncAdd () {
   return dispatch => {
