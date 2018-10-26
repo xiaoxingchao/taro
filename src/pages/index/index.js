@@ -49,18 +49,16 @@ export default class Index extends Component {
 
   componentDidMount () {
     let _this = this;
-    setTimeout(function () {
-      _this.setState({
-        isload:false
-      })
-    }, 6000)
+    _this.setState({
+      isload:false
+    })
   }
   componentWillUnmount () { }
 
   componentDidShow () { }
 
   componentDidHide () { }
-  button=()=>{
+  signIcon=()=>{
     Taro.navigateTo({
       title:"setup",
       url: '/pages/setup/setup'
@@ -121,7 +119,7 @@ export default class Index extends Component {
                       value='user' 
                       size='30'
                       color='#fff' 
-                      onClick={this.button.bind(this)}
+                      onClick={this.signIcon.bind(this)}
                     >
                     </AtIcon>
                   </View>

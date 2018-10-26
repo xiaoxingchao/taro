@@ -21,11 +21,9 @@ export default class Index extends Component {
 
   componentDidMount () { 
     let _this = this;
-    setTimeout(function () {
-      _this.setState({
-        isload:false
-      })
-    }, 6000)
+    _this.setState({
+      isload:false
+    })
   }
   componentWillUnmount () { }
 

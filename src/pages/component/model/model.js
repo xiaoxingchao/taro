@@ -17,7 +17,7 @@ import jifen from '../../image/jifen.png'
 import jifen2 from '../../image/6.png'
 import gongyi from '../../image/hongbao.png'
 import gongyi2 from '../../image/7.png'
-// import senlin from '../../image/choujiang.png'
+import senlin from '../../image/choujiang1.png'
 import senlin2 from '../../image/9.png'
 import paihang from '../../image/paihang.png'
 import paihang2 from '../../image/10.png'
@@ -47,7 +47,7 @@ export default class Index extends Component {
       this.background = jifen;
       this.background2 = jifen2;
     }else if(props.bg==='senlin'){
-      this.background = xingyun;
+      this.background = senlin;
       this.background2 = senlin2;
     }else if(props.bg==='paihang'){
       this.background = paihang;

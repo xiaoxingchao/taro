@@ -21,6 +21,9 @@ export const isload = () => {
 }
 // 异步的action
 export function asyncAdd () {
+  // return {
+  //   type: 'ggg'
+  // }
   return dispatch => {
     setTimeout(() => {
       dispatch(add())

@@ -7,6 +7,11 @@ export default createReducer(fromJS({
   Y:'你好',
   isload:true
 }),{
+  'qqq':(state)=>{
+    return state.merge({
+      name:'破佛顶山减肥呢'
+    })
+  },
   [ADD]: (state) => {
     const counterState = state.toJS();
     console.log(counterState);

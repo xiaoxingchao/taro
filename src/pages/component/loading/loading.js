@@ -27,7 +27,12 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () { 
-
+    let {dispatch} = this.props;
+    dispatch({
+      type:'ADD',
+      payload: {'aaaa': ['222']}
+    });
+    console.log(this.props);
   }
   componentWillUnmount () { }
 
