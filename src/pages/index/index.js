@@ -28,6 +28,13 @@ import Loading from '../component/loading/loading'
 //   }
 // }
 // @connect(mapStateToProps, mapDispatchToProps)
+/**
+ *京环之声首页
+ *
+ * @export 
+ * @class Index
+ * @extends {Component}
+ */
 export default class Index extends Component {
   config = {
     navigationBarTitleText: '京环之声',
