@@ -1,7 +1,6 @@
 import {
   ADD,
-  MINUS,
-  ISLOAD
+  MINUS
 } from '../constants/counter'
 
 export const add = () => {
@@ -14,16 +13,9 @@ export const minus = () => {
     type: MINUS
   }
 }
-export const isload = () => {
-  return {
-    type: ISLOAD
-  }
-}
+
 // 异步的action
 export function asyncAdd () {
-  // return {
-  //   type: 'ggg'
-  // }
   return dispatch => {
     setTimeout(() => {
       dispatch(add())
