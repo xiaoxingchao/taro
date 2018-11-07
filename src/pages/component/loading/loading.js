@@ -2,24 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import { View,Image} from '@tarojs/components'
 
 import { connect } from '@tarojs/redux'
-import { bindActionCreators } from 'redux'
 
 // import { AtIcon } from 'taro-ui'
 import './loading.less'
 
-import * as Actions from '../../../actions/counter'
-
-function mapStateToProps(state) {
-  return {
-    counter: state.counter.toJS()
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators(Actions, dispatch)
-  }
-}
-@connect(mapStateToProps, mapDispatchToProps)
 export default class Index extends Component {
   state={
     isload:true,
@@ -27,12 +13,7 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () { 
-    let {dispatch} = this.props;
-    dispatch({
-      type:'ADD',
-      payload: {'aaaa': ['222']}
-    });
-    console.log(this.props);
+    
   }
   componentWillUnmount () { }
 

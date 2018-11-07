@@ -1,22 +1,28 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { bindActionCreators } from 'redux'
 import './test.less'
-// import {add,minus,asyncAdd} from '../../actions/counter'
-import * as Actions from '../../actions/counter'
+import { add, minus, asyncAdd, list } from '../../actions/counter'
 
-function mapStateToProps(state) {
-  return {
-    counter: state.counter.toJS()
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators(Actions, dispatch)
-  }
-}
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(
+  ({ counter }) => ({
+    counter
+  }),
+  (dispatch) => ({
+    onGetList(params) {
+      dispatch(list(params))
+    },
+    add () {
+      dispatch(add())
+    },
+    minus () {
+      dispatch(minus())
+    },
+    asyncAdd () {
+      dispatch(asyncAdd())
+    }
+  })
+)
 
 export default class Index extends Component {
   
@@ -27,10 +33,12 @@ export default class Index extends Component {
     //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径
     // }
   }
-  componentWillMount () { }
+  componentWillMount () { 
+    
+  }
 
   componentDidMount () { 
-    
+    this.props.onGetList({a:1});
   }
   componentWillUnmount () { }
 
@@ -49,13 +57,13 @@ export default class Index extends Component {
   }
   render () {
     console.log(this.props);
-    const { add, minus, asyncAdd } = this.props
     return (
       <View className='todo'>
-         <Button className='add_btn' onClick={add}>+</Button>
-        <Button className='dec_btn' onClick={minus}>-</Button>
-        <Button className='dec_btn' onClick={asyncAdd}>async</Button>
+        <Button className='add_btn' onClick={this.props.add}>+</Button>
+        <Button className='dec_btn' onClick={this.props.minus}>-</Button>
+        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
         <View>{this.props.counter.num}</View>
+        <View>{JSON.stringify(this.props.counter.list)}</View>
       </View>
     )
   }
