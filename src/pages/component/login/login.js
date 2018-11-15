@@ -91,6 +91,7 @@ export default class Index extends Component {
       Taro.login({
         success: function (res) {
           if (res.code) {
+            
             resolve(res)
           } else {
             showModel("登录失败")
