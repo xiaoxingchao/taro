@@ -1,9 +1,21 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Button } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import {post} from '../../../utils/network'
 import {showModel} from '../../../utils/tools'
 import './login.less'
+import {checkToken } from '../../../actions/counter'
 
+@connect(
+  ({ counter }) => ({
+    counter
+  }),
+  (dispatch) => ({
+    onCheckToken(params) {
+      dispatch(checkToken(params))
+    },
+  })
+)
 
 export default class Index extends Component {
   state={
@@ -12,7 +24,7 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () { 
-    
+    this.props.onCheckToken({});
   }
   componentWillUnmount () { }
 
@@ -37,6 +49,7 @@ export default class Index extends Component {
     Taro.getStorage({
       key: 'token',
       success: function (res) {
+        console.log('5546541651223');
         var token = res.data;
         //验证token是否有效
         post('app_applet/checkToken', { "token": token }, false).then(function (res1) {
@@ -91,7 +104,7 @@ export default class Index extends Component {
       Taro.login({
         success: function (res) {
           if (res.code) {
-            
+            console.log(res.code);
             resolve(res)
           } else {
             showModel("登录失败")
@@ -106,7 +119,7 @@ export default class Index extends Component {
   }
   render () {
     return (
-      <View className='wx_dialog_container' hidden={!this.state.isShow}>
+      <View className='wx_dialog_container' hidden={!this.props.counter.checkToken}>
         <View className='wx-mask'></View>
         <View className='wx-dialog'>
             <View className='wx-dialog-title'>欢迎进入京环之声答题小程序</View>

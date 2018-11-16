@@ -3,13 +3,14 @@ import { HTTP_STATUS } from '../const/status'
 import { base } from './config'
 import { logError } from '../utils'
 
-const token = ''
+
 
 export default {
   baseOptions(params, method = 'GET') {
     let { url, data } = params
+    let token = Taro.getStorageSync('token');
     // let token = getApp().globalData.token
-    // if (!token) login()
+    if (!token) return;
     console.log('params', params)
     let contentType = 'application/x-www-form-urlencoded'
     contentType = params.contentType || contentType

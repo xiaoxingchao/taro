@@ -1,8 +1,9 @@
-import { ADD, MINUS, LIST } from '../constants/counter'
+import { ADD, MINUS, LIST, CHECKTOKEN } from '../constants/counter'
 
 const INITIAL_STATE = {
   num: 0,
-  list:[]
+  list:[],
+  checkToken:false
 }
 
 export default function counter (state = INITIAL_STATE, action) {
@@ -28,6 +29,18 @@ export default function counter (state = INITIAL_STATE, action) {
         //  list: action.payload.data.news
          list: data
        }
+    case CHECKTOKEN:
+       console.log('action.payload',action.payload);
+      //  let data = state.checkToken.concat(action.payload.data)
+      //  // Object.assign(state.list, action.payload.data.news)
+      //  console.log('data',data)
+      //  console.log('state',state)
+        return {
+          ...state,
+          ...{checkToken:true}
+         //  list: action.payload.data.news
+          // list: data
+        }
      default:
        return state
   }

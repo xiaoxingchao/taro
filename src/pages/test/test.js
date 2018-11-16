@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View,Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './test.less'
-import { add, minus, asyncAdd, list } from '../../actions/counter'
+import { add, minus, asyncAdd, checkToken } from '../../actions/counter'
 
 @connect(
   ({ counter }) => ({
@@ -10,7 +10,7 @@ import { add, minus, asyncAdd, list } from '../../actions/counter'
   }),
   (dispatch) => ({
     onGetList(params) {
-      dispatch(list(params))
+      dispatch(checkToken(params))
     },
     add () {
       dispatch(add())
