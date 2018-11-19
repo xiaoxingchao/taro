@@ -37,7 +37,7 @@ export default function counter (state = INITIAL_STATE, action) {
       //  console.log('state',state)
         return {
           ...state,
-          ...{checkToken:true}
+          // ...{checkToken:true}
          //  list: action.payload.data.news
           // list: data
         }
