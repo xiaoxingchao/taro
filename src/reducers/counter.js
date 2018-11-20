@@ -3,7 +3,8 @@ import { ADD, MINUS, LIST, CHECKTOKEN } from '../constants/counter'
 const INITIAL_STATE = {
   num: 0,
   list:[],
-  checkToken:false
+  checkToken:false,
+  JDLIST:{}
 }
 
 export default function counter (state = INITIAL_STATE, action) {
@@ -37,11 +38,17 @@ export default function counter (state = INITIAL_STATE, action) {
       //  console.log('state',state)
         return {
           ...state,
+          ...action.payload
           // ...{checkToken:true}
          //  list: action.payload.data.news
           // list: data
         }
-     default:
-       return state
+      default:
+        let p={};
+        p[action.type] = action.payload;
+        return {
+          ...state,
+          ...p
+        }
   }
 }

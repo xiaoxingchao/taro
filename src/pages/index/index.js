@@ -117,7 +117,7 @@ export default class Index extends Component {
                   </View>
                 </View>
                 <View className='name'>
-                  <View className='name_n'><open-data type='userNickName' ></open-data></View>
+                  <View className='name_n'><open-data type='userNickName' controls='{{!canIUse}}'></open-data></View>
                   <Text>积分: {60000}</Text>
                 </View>
                 <View className='sign'>
@@ -200,7 +200,7 @@ export default class Index extends Component {
             <Bottom />
           </View>
         </View>
-        <AtModal
+        {/* <AtModal
           isOpened={this.state.openModel}
           title='标题'
           // cancelText='取消'
@@ -208,7 +208,7 @@ export default class Index extends Component {
           // onCancel={ this.handleCancel }
           onConfirm={this.handleConfirm.bind(this)}
           content='超过三次'
-        />
+        /> */}
         <Login />
         <Loading load={this.state.isload} />
       </View>

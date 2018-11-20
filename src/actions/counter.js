@@ -2,9 +2,8 @@ import { bindActionCreators } from 'redux'
 import Taro from '@tarojs/taro'
 import {
   ADD,
-  LIST,
   MINUS,
-  CHECKTOKEN,
+  JDLIST
 } from '../constants/counter'
 import store from '../store'
 import { createApiAction } from './index'
@@ -30,12 +29,10 @@ export function asyncAdd() {
   }
 }
 // 请求api
-export const list = createApiAction(LIST, params => api.get('/issues', params))
-export const checkToken = createApiAction(CHECKTOKEN, params => api.post('app_applet/checkToken', params))
+export const jdlist = createApiAction(JDLIST, params => api.post('jsonapi/iwebshop_question/getA.json', params));
 export default bindActionCreators({
-  list,
+  jdlist,
   add,
   minus,
   asyncAdd,
-  checkToken
 }, store.dispatch)

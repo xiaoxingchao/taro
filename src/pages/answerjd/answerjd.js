@@ -1,12 +1,31 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, ScrollView,Image  } from '@tarojs/components'
-import { AtAvatar,AtList, AtProgress   } from 'taro-ui'
+import { connect } from '@tarojs/redux'
+import { AtProgress   } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
 import api from '../../service/api'
 import './answerjd.less'
+import Login from '../component/login/login'
+import { jdlist } from '../../actions/counter'
 // import bg from '../image/indexheadimg.png'
 
+
+@connect(
+  ({ counter }) => ({
+    counter
+  }),
+  (dispatch) => ({
+    onGetList(parame,fun) {
+      dispatch(jdlist(parame)).then((res)=>{
+        fun(res)
+      })
+    },
+    onGetSelect(parame){
+      dispatch(parame)
+    }
+  })
+)
 export default class Index extends Component {
 
   config = {
@@ -33,18 +52,20 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    api.post('jsonapi/iwebshop_question/getA.json',{})
-      .then((ret)=>{
-        if(ret.data.code===0){
-          this.setState({
-            data:ret.data.data,
-            quTime:10,
-          },()=>{
-            this.countdown();
-          })
+    api.post('jsonapi/iwebshop_score/addScore.json',{score:-2,source:3})
+      .then((res)=>{
+        if(res.data.code===0){
+          this.props.onGetList({},this.initData);
         }
-        console.log(ret);
       })
+  }
+  initData=(res)=>{
+    this.setState({
+      data:res.data.data,
+      quTime:10,
+    },()=>{
+      this.countdown();
+    })
   }
   componentWillUnmount () {
     clearInterval(this.intervalId);
@@ -64,39 +85,50 @@ export default class Index extends Component {
         quTime: time,
       })
       if (time == 0) {
+        
         clearInterval(_this.intervalId);
-        _this.validationQuestion(JSON.parse(_this.state.data[_this.state.now_num-1].answer));
+        _this.setState({
+          select_ans:[..._this.state.select_ans,...[0]],
+          right_ans:[..._this.state.right_ans,...JSON.parse(_this.state.data[_this.state.now_num-1].answer)],
+        },()=>{
+          _this.validationQuestion(JSON.parse(_this.state.data[_this.state.now_num-1].answer));
+        })
+        
       }
     }, 1000);
   }
   //验证答案
   validationQuestion=(right)=>{
     let _this = this;
-    let {select_ans,now_num, data} = this.state;
+    let {select_ans,now_num, data,right_ans} = this.state;
     clearInterval(this.intervalId);
-    for(let i=0;i<right.length;i++){
-      if(select_ans[0]===Number(right[i])){
-        _this.setState({
-          now_score:_this.state.now_score+2
-        })
-      }
+    let score = _this.state.now_score;
+    if(select_ans[_this.state.now_num-1]===Number(right[0])){
+      score = score+2;
     }
-    this.setState({
-      right_ans:right
+    _this.setState({
+      now_score:score
     },()=>{
       if(now_num===data.length){
         //答题结束
-        setTimeout(function () { 
-          Taro.redirectTo({
-            url: '../index/index',
+        api.post('jsonapi/iwebshop_score/addScore.json',{score:_this.state.now_score,source:3})
+          .then((res)=>{
+            if(res.data.code===0){
+              setTimeout(function () { 
+                _this.props.onGetSelect({
+                  type:'jdResult',
+                  payload:{select_ans:select_ans,right_ans:right_ans,score:_this.state.now_score}
+                })
+                Taro.redirectTo({
+                  url: '../answer_jd/answer_jd',
+                })
+              }, 1000);
+            } 
           })
-        }, 2000);
-        
       }else{
         setTimeout(function () { _this.next_question()}, 2000 );
       }
     })
-    
   }
 
   //下一题
@@ -110,9 +142,7 @@ export default class Index extends Component {
       scrollTop:0,
       flagClick:true,
       percent:percent,
-      select_ans:[],
       quTime:10,
-      right_ans:[]
     },()=>{
       this.countdown();
     })
@@ -126,9 +156,10 @@ export default class Index extends Component {
   }
   selectAnswer=(item,index,right)=>{
     if(this.state.flagClick){
+
       this.setState({
-        select_ans:[index+1],
-        // right_ans:[1],
+        select_ans:[...this.state.select_ans,...[index+1]],
+        right_ans:[...this.state.right_ans,...right],
         flagClick:false,
         // scrollTop:0
       },()=>{
@@ -138,7 +169,8 @@ export default class Index extends Component {
     }
   }
   render () {
-    let {data,now_num,now_score,right_ans} = this.state;
+    // let data = this.props.counter.JDLIST.data?this.props.counter.JDLIST.data.data:[{options:"[]"}];
+    let {now_num,now_score,right_ans,select_ans,data} = this.state;
     return (
       <View className='con'>
         <ScrollView
@@ -162,7 +194,7 @@ export default class Index extends Component {
                 {now_score}分
               </View>
               <View className='qu_per'>
-                <AtProgress percent={this.state.percent} strokeWidth={12} isHidePercent={true} color='#40b740' />
+                <AtProgress percent={this.state.percent} strokeWidth={12} isHidePercent={true?true:false} color='#40b740' />
               </View>
             </View>
             <View className='qu_con'>
@@ -178,15 +210,16 @@ export default class Index extends Component {
               let claImgRight = "answer_img";
               let claImgError = "answer_img";
               let flagtype = 1;
-              for(let i=0;i<this.state.select_ans.length;i++){
-                if(this.state.select_ans[i]===index+1){
-                  flagtype = 2; //选择
-                }
+              if(select_ans[now_num-1]&&select_ans[now_num-1]===index+1){
+                flagtype = 2; //选择
               }
-              for(let j=0;j<right_ans.length;j++){
-                if(Number(right_ans[j])===index+1){
-                  flagtype = 3; //正确答案
-                }
+              // for(let i=0;i<this.state.select_ans.length;i++){
+              //   if(this.state.select_ans[i]===index+1){
+              //     flagtype = 2; //选择
+              //   }
+              // }
+              if(right_ans[now_num-1]&&Number(right_ans[now_num-1])===index+1){
+                flagtype = 3; //正确答案
               }
               if(flagtype===2){
                 cla+=' error_bg';
@@ -202,10 +235,9 @@ export default class Index extends Component {
               </View>:<View key={index}></View>;
             }):''}
           </View>
-
           <Bottom></Bottom>
         </ScrollView>
-        
+        <Login />
       </View>
     )
   }

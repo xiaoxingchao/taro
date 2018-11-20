@@ -1,10 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import {post} from '../../../utils/network'
+import api from '../../../service/api'
 import {showModel} from '../../../utils/tools'
 import './login.less'
-import {checkToken } from '../../../actions/counter'
+// import {checkToken } from '../../../actions/counter'
 
 @connect(
   ({ counter }) => ({
@@ -12,87 +12,55 @@ import {checkToken } from '../../../actions/counter'
   }),
   (dispatch) => ({
     onCheckToken(params) {
-      dispatch(checkToken(params))
+      dispatch(params)
     },
   })
 )
 
 export default class Index extends Component {
   state={
-    isShow:false
+    // isShow:false
   }
   componentWillMount () { }
 
   componentDidMount () { 
-    this.props.onCheckToken({});
+    let token = Taro.getStorageSync('token');
+    if (!token){
+      this.props.onCheckToken({type:'CHECKTOKEN',payload:{checkToken:true}})
+    }
+    // this.props.onCheckToken({});
   }
   componentWillUnmount () { }
 
   componentDidShow () { }
 
   componentDidHide () { }
-  //隐藏弹框
-  hideDialog=()=>{
-    this.setState({
-      isShow: false
-    })
-  }
-  //展示弹框
-  showDialog=()=>{
-    this.setState({
-      isShow: true
-    })
-  }
-  //验证token
-  checkToken() {
-    var that = this;
-    Taro.getStorage({
-      key: 'token',
-      success: function (res) {
-        console.log('5546541651223');
-        var token = res.data;
-        //验证token是否有效
-        post('app_applet/checkToken', { "token": token }, false).then(function (res1) {
-          if (res1.code == 0) {
-            // that.triggerEvent("init");
-          } else {
-            that.showDialog();
-            return;
-          }
-        })
-      },
-      fail: function () {
-        that.showDialog();
-        return;
-      }
-    })
-  }
-  getUserInfoAction=(res)=>{
+
+  getUserInfoAction=async (res)=>{
     console.log(res);
     var that = this;
     var encryptedData = res.detail.encryptedData;
     var iv = res.detail.iv;
     if (encryptedData && iv) {
       // console.log("允许")
-      that.login().then((res1) => {
-        var data = {
-          "code": res1.code,
-          "encryptedData": encryptedData,
-          "iv": iv,
+      console.log(that.login());
+      let login = await that.login();
+      var data = {
+        "code": login.code,
+        "encryptedData": encryptedData,
+        "iv": iv,
+      }
+      api.post('jsonapi/wx_app/Login.json', data).then((res2) => {
+        if (res2.data.code == 0) {
+          var token = res2.data.token;
+          Taro.setStorageSync("token", token);
+          that.props.onCheckToken({type:'CHECKTOKEN',payload:{checkToken:false}})
+          // that.hideDialog();
+        } else {
+          that.props.onCheckToken({type:'CHECKTOKEN',payload:{checkToken:true}})
         }
-        post('app_applet/login', data).then((res2) => {
-          if (res.code == 0) {
-            var token = res2.result.token;
-            Taro.setStorageSync("token", token);
-            that.hideDialog();
-          } else {
-            showModel(res.message);
-          }
-        }).catch((errMsg) => {
-          showModel("网络连接失败" + errMsg)
-        })
       }).catch((errMsg) => {
-        showModel("登录:" + errMsg)
+        showModel("网络连接失败" + JSON.stringify(errMsg))
       })
     } else {
       showModel("登录失败，请重新授权");

@@ -50,7 +50,7 @@ export function createApiCheck(actionType, func = () => {}) {
     customActionType = actionType,
   ) => async (dispatch) => {
     try {
-      dispatch({ type: `${customActionType  }_request`, params });
+      // dispatch({ type: `${customActionType  }_request`, params });
       const data = await func(params);
 
       dispatch({ type: customActionType, params, payload: data });

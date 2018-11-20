@@ -10,18 +10,22 @@ export default {
     let { url, data } = params
     let token = Taro.getStorageSync('token');
     // let token = getApp().globalData.token
-    // if (!token) return;
+    
     console.log('params', params)
     let contentType = 'application/x-www-form-urlencoded'
     contentType = params.contentType || contentType
+    let header={ 'content-type': contentType, 'token': token };
+    if (!token){
+      header={ 'content-type': contentType,};
+    };
     const option = {
       isShowLoading: false,
       loadingText: '正在加载',
       url: base + url,
       data: data,
       method: method,
-      // header: { 'content-type': contentType, 'token': token },
-      header: { 'content-type': contentType},
+      header: header,
+      // header: { 'content-type': contentType},
       success(res) {
         if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
           return logError('api', '请求资源不存在')
