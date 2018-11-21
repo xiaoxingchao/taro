@@ -18,6 +18,8 @@ class App extends Component {
       'pages/setup/setup',  //个人中心
       'pages/personal/personal', //个人信息
       'pages/address/address', //收货地址
+      'pages/addaddress/addaddress', //编辑收货地址
+      'pages/scoredetails/scoredetails', //积分详情
       'pages/signin/signin', //签到
       'pages/nameapplication/nameapplication',
       'pages/answerrule/answerrule', //答题规则
@@ -26,7 +28,7 @@ class App extends Component {
       'pages/answer_jd/answer_jd', //经典答题结束
       'pages/answerreview/answerreview', //经典答题回顾
       
-      'pages/addaddress/addaddress'
+      
     ],
     window: {
       backgroundTextStyle: 'light',
