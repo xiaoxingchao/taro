@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Image} from '@tarojs/components'
 
-import { connect } from '@tarojs/redux'
+// import { connect } from '@tarojs/redux'
 
 // import { AtIcon } from 'taro-ui'
 import './loading.less'
@@ -20,11 +20,6 @@ export default class Index extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
-  button=()=>{
-    Taro.redirectTo({
-      url: '/pages/index/index'
-    })
-  }
   componentWillReceiveProps(nextProps){
     if(this.props.load!==nextProps.load){
       this.setState({

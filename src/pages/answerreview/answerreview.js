@@ -6,6 +6,7 @@ import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
 import './answerreview.less'
 import Login from '../component/login/login'
+import Loading from '../component/loading/loading'
 // import bg from '../image/indexheadimg.png'
 
 
@@ -26,8 +27,8 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
+      isload:true,
       now_num:1,
-      // flagClick:true,
       percent:20,
       data:[{options:"[]"}],
     }
@@ -38,6 +39,10 @@ export default class Index extends Component {
   componentDidMount () {
     this.setState({
       data:this.props.counter.JDLIST.data.data
+    },()=>{
+      this.setState({
+        isload:false,
+      })
     })
    
   }
@@ -160,6 +165,7 @@ export default class Index extends Component {
           <Bottom></Bottom>
         </ScrollView>
         <Login />
+        <Loading load={this.state.isload} />
       </View>
     )
   }

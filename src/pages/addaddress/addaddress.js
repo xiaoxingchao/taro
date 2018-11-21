@@ -1,55 +1,115 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { View,Form,Button,Input,Label  } from '@tarojs/components'
+import Bottom from '../component/bottom/bottom'
+import api from '../../service/api'
+import {showModel} from '../../utils/tools'
 import './addaddress.less'
+// import { userlist } from '../../actions/counter'
+import Loading from '../component/loading/loading'
+import Login from '../component/login/login'
 
 
 export default class Index extends Component {
-  
+
   config = {
-    navigationBarTitleText: 'add',
-    // 定义需要引入的第三方组件
-    // usingComponents: {
-    //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径
-    // }
+    navigationBarTitleText: '编辑收货地址',
   }
+  constructor(props){
+    super(props);
+    this.state={
+      isload:true,
+      data:{}
+    }
+  }
+
   componentWillMount () { }
 
-  componentDidMount () { 
-    
+  componentDidMount () {
+    this.setState({
+      isload:false,
+    })
   }
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () { 
+    let userId = Taro.getStorageSync('userId');
+    if(!userId) return;
+    api.post('jsonapi/iwebshop_member/get.json', {user_id:userId}).then((res) => {
+      if (res.data.code == 0) {
+        this.setState({
+          data:res.data.data?res.data.data[0]:{},
+        })
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
 
   componentDidHide () { }
-  button=()=>{
-    Taro.navigateBack()
-    // Taro.redirectTo({
-    //   url: '/pages/index/index'
-    // })
+  formSubmit=(e)=>{
+    let userId = Taro.getStorageSync('userId');
+    let {data} = this.state;
+    var value = e.detail.value;
+    for(var i in value){
+      if(value[i]==''){
+        showModel("请填写完整");
+        return;
+      }
+    }
+    if(JSON.stringify(data)==='{}'){
+      api.post('jsonapi/iwebshop_member/add.json', {...{user_id:userId},...value}).then((res) => {
+        if (res.data.code == 0) {
+          Taro.navigateBack();
+        } else {
+          showModel(JSON.stringify(res.errMsg))
+        }
+      }).catch((errMsg) => {
+        showModel('网络连接失败' + JSON.stringify(errMsg))
+      })
+    }else{
+      api.post('jsonapi/iwebshop_member/update.json', {...{ID:data.ID},...value}).then((res) => {
+        if (res.data.code == 0) {
+          Taro.navigateBack();
+        } else {
+          showModel(JSON.stringify(res.errMsg))
+        }
+      }).catch((errMsg) => {
+        showModel('网络连接失败' + JSON.stringify(errMsg))
+      })
+    }
   }
   render () {
+    let {data} = this.state;
     return (
-      <View className='header'>
-        <Text>
-          怎了8888888
-        </Text>
-        {/* <AtButton>77</AtButton> */}
-        <AtButton type='primary' onClick={this.button.bind(this)}>按钮文案</AtButton>
-        {/* <AtForm>
-          <AtInput
-            name='value1'
-            title='文本'
-            type='text'
-            placeholder='单行文本'
-            value={this.state.value1}
-            onChange={this.handleChange.bind(this)}
-          />
-        </AtForm> */}
-
+      <View className='con'>
+        <View className='address'>
+          <Form
+            onSubmit={this.formSubmit.bind(this)}
+            onReset={this.onReset.bind(this)}
+            className='form'
+          > 
+            <View className='mui-input-row'>
+              <Label >联系人：</Label >
+              <Input type='text' placeholder='请输入...' name='true_name' value={data.true_name} />
+            </View>
+            <View className='mui-input-row'>
+              <Label >电话：</Label >
+              <Input type='number' placeholder='请输入...' name='mobile' value={data.mobile} />
+            </View>
+            <View className='mui-input-row'>
+              <Label >详细地址：</Label >
+              <Input type='text' placeholder='请输入...' name='contact_addr' value={data.contact_addr} />
+            </View>
+            <Button size='normal' formType='submit' className='nalsubmitapply'>提交</Button>
+          </Form>
+          
+        </View>
+        <Bottom></Bottom>
+        <Login />
+        <Loading load={this.state.isload} />
       </View>
     )
   }
 }
-

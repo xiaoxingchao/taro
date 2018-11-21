@@ -52,23 +52,22 @@ export default class Index extends Component {
   componentWillMount () { }
   initData=(res)=>{
     if(res.data.code===0){
+      Taro.setStorageSync("userId", res.data.data[0].id);
       this.setState({
-        isload:false,
         data:res.data.data[0]
       })
-    }else{
-      this.setState({
-        isload:false,
-      })
     }
-    
   }
   componentDidMount () {
-    this.props.onGetUserList({},this.initData);
+    this.setState({
+      isload:false,
+    })
   }
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () {
+    this.props.onGetUserList({},this.initData);
+  }
 
   componentDidHide () { }
   signIcon=()=>{
@@ -144,7 +143,7 @@ export default class Index extends Component {
               <View className='pri_bottom'>
                 <View className='at-row'>
                   <View className='at-col apply'>
-                    <Navigator url='../test/test'>
+                    <Navigator url='../nameapplication/nameapplication'>
                       冠名申请
                     </Navigator>
                   </View>

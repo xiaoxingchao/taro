@@ -13,16 +13,19 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index',
-      'pages/test/test',
-      'pages/setup/setup',
-      'pages/signin/signin',
+      'pages/index/index',//主页 
+      'pages/test/test', //测试
+      'pages/setup/setup',  //个人中心
+      'pages/personal/personal', //个人信息
+      'pages/address/address', //收货地址
+      'pages/signin/signin', //签到
       'pages/nameapplication/nameapplication',
-      'pages/answerrule/answerrule',
+      'pages/answerrule/answerrule', //答题规则
       'pages/luckdraw/luckdraw',
-      'pages/answerjd/answerjd',
-      'pages/answer_jd/answer_jd',
-      'pages/answerreview/answerreview',
+      'pages/answerjd/answerjd', //经典答题
+      'pages/answer_jd/answer_jd', //经典答题结束
+      'pages/answerreview/answerreview', //经典答题回顾
+      
       'pages/addaddress/addaddress'
     ],
     window: {

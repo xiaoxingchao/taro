@@ -9,6 +9,7 @@ import scoreBg from '../image/score.png'
 import {showModel} from '../../utils/tools'
 import './answer_jd.less'
 import { userlist } from '../../actions/counter'
+import Loading from '../component/loading/loading'
 
 @connect(
   ({ counter }) => ({
@@ -35,13 +36,21 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
+      isload:true,
+      so:0
     }
   }
 
   componentWillMount () { }
 
   componentDidMount () {
-    
+    this.setState({
+      so:this.props.counter.jdResult?this.props.counter.jdResult.score:0
+    },()=>{
+      this.setState({
+        isload:false,
+      })
+    })
   }
   componentWillUnmount () { }
 
@@ -57,9 +66,7 @@ export default class Index extends Component {
           url: '../answerjd/answerjd',
         })
       }
-      
     }
-    
   }
   tojd=()=>{
     this.props.onGetUserList({},this.initData);
@@ -75,8 +82,7 @@ export default class Index extends Component {
     })
   }
   render () {
-    let so = this.props.counter.jdResult?this.props.counter.jdResult.score:0;
-    console.log(this.props.counter);
+    let {so} = this.state;
     return (
       <View className='con'>
         <View>
@@ -112,6 +118,7 @@ export default class Index extends Component {
           className='img'
         >
         </Image>
+        <Loading load={this.state.isload} />
       </View>
     )
   }

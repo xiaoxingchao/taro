@@ -1,12 +1,18 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Image  } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import { AtList, AtListItem  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
 import bg from '../image/indexheadimg.png'
 import './setup.less'
+import Loading from '../component/loading/loading'
 
-
+@connect(
+  ({ counter }) => ({
+    counter
+  })
+)
 
 export default class Index extends Component {
 
@@ -20,13 +26,21 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
+      isload:true,
+      score:0
     }
   }
 
   componentWillMount () { }
 
   componentDidMount () {
-    
+    this.setState({
+      score:this.props.counter.USERLIST?this.props.counter.USERLIST.data.data[0].score:0
+    },()=>{
+      this.setState({
+        isload:false,
+      })
+    })
   }
   componentWillUnmount () { }
 
@@ -46,7 +60,10 @@ export default class Index extends Component {
 
   }
   personalinfor=()=>{
-
+    Taro.navigateTo({
+      title:"个人信息",
+      url: '/pages/personal/personal'
+    })
   }
   render () {
     return (
@@ -65,7 +82,7 @@ export default class Index extends Component {
             </View>
             <View className='name'>
               <View className='name_n'><open-data type='userNickName' ></open-data></View>
-              <Text>积分: {60000}</Text>
+              <Text>积分: {this.state.score}</Text>
             </View>
           </View>
         </View>
@@ -90,8 +107,8 @@ export default class Index extends Component {
             /> */}
           </AtList>
         </View>
-
         <Bottom></Bottom>
+        <Loading load={this.state.isload} />
       </View>
     )
   }
