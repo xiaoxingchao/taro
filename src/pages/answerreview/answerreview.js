@@ -66,8 +66,20 @@ export default class Index extends Component {
         percent:percent,
       })
     }
-    
-    
+  }
+  // 上一题
+  pre_question=()=>{
+    this.goTop();
+    let {now_num, data} = this.state;
+    if (now_num===1) return;
+    now_num = now_num-1;
+    var percent = (now_num / data.length) * 100;
+    this.setState({
+      now_num:now_num,
+      scrollTop:0,
+      // flagClick:true,
+      percent:percent,
+    })
   }
   //返回顶部
   goTop=()=>{
@@ -139,7 +151,12 @@ export default class Index extends Component {
               </View>:<View key={index}></View>;
             }):''}
           </View>
-          <View className='leaveanswer' onClick={this.next_question.bind(this)}>{now_num===data.length?'关闭':'下一题'}</View>
+          <View className='opa'>
+            {now_num===1?'':<View className='pre' onClick={this.pre_question.bind(this)}>上一题</View>}
+            
+            <View className='next' onClick={this.next_question.bind(this)}>{now_num===data.length?'关闭':'下一题'}</View>
+          </View>
+          
           <Bottom></Bottom>
         </ScrollView>
         <Login />

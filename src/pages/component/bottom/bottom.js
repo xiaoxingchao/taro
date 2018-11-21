@@ -17,7 +17,7 @@ export default class App extends Component {
   render () {
     return (
       <View className='copyright'>
-        <Text>版权:aaaa</Text>
+        <Text>版权所有:北京市环境保护宣传中心</Text>
       </View>
     )
   }

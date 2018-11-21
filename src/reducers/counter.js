@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   num: 0,
   list:[],
   checkToken:false,
-  JDLIST:{}
+  JDLIST:{},
+  USERLIST:{}
 }
 
 export default function counter (state = INITIAL_STATE, action) {

@@ -1,33 +1,23 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Navigator,Button,Image  } from '@tarojs/components'
-
+import { connect } from '@tarojs/redux'
 // import { connect } from '@tarojs/redux'
 // import { bindActionCreators } from 'redux'
 
-import {AtIcon,AtModal} from 'taro-ui'
+import {AtIcon} from 'taro-ui'
 import Sign from '../component/sign/sign'
 import Model from '../component/model/model'
 import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
+// import api from '../../service/api'
 import './index.less'
 import bg from '../image/indexheadimg.png'
 import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
+import {showModel} from '../../utils/tools'
+import { userlist } from '../../actions/counter'
 
-// import * as Actions from '../../actions/counter'
-// import { isload } from './../../actions/counter';
 
-// function mapStateToProps(state) {
-//   return {
-//     counter: state.counter.toJS()
-//   }
-// }
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     ...bindActionCreators(Actions, dispatch)
-//   }
-// }
-// @connect(mapStateToProps, mapDispatchToProps)
 /**
  *京环之声首页
  *
@@ -35,30 +25,46 @@ import Loading from '../component/loading/loading'
  * @class Index
  * @extends {Component}
  */
+@connect(
+  ({ counter }) => ({
+    counter
+  }),
+  (dispatch) => ({
+    onGetUserList(parame,fun) {
+      dispatch(userlist(parame)).then((res)=>{
+        fun(res)
+      })
+    }
+  })
+)
 export default class Index extends Component {
   config = {
     navigationBarTitleText: '京环之声',
-    // 定义需要引入的第三方组件
-    // usingComponents: {
-    //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径
-    // }
   }
   constructor(props){
     super(props);
     this.state={
-      openModel:false,
       isload:true,
+      data:{}
     }
-    this.num = 0;
   }
 
   componentWillMount () { }
-
+  initData=(res)=>{
+    if(res.data.code===0){
+      this.setState({
+        isload:false,
+        data:res.data.data[0]
+      })
+    }else{
+      this.setState({
+        isload:false,
+      })
+    }
+    
+  }
   componentDidMount () {
-    let _this = this;
-    _this.setState({
-      isload:false
-    })
+    this.props.onGetUserList({},this.initData);
   }
   componentWillUnmount () { }
 
@@ -82,22 +88,20 @@ export default class Index extends Component {
 
   }
   clickModel=(a)=>{
-    if(this.num){
-      this.setState({
-        openModel:true
-      })
-    }else{
-      Taro.navigateTo({
-        url:a
-      })
+    let {data} = this.state;
+    if(a==='../answerjd/answerjd'){
+      if(data.jd_count>=3){
+        showModel('超过三次')
+      }else{
+        Taro.navigateTo({
+          url:a
+        })
+      }
     }
-  }
-  handleConfirm=()=>{
-    this.setState({
-      openModel:false
-    })
+    
   }
   render () {
+    let {data} = this.state;
     return (
       <View className='index'>
         <View className='header_bg'>
@@ -118,7 +122,7 @@ export default class Index extends Component {
                 </View>
                 <View className='name'>
                   <View className='name_n'><open-data type='userNickName' controls='{{!canIUse}}'></open-data></View>
-                  <Text>积分: {60000}</Text>
+                  <Text>积分: {data.score}</Text>
                 </View>
                 <View className='sign'>
                   <View className='info_icon'>
@@ -160,7 +164,7 @@ export default class Index extends Component {
               <View className='at-row'>
                 <View className='at-col at-col-6 model_left'>
                   <View onClick={this.clickModel.bind(this,'../answerjd/answerjd')} className='v'>
-                    <Model name='经典答题' url='../answerjd/index' bg='jingdian' />
+                    <Model name='经典答题' bg='jingdian' />
                   </View>
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
                     <Model name='夺宝答题' url='../luckdraw/index' bg='duobao' />
@@ -200,15 +204,6 @@ export default class Index extends Component {
             <Bottom />
           </View>
         </View>
-        {/* <AtModal
-          isOpened={this.state.openModel}
-          title='标题'
-          // cancelText='取消'
-          confirmText='确认'
-          // onCancel={ this.handleCancel }
-          onConfirm={this.handleConfirm.bind(this)}
-          content='超过三次'
-        /> */}
         <Login />
         <Loading load={this.state.isload} />
       </View>

@@ -3,7 +3,8 @@ import Taro from '@tarojs/taro'
 import {
   ADD,
   MINUS,
-  JDLIST
+  JDLIST,
+  USERLIST
 } from '../constants/counter'
 import store from '../store'
 import { createApiAction } from './index'
@@ -29,6 +30,7 @@ export function asyncAdd() {
   }
 }
 // 请求api
+export const userlist = createApiAction(USERLIST, params => api.post('jsonapi/wx_app/userInfo.json', params));
 export const jdlist = createApiAction(JDLIST, params => api.post('jsonapi/iwebshop_question/getA.json', params));
 export default bindActionCreators({
   jdlist,

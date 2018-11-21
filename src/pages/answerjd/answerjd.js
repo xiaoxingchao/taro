@@ -7,6 +7,7 @@ import Avatar from '../component/avatar/avatar'
 import api from '../../service/api'
 import './answerjd.less'
 import Login from '../component/login/login'
+import Loading from '../component/loading/loading'
 import { jdlist } from '../../actions/counter'
 // import bg from '../image/indexheadimg.png'
 
@@ -16,12 +17,12 @@ import { jdlist } from '../../actions/counter'
     counter
   }),
   (dispatch) => ({
-    onGetList(parame,fun) {
+    onGetJdList(parame,fun) {
       dispatch(jdlist(parame)).then((res)=>{
         fun(res)
       })
     },
-    onGetSelect(parame){
+    onGetJdSelect(parame){
       dispatch(parame)
     }
   })
@@ -38,6 +39,7 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
+      isload:true,
       quTime:0,
       now_score:0,
       now_num:1,
@@ -55,17 +57,25 @@ export default class Index extends Component {
     api.post('jsonapi/iwebshop_score/addScore.json',{score:-2,source:3})
       .then((res)=>{
         if(res.data.code===0){
-          this.props.onGetList({},this.initData);
+          this.props.onGetJdList({},this.initData);
         }
       })
   }
   initData=(res)=>{
-    this.setState({
-      data:res.data.data,
-      quTime:10,
-    },()=>{
-      this.countdown();
-    })
+    if(res.data.code===0){
+      this.setState({
+        isload:false,
+        data:res.data.data,
+        quTime:10,
+      },()=>{
+        this.countdown();
+      })
+    }else{
+      this.setState({
+        isload:false
+      })
+    }
+    
   }
   componentWillUnmount () {
     clearInterval(this.intervalId);
@@ -115,7 +125,7 @@ export default class Index extends Component {
           .then((res)=>{
             if(res.data.code===0){
               setTimeout(function () { 
-                _this.props.onGetSelect({
+                _this.props.onGetJdSelect({
                   type:'jdResult',
                   payload:{select_ans:select_ans,right_ans:right_ans,score:_this.state.now_score}
                 })
@@ -238,6 +248,7 @@ export default class Index extends Component {
           <Bottom></Bottom>
         </ScrollView>
         <Login />
+        <Loading load={this.state.isload} />
       </View>
     )
   }

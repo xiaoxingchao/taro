@@ -6,11 +6,20 @@ import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
 import bg from '../image/lookforoppobgimg.png'
 import scoreBg from '../image/score.png'
+import {showModel} from '../../utils/tools'
 import './answer_jd.less'
+import { userlist } from '../../actions/counter'
 
 @connect(
   ({ counter }) => ({
     counter
+  }),
+  (dispatch) => ({
+    onGetUserList(parame,fun) {
+      dispatch(userlist(parame)).then((res)=>{
+        fun(res)
+      })
+    }
   })
 )
 
@@ -39,10 +48,21 @@ export default class Index extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
+  initData=(res)=>{
+    if(res.data.code===0){
+      if(res.data.data[0].jd_count>=3){
+        showModel('超过三次')
+      }else{
+        Taro.redirectTo({
+          url: '../answerjd/answerjd',
+        })
+      }
+      
+    }
+    
+  }
   tojd=()=>{
-    Taro.redirectTo({
-      url: '../answerjd/answerjd',
-    })
+    this.props.onGetUserList({},this.initData);
   }
   backIndex=()=>{
     Taro.redirectTo({
