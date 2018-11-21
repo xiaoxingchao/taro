@@ -32,12 +32,10 @@ export default class Index extends Component {
   componentWillUnmount () { }
 
   componentDidShow () { 
-    let userId = Taro.getStorageSync('userId');
-    if(!userId) return;
-    api.post('jsonapi/iwebshop_member/get.json', {user_id:userId}).then((res) => {
+    api.post('jsonapi/wx_app/getRule.json', {}).then((res) => {
       if (res.data.code == 0) {
         this.setState({
-          data:res.data.data?res.data.data[0]:{},
+          data:res.data.result?res.data.result:{},
         })
       } else {
         showModel(JSON.stringify(res.errMsg))
@@ -48,38 +46,7 @@ export default class Index extends Component {
   }
 
   componentDidHide () { }
-  formSubmit=(e)=>{
-    let userId = Taro.getStorageSync('userId');
-    let {data} = this.state;
-    var value = e.detail.value;
-    for(var i in value){
-      if(value[i]==''){
-        showModel("请填写完整");
-        return;
-      }
-    }
-    if(JSON.stringify(data)==='{}'){
-      api.post('jsonapi/iwebshop_member/add.json', {...{user_id:userId},...value}).then((res) => {
-        if (res.data.code == 0) {
-          Taro.navigateBack();
-        } else {
-          showModel(JSON.stringify(res.errMsg))
-        }
-      }).catch((errMsg) => {
-        showModel('网络连接失败' + JSON.stringify(errMsg))
-      })
-    }else{
-      api.post('jsonapi/iwebshop_member/update.json', {...{ID:data.ID},...value}).then((res) => {
-        if (res.data.code == 0) {
-          Taro.navigateBack();
-        } else {
-          showModel(JSON.stringify(res.errMsg))
-        }
-      }).catch((errMsg) => {
-        showModel('网络连接失败' + JSON.stringify(errMsg))
-      })
-    }
-  }
+
   render () {
     let {data} = this.state;
     return (
