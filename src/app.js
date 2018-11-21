@@ -22,6 +22,7 @@ class App extends Component {
       'pages/luckdraw/luckdraw',
       'pages/answerjd/answerjd',
       'pages/answer_jd/answer_jd',
+      'pages/answerreview/answerreview',
       'pages/addaddress/addaddress'
     ],
     window: {

@@ -51,7 +51,7 @@ export default class Index extends Component {
   }
   backSee=()=>{
     Taro.redirectTo({
-      url: '../index/index',
+      url: '../answerreview/answerreview',
     })
   }
   render () {
