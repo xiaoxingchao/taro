@@ -50,7 +50,7 @@ export default class Index extends Component {
       showModel('网络连接失败' + JSON.stringify(errMsg))
     })
   }
-  componentDidShow () { 
+  componentDidShow () {
     this.getRewardLog();
   }
   getNum=(value)=>{
@@ -64,7 +64,9 @@ export default class Index extends Component {
     return (
       <View className='con'>
         <View className='run'>
-          <View className='draw'><LuckDraw  onGetNum={this.getNum} /></View>
+          <View className='draw'>
+            <LuckDraw  onGetNum={this.getNum} onGetLog={this.getRewardLog} />
+          </View>
           <Image src={turnbgimg} className='turnbg' mode='widthFix' />
           <Image src={turntitimg} className='turntit' />
         </View>

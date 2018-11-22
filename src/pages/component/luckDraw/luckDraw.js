@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text ,Image} from '@tarojs/components'
+import moment from 'moment'
 // import { AtButton } from 'taro-ui'
 import {showModel} from '../../../utils/tools'
 import api from '../../../service/api'
@@ -15,12 +16,12 @@ export default class Index extends Component {
     }
     this.animation = Taro.createAnimation({duration: 2000,timingFunction: 'ease',});
     this.awards=[
-      { 'index': 0,'deg':0, 'name': '一等奖' },
-      { 'index': 1, 'deg':288,'name': '谢谢参与' },
+      { 'index': 1,'deg':0, 'name': '一等奖' },
+      { 'index': 5, 'deg':288,'name': '谢谢参与' },
       { 'index': 2, 'deg':216,'name': '二等奖' },
       // { 'index': 3, 'name': '欢迎再来' },
       { 'index': 4, 'deg':144,'name': '优秀奖' },
-      { 'index': 5, 'deg':72,'name': '三等奖' }
+      { 'index': 3, 'deg':72,'name': '三等奖' }
     ];
     this.startFlag=true;
     this.initDeg = 0;
@@ -45,63 +46,98 @@ export default class Index extends Component {
   }
   componentWillMount () { }
 
-  componentDidMount () { 
+  componentDidMount () {
     this.getRewardSet();
   }
   componentWillUnmount () { }
 
-  componentDidShow () { 
-    
+  componentDidShow () {
+
   }
 
   componentDidHide () { }
+  getRandom=()=>{
+    let num = 0;
+    let {initData} = this.state;
+    let conf1 = Number(JSON.parse(initData.conf1).chance);
+    let conf2 = Number(JSON.parse(initData.conf2).chance);
+    let conf3 = Number(JSON.parse(initData.conf3).chance);
+    let conf4 = Number(JSON.parse(initData.conf4).chance);
+    let conf5 = Number(JSON.parse(initData.conf5).chance);
+    let conf = conf1+conf2+conf3+conf4+conf5;
+    let index = Math.random()*conf;
+    if(index<=conf1){
+      num=1;
+    }else if(index<=(conf1+conf2)){
+      num=2;
+    }else if(index<=(conf1+conf2+conf3)){
+      num=3;
+    }else if(index<=(conf1+conf2+conf3+conf4)){
+      num=4;
+    }else if(index<=(conf1+conf2+conf3+conf4+conf5)){
+      num=5;
+    }
+    return num;
+  }
   start=()=>{
     let {initData} = this.state;
     var _this = this;
-    if(initData.num<=0){
-      showModel('今日已抽奖三次!')
-      return;
-    }
+
     if(this.startFlag){
-      this.getRewardSet();
       this.startFlag = false;
-      let randomNum = [];
-      let index = Math.floor(Math.random() * 5+1);
-      let tit = '';
-      
-      for(let i=0;i<this.awards.length;i++){
-        randomNum.push(i*360/this.awards.length);
-      }
-      this.initDeg += (-randomNum[index-1]+720*2);
-      for(let j=0;j<this.awards.length;j++){
-        if(this.awards[j].deg===(this.initDeg%360)){
-          tit=this.awards[j].name;
-        }
-      }
-      this.animation.rotate(this.initDeg).step();
-      this.setState({
-        animationData:this.animation.export()
-      },()=>{
-        setTimeout(()=>{
-          Taro.showModal({
-            title:tit,
-            content:'nizhongjiangle',
-            showCancel:false,
-            confirmText:'确定',
-            success:function(){
-              // _this.animation.rotate(0).step();
-              // _this.setState({
-              //   animationData:_this.animation.export()
-              // })
-              _this.startFlag = true;
-              console.log('ppp');
+      let userId = Taro.getStorageSync('userId');
+      if(!userId) return;
+      api.post('jsonapi/reward_log/get.json', {user_id:userId,'*create_time':moment().format('YYYY-MM-DD')}).then((res) => {
+        if (res.data.code == 0) {
+          if(res.data.data.length>=initData.num){
+            showModel('明日再来!')
+            return;
+          }else{
+            _this.getRewardSet();
+            let randomNum = 0;
+            let index = _this.getRandom();
+            let tit = '';
+            for(let i=0;i<_this.awards.length;i++){
+              randomNum
+              if(_this.awards[i].index===index){
+                tit=_this.awards[i].name;
+                randomNum = _this.awards[i].deg;
+              }
             }
-          })
-        },2000)
-        
+            let aa = Math.floor(_this.initDeg/360);
+            _this.initDeg = (aa*360+randomNum+720*2);
+
+            _this.animation.rotate(_this.initDeg).step();
+            _this.setState({
+              animationData:_this.animation.export()
+            },()=>{
+              setTimeout(()=>{
+                console.log('------------------------------------');
+                console.log(_this.props);
+                console.log('------------------------------------');
+                _this.props.onGetLog();
+                Taro.showModal({
+                  title:tit,
+                  content:'获奖',
+                  showCancel:false,
+                  confirmText:'确定',
+                  success:function(){
+                    _this.startFlag = true;
+                  }
+                })
+              },2000)
+
+            })
+          }
+        } else {
+          showModel(JSON.stringify(res.errMsg))
+        }
+      }).catch((errMsg) => {
+        showModel('网络连接失败' + JSON.stringify(errMsg))
       })
+
     }
-    
+
   }
   render () {
     return (
@@ -125,7 +161,7 @@ export default class Index extends Component {
   }
 }
 Index.defaultProps={
-  parent:null,
-  onGetNum:null
+  onGetNum:null,
+  onGetLog:null
 };
 
