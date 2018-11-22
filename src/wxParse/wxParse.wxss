@@ -17,12 +17,8 @@
     color: #666;
     line-height: 1.8;
 }
-.wxParse view{
-    word-break:break-all; 
-    overflow:hidden;
-}
-.wxParse image{
-    max-width: 100%; 
+view{
+    word-break:break-all; overflow:auto;
 }
 .wxParse-inline{
     display: inline;

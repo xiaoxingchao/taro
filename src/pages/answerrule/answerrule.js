@@ -7,13 +7,13 @@ import './answerrule.less'
 // import { userlist } from '../../actions/counter'
 import Loading from '../component/loading/loading'
 import Login from '../component/login/login'
-// import WxParse from '../../wxParse/wxParse'
+import WxParse from '../../wxParse/wxParse'
 
 
 export default class Index extends Component {
 
   config = {
-    navigationBarTitleText: '积分详情',
+    navigationBarTitleText: '答题规则',
   }
   constructor(props){
     super(props);
@@ -36,9 +36,10 @@ export default class Index extends Component {
     api.post('jsonapi/wx_app/getRule.json', {}).then((res) => {
       if (res.data.code == 0) {
         var data = res.data.result;
-        // WxParse.wxParse('jd_rule', 'html', data.jd_rule, this.$scope, 5);
-        // WxParse.wxParse('jj_rule', 'html', data.jj_rule, this.$scope, 5);
-        // WxParse.wxParse('db_rule', 'html', data.db_rule, this.$scope, 5);
+        WxParse.wxParse('jd_rule', 'html', data.jd_rule, this.$scope, 5);
+        WxParse.wxParse('jj_rule', 'html', data.jj_rule, this.$scope, 5);
+        WxParse.wxParse('db_rule', 'html', data.db_rule, this.$scope, 5);
+        WxParse.wxParse('zt_rule', 'html', data.db_rule, this.$scope, 5);
         this.setState({
           data:res.data.result?res.data.result:{},
         })
@@ -54,11 +55,35 @@ export default class Index extends Component {
 
   render () {
     let {data} = this.state;
+    console.log(this.state);
     return (
       <View className='con'>
-        <View className='address'>
-
-
+        <import src='../../wxParse/wxParse.wxml' />
+        <View>
+        <View class='rulebox'>
+          <View class='rulemodeltit'><View class='view-span'>竞技答题规则</View></View>
+          <View class='wxParse'>
+            <template is='wxParse' data='{{wxParseData:jj_rule.nodes}}' />
+          </View>
+        </View>
+        <View class='rulebox'>
+          <View class='rulemodeltit'><View class='view-span'>经典答题规则</View></View>
+          <View class='wxParse'>
+            <template is='wxParse' data='{{wxParseData:jd_rule.nodes}}' />
+          </View>
+        </View>
+        <View class='rulebox'>
+          <View class='rulemodeltit'><View class='view-span'>夺宝答题规则</View></View>
+          <View class='wxParse'>
+            <template is='wxParse' data='{{wxParseData:db_rule.nodes}}' />
+          </View>
+        </View>
+        <View class='rulebox'>
+          <View class='rulemodeltit'><View class='view-span'>专题答题规则</View></View>
+          <View class='wxParse'>
+            <template is='wxParse' data='{{wxParseData:zt_rule.nodes}}' />
+          </View>
+        </View>
         </View>
         <Bottom></Bottom>
         <Login />

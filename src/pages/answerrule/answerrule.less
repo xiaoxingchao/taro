@@ -1,0 +1,35 @@
+@import "../../wxParse/wxParse.wxss";
+.rulebox{
+	width: 100%;
+  padding: 0 15Px;
+  box-sizing: border-box;
+}
+.rulemodeltit{
+	width: 100%;
+	margin-top: 24Px;
+	text-align: center;
+  position: relative;
+  &:after{
+    content: '';
+    display: block;
+    width: 80%;
+    height: 4Px;
+    border-top: 1Px solid #DAD4D4;
+    border-bottom: 1Px solid #DAD4D4;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    z-index: 1;
+    margin-top: -4PX;
+  }
+}
+.rulemodeltit .view-span{
+	font-size: 16Px;
+	color: #4ca1ff;
+	display: inline-block;
+	padding: 0 8Px;
+	background-color: #FFFFFF;
+	position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}

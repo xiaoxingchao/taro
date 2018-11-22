@@ -12,9 +12,6 @@
  * detail : http://weappdev.com/t/wxparse-alpha0-1-html-markdown/184
  */
 
-var app = getApp();
-var host=app.globalData.host;
-
 var __placeImgeUrlHttps = "https";
 var __emojisReg = '';
 var __emojisBaseSrc = '';
@@ -119,7 +116,7 @@ function html2json(html, bindName) {
                     // has multi attibutes
                     // make it array of attribute
                     if (name == 'style') {
-                        // console.dir(value);
+                        console.dir(value);
                         //  value = value.join("")
                         node.styleStr = value;
                     }
@@ -151,9 +148,6 @@ function html2json(html, bindName) {
             if (node.tag === 'img') {
                 node.imgIndex = results.images.length;
                 var imgUrl = node.attr.src;
-                if (!/^https?:\/\//.test(node.attr.src)) {
-                    imgUrl = host + node.attr.src;
-                }
                 if (imgUrl[0] == '') {
                     imgUrl.splice(0, 1);
                 }
