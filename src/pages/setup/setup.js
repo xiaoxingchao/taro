@@ -57,7 +57,10 @@ export default class Index extends Component {
   }
   
   personalint=()=>{
-
+    Taro.navigateTo({
+      title:"积分详情",
+      url: '/pages/scoredetails/scoredetails'
+    })
   }
   personalinfor=()=>{
     Taro.navigateTo({

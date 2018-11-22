@@ -1,7 +1,26 @@
 import Taro from '@tarojs/taro'
 
 
-
+// 排序
+ // 用法 arr.sort(compare('gisTime',compare('gisTime')))
+export function compare(name, minor) {
+  return function (o, p) {
+    var a, b;
+    if (o && p && typeof o === 'object' && typeof p === 'object') {
+      a = o[name];
+      b = p[name];
+      if (a === b) {
+          return typeof minor === 'function' ? minor(o, p) : 0;
+      }
+      if (typeof a === typeof b) {
+          return a < b ? -1 : 1;
+      }
+      return typeof a < typeof b ? -1 : 1;
+    } else {
+      alert("error");
+    }
+  }
+}
 export function showModel(str, isBack) {
   Taro.showModal({
     title: '提示',

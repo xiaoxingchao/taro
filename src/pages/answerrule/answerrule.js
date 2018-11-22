@@ -19,7 +19,6 @@ export default class Index extends Component {
     super(props);
     this.state={
       isload:true,
-      data:{}
     }
   }
 
@@ -40,9 +39,6 @@ export default class Index extends Component {
         WxParse.wxParse('jj_rule', 'html', data.jj_rule, this.$scope, 5);
         WxParse.wxParse('db_rule', 'html', data.db_rule, this.$scope, 5);
         WxParse.wxParse('zt_rule', 'html', data.db_rule, this.$scope, 5);
-        this.setState({
-          data:res.data.result?res.data.result:{},
-        })
       } else {
         showModel(JSON.stringify(res.errMsg))
       }
@@ -54,8 +50,6 @@ export default class Index extends Component {
   componentDidHide () { }
 
   render () {
-    let {data} = this.state;
-    console.log(this.state);
     return (
       <View className='con'>
         <import src='../../wxParse/wxParse.wxml' />
