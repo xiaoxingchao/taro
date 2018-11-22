@@ -116,7 +116,7 @@ export default class Index extends Component {
                     {type}
                   </View>
                   <View className='intDetails_pB'>
-                    {moment(item.create_time).format('YYYY-MM-DD HH:mm:ss')}
+                    {moment.parseZone(item.create_time).format('YYYY-MM-DD HH:mm:ss')}
                   </View>
                 </View>
                 <View className='intDetails_divR' style={{color:'#007AFF'}}>

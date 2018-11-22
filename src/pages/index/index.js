@@ -96,6 +96,10 @@ export default class Index extends Component {
           url:a
         })
       }
+    }else{
+      Taro.navigateTo({
+        url:a
+      })
     }
     
   }
@@ -142,11 +146,11 @@ export default class Index extends Component {
               </View>
               <View className='pri_bottom'>
                 <View className='at-row'>
-                  <View className='at-col apply'>
+                  {/* <View className='at-col apply'>
                     <Navigator url='../nameapplication/nameapplication'>
                       冠名申请
                     </Navigator>
-                  </View>
+                  </View> */}
                   <View className='at-col service'>
                     微信客服
                     <Button openType='contact' className='kefu'></Button>

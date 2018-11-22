@@ -1,6 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text ,Image} from '@tarojs/components'
 // import { AtButton } from 'taro-ui'
+import {showModel} from '../../../utils/tools'
+import api from '../../../service/api'
 import './luckDraw.less'
 
 
@@ -8,9 +10,10 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
-      animationData:{}
+      animationData:{},
+      initData:{}
     }
-    this.animation = Taro.createAnimation({duration: 1000,timingFunction: 'ease',});
+    this.animation = Taro.createAnimation({duration: 2000,timingFunction: 'ease',});
     this.awards=[
       { 'index': 0,'deg':0, 'name': '一等奖' },
       { 'index': 1, 'deg':288,'name': '谢谢参与' },
@@ -22,20 +25,45 @@ export default class Index extends Component {
     this.startFlag=true;
     this.initDeg = 0;
   }
+  getRewardSet=()=>{
+    let userId = Taro.getStorageSync('userId');
+    if(!userId) return;
+    api.post('jsonapi/wx_app/getRewardSet.json', {}).then((res) => {
+      if (res.data.code == 0) {
+        if(res.data.data){
+          this.props.onGetNum(res.data.data[0].num);
+        }
+        this.setState({
+          initData:res.data.data?res.data.data[0]:{},
+        })
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
   componentWillMount () { }
 
   componentDidMount () { 
-    
+    this.getRewardSet();
   }
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () { 
+    
+  }
 
   componentDidHide () { }
   start=()=>{
+    let {initData} = this.state;
     var _this = this;
-
+    if(initData.num<=0){
+      showModel('今日已抽奖三次!')
+      return;
+    }
     if(this.startFlag){
+      this.getRewardSet();
       this.startFlag = false;
       let randomNum = [];
       let index = Math.floor(Math.random() * 5+1);
@@ -43,7 +71,6 @@ export default class Index extends Component {
       
       for(let i=0;i<this.awards.length;i++){
         randomNum.push(i*360/this.awards.length);
-        
       }
       this.initDeg += (-randomNum[index-1]+720*2);
       for(let j=0;j<this.awards.length;j++){
@@ -55,20 +82,23 @@ export default class Index extends Component {
       this.setState({
         animationData:this.animation.export()
       },()=>{
-        Taro.showModal({
-          title:tit,
-          content:'nizhongjiangle',
-          showCancel:false,
-          confirmText:'确定',
-          success:function(){
-            // _this.animation.rotate(0).step();
-            // _this.setState({
-            //   animationData:_this.animation.export()
-            // })
-            _this.startFlag = true;
-            console.log('ppp');
-          }
-        })
+        setTimeout(()=>{
+          Taro.showModal({
+            title:tit,
+            content:'nizhongjiangle',
+            showCancel:false,
+            confirmText:'确定',
+            success:function(){
+              // _this.animation.rotate(0).step();
+              // _this.setState({
+              //   animationData:_this.animation.export()
+              // })
+              _this.startFlag = true;
+              console.log('ppp');
+            }
+          })
+        },2000)
+        
       })
     }
     
@@ -94,4 +124,8 @@ export default class Index extends Component {
     )
   }
 }
+Index.defaultProps={
+  parent:null,
+  onGetNum:null
+};
 

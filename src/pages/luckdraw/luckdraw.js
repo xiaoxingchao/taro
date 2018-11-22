@@ -1,45 +1,95 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Image} from '@tarojs/components'
-// import { AtButton } from 'taro-ui'
-import Luck from '../component/luckDraw/luckDraw'
+import { View,Image } from '@tarojs/components'
+import moment from 'moment'
+import Bottom from '../component/bottom/bottom'
+import api from '../../service/api'
+import {showModel} from '../../utils/tools'
 import './luckdraw.less'
+// import { userlist } from '../../actions/counter'
+import LuckDraw from '../component/luckDraw/luckDraw'
 import Loading from '../component/loading/loading'
+import Login from '../component/login/login'
+import turnbgimg from '../image/turnbgimg.jpg'
+import turntitimg from '../image/turntitimg.png'
+import cjrecordimg from '../image/cjrecordimg.png'
 
 export default class Index extends Component {
-  
+
   config = {
     navigationBarTitleText: '抽奖',
-    // 定义需要引入的第三方组件
-    // usingComponents: {
-    //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径
-    // }
   }
-  state={
-    isload:true,
+  constructor(props){
+    super(props);
+    this.state={
+      isload:true,
+      logData:[],
+      count:0
+    }
   }
+
   componentWillMount () { }
 
-  componentDidMount () { 
-    let _this = this;
-    _this.setState({
-      isload:false
+  componentDidMount () {
+    this.setState({
+      isload:false,
     })
   }
   componentWillUnmount () { }
-
-  componentDidShow () { }
-
+  getRewardLog=()=>{
+    let userId = Taro.getStorageSync('userId');
+    if(!userId) return;
+    api.post('jsonapi/reward_log/get.json', {user_id:userId,type:2}).then((res) => {
+      if (res.data.code == 0) {
+        this.setState({
+          logData:res.data.data?res.data.data:[],
+        })
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
+  componentDidShow () { 
+    this.getRewardLog();
+  }
+  getNum=(value)=>{
+    this.setState({
+      count:value
+    })
+  }
   componentDidHide () { }
   render () {
+    let {logData,count} = this.state;
     return (
-      <View className='luck_draw'>
-        {/* <Image
-          src={}
-        ></Image> */}
-        <Luck />
+      <View className='con'>
+        <View className='run'>
+          <View className='draw'><LuckDraw  onGetNum={this.getNum} /></View>
+          <Image src={turnbgimg} className='turnbg' mode='widthFix' />
+          <Image src={turntitimg} className='turntit' />
+        </View>
+        <View className='log'>
+          <View className='times'>
+            抽奖机会: {count} 次
+          </View>
+          <View className='log-record'>
+            <Image src={cjrecordimg} className='log-img' mode='widthFix' />
+          </View>
+          <View className='log-con'>
+            <View className='log-detail'>
+              {logData.map((item,index)=>{
+                return <View key={index} className='log-item'>
+                  <View className='log-col'>{moment.parseZone(item.create_time).format('YYYY-MM-DD HH:mm:ss')}</View>
+                  <View className='log-col'>积分{item.value}分</View>
+                </View>
+              })}
+            </View>
+            <Bottom></Bottom>
+          </View>
+        </View>
+        <Login />
         <Loading load={this.state.isload} />
       </View>
     )
   }
 }
-

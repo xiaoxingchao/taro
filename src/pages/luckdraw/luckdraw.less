@@ -1,0 +1,78 @@
+.run{
+  width: 100%;
+  height:100vh;
+  overflow-x: hidden;
+  // position: relative;
+  .turnbg{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height:auto;
+    z-index: -10;
+  }
+  .turntit{
+    position: absolute;
+    top:1rem;
+    left: 0;
+    width: 100%;
+    height:5rem;
+    z-index: -9;
+  }
+  .draw{
+    position: absolute;
+    top:6rem;
+    left:50%;
+    margin-left:-300px;
+    width:600px;
+    height:600px;
+  }
+}
+.log{
+  margin-top:-6rem;
+  
+  box-sizing: border-box;
+  padding-top:10Px;
+  .times{
+    text-align: center;
+    width:100%;
+    color:#fff;
+    font-size:18Px;
+    height:30Px;
+    line-height: 30Px;
+  }
+  .log-con{
+    margin-top:-20Px;
+    width:100%;
+    box-sizing: border-box;
+    padding:0 18Px 10Px;
+    background:#23A8F4;
+    .log-detail{
+      border-radius: 7Px;
+      box-sizing: border-box;
+      width:100%;
+      background:#fff;
+      padding:40Px 10Px 10Px;
+    }
+  }
+}
+.log-record{
+  width:212Px;
+  margin:0 auto;
+  .log-img{
+    width:100%;
+  }
+}
+.log-item{
+  display:flex;
+  display:-webkit-flex;
+  justify-content:space-between;
+  width:100%;
+  font-size:12Px;
+  color:#333333;
+  margin-bottom:.7rem;
+  .log-col{
+    font-size:12Px;
+    color:#333333;
+  }
+}
