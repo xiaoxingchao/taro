@@ -26,6 +26,7 @@ export default class Index extends Component {
     this.startFlag=true;
     this.initDeg = 0;
   }
+  // 获取设置信息
   getRewardSet=()=>{
     let userId = Taro.getStorageSync('userId');
     if(!userId) return;
@@ -56,6 +57,14 @@ export default class Index extends Component {
   }
 
   componentDidHide () { }
+  getCurScore=(num)=>{
+    let {initData} = this.state;
+    let score = 0;
+    if(JSON.parse(initData['conf'+num]).value){
+      score = Number(JSON.parse(initData['conf'+num]).value);
+    }
+    return score;
+  }
   getRandom=()=>{
     let num = 0;
     let {initData} = this.state;
@@ -79,10 +88,23 @@ export default class Index extends Component {
     }
     return num;
   }
+  // 增加分数
+  addScore=(score)=>{
+    let userId = Taro.getStorageSync('userId');
+    if(!userId) return;
+    api.post('jsonapi/iwebshop_score/addScore.json', {source:1,score:score}).then((res) => {
+      if (res.data.code == 0) {
+        this.props.onGetLog();
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
   start=()=>{
     let {initData} = this.state;
     var _this = this;
-
     if(this.startFlag){
       this.startFlag = false;
       let userId = Taro.getStorageSync('userId');
@@ -93,32 +115,26 @@ export default class Index extends Component {
             showModel('明日再来!')
             return;
           }else{
-            _this.getRewardSet();
             let randomNum = 0;
             let index = _this.getRandom();
-            let tit = '';
+            let score = this.getCurScore(index);
+            _this.addScore(score);
             for(let i=0;i<_this.awards.length;i++){
-              randomNum
               if(_this.awards[i].index===index){
-                tit=_this.awards[i].name;
                 randomNum = _this.awards[i].deg;
               }
             }
             let aa = Math.floor(_this.initDeg/360);
             _this.initDeg = (aa*360+randomNum+720*2);
-
             _this.animation.rotate(_this.initDeg).step();
+
             _this.setState({
               animationData:_this.animation.export()
             },()=>{
               setTimeout(()=>{
-                console.log('------------------------------------');
-                console.log(_this.props);
-                console.log('------------------------------------');
-                _this.props.onGetLog();
                 Taro.showModal({
-                  title:tit,
-                  content:'获奖',
+                  title:'恭喜',
+                  content:score===0?'谢谢参与':'恭喜获得积分'+score,
                   showCancel:false,
                   confirmText:'确定',
                   success:function(){

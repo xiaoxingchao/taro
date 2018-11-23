@@ -31,6 +31,7 @@ export default class Index extends Component {
       now_num:1,
       percent:20,
       data:[{options:"[]"}],
+      jdResult:{right_ans:[],select_ans:[]}
     }
   }
 
@@ -38,18 +39,18 @@ export default class Index extends Component {
 
   componentDidMount () {
     this.setState({
-      data:this.props.counter.JDLIST.data.data
-    },()=>{
-      this.setState({
-        isload:false,
-      })
+      isload:false,
     })
-   
   }
   componentWillUnmount () {
    }
 
-  componentDidShow () { }
+  componentDidShow () { 
+    this.setState({
+      data:this.props.counter.JDLIST.data.data,
+      jdResult:this.props.counter.jdResult
+    })
+  }
 
   componentDidHide () { }
 
@@ -94,7 +95,7 @@ export default class Index extends Component {
   }
   render () {
     // let data = this.props.counter.JDLIST.data.data;
-    let {right_ans,select_ans} = this.props.counter.jdResult;
+    let {right_ans,select_ans} = this.state.jdResult;
     let {now_num,data} = this.state;
     return (
       <View className='con'>
@@ -134,11 +135,6 @@ export default class Index extends Component {
               if(select_ans[now_num-1]&&select_ans[now_num-1]===index+1){
                 flagtype = 2; //选择
               }
-              // for(let i=0;i<this.state.select_ans.length;i++){
-              //   if(this.state.select_ans[i]===index+1){
-              //     flagtype = 2; //选择
-              //   }
-              // }
               if(right_ans[now_num-1]&&Number(right_ans[now_num-1])===index+1){
                 flagtype = 3; //正确答案
               }

@@ -21,13 +21,13 @@ class App extends Component {
       'pages/addaddress/addaddress', //编辑收货地址
       'pages/scoredetails/scoredetails', //积分详情
       'pages/signin/signin', //签到
-      'pages/nameapplication/nameapplication',
+      'pages/nameapplication/nameapplication', //冠名申请
       'pages/answerrule/answerrule', //答题规则
-      'pages/luckdraw/luckdraw',
+      'pages/luckdraw/luckdraw',//幸运抽奖
       'pages/answerjd/answerjd', //经典答题
       'pages/answer_jd/answer_jd', //经典答题结束
       'pages/answerreview/answerreview', //经典答题回顾
-      
+      'pages/scorechange/scorechange', //积分兑换
       
     ],
     window: {

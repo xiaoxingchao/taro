@@ -76,8 +76,13 @@ export default class Index extends Component {
       <View>
         <View 
           className='model'
-          // style={{height:this.props.height||'80px',lineHeight:this.props.height||'80px'}}
+          // style={{backgroundColor:this.props.type==='1'?'rgba(0,0,0,0.5)':'rgba(0,0,0,0)',}}
         >
+          {
+            this.props.type=='1'?<View className='screeing'>
+              待开发
+            </View>:''
+          }
           {this.props.bg=='paihang'?<Image
             src={bg1}
             className='model_img'
@@ -100,7 +105,6 @@ export default class Index extends Component {
           <Image
             src={bg2}
             className='img2'
-            
           > 
           </Image>
           <View className='model_text'>{this.props.name}</View>
@@ -112,7 +116,7 @@ export default class Index extends Component {
 }
 Index.defaultProps={
   name:'',
-  url:'',
+  type:'',
   bg:'',
   height:'',
   num:''

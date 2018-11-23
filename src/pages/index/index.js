@@ -88,6 +88,7 @@ export default class Index extends Component {
   }
   clickModel=(a)=>{
     let {data} = this.state;
+    if(a==='1') return;
     if(a==='../answerjd/answerjd'){
       if(data.jd_count>=3){
         showModel('超过三次')
@@ -169,8 +170,8 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'../answerjd/answerjd')} className='v'>
                     <Model name='经典答题' bg='jingdian' />
                   </View>
-                  <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
-                    <Model name='夺宝答题' url='../luckdraw/index' bg='duobao' />
+                  <View onClick={this.clickModel.bind(this,'1')} className='v'>
+                    <Model name='夺宝答题' type='1' bg='duobao' />
                   </View>
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
                     <Model name='竞技答题' url='../luckdraw/index' bg='jingji' />
@@ -186,8 +187,11 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
                     <Model name='专题答题' url='../luckdraw/index' bg='zhuanti' />
                   </View>
-                  <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
-                    <Model name='积分兑换' url='../luckdraw/index' bg='jifen' />
+                  <View onClick={this.clickModel.bind(this,'../scorechange/scorechange')} className='v'>
+                    <View className='v-text'>
+                      {data.score}
+                    </View>
+                    <Model name='积分兑换' bg='jifen' />
                   </View>
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
                     <Model name='京环森林' url='../luckdraw/index' bg='senlin' />
@@ -200,7 +204,6 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
                     <Model name='排行榜' bg='paihang' />
                   </View>
-                 
                 </View>
               </View>
             </View>
