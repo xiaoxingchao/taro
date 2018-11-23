@@ -5,6 +5,97 @@
   width:94%;
   margin:0 auto;
   .header{
-    
+    padding:16Px 0 16Px 10Px;
+    display:flex;
+    background:#fff;
+    border-radius: 0 0 5Px 5Px;
+    .avatar{
+      width:3rem;
+      height:3rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .name{
+      padding-left:10Px;
+      .name_n{
+        color:#666;
+        margin-bottom:4Px;
+      }
+    }
   }
+}
+.name_text{
+  color:@defaultColor;
+}
+.detail{
+  display:inline-block;
+  background:@defaultColor;
+  color:#fff;
+  padding:2Px 10Px;
+  border-radius: 11Px;
+  font-size:12Px;
+  margin-top:2Px;
+}
+.detail:active{
+  background:@defaultActiveColor;
+}
+.change-record{
+  flex:2;
+  display:flex;
+  flex-direction:row-reverse;
+  padding-top:0.5rem;
+  .record{
+    width:5rem;
+    height:2rem;
+    color:#fff;
+    background:@defaultColor;
+    line-height:2rem;
+    padding:0 .7rem 0 1rem;
+    border-radius:.8rem 0 0 .8rem;
+    font-size:.8rem;
+    white-space:nowrap;
+    &:active{
+      background:@defaultActiveColor;
+    }
+  }
+}
+
+
+.intexch_seachbox{
+	margin-top: 13Px;
+	width: 100%;
+	height: 40Px;
+	border-radius: 20Px;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	-webkit-justify-content: space-between;
+	background-color: #FFFFFF;
+}
+.intexch_seachbox image{
+	width: 40Px;
+	height: 25Px;
+	margin-top: 7Px;
+	margin-left: 10Px;
+}
+.intexch_seachbox .intexch_seach{
+	height: 26Px;
+	border: 0;
+	width: 100%;
+	font-size: 16PX;
+	color: #000000;
+	padding: 0 8Px;
+    margin: 7Px 0;
+}
+.intexch_seach_btn{
+	height: 36Px;
+	line-height: 36Px;
+	margin-top: 2Px;
+	margin-right: 2Px;
+	white-space: nowrap;
+	padding: 0 15Px;
+	background-color: @defaultColor;
+	color: #FFFFFF;
+	font-size: 15Px;
+	border-radius: 18Px;
 }

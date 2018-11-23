@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Navigator,Button,Image  } from '@tarojs/components'
+import { View, Text,Input,Button,Image  } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import { connect } from '@tarojs/redux'
 // import { bindActionCreators } from 'redux'
@@ -11,7 +11,7 @@ import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
 // import api from '../../service/api'
 import './scorechange.less'
-import bg from '../image/indexheadimg.png'
+import seachimg from '../image/seachimg.png'
 import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
 import {showModel} from '../../utils/tools'
@@ -73,10 +73,10 @@ export default class Index extends Component {
   }
 
   componentDidHide () { }
-  signIcon=()=>{
+  toDetail=()=>{
     Taro.navigateTo({
-      title:"setup",
-      url: '/pages/setup/setup'
+      title:"详情",
+      url: '/pages/scoredetails/scoredetails'
     })
   }
   getinfo=()=>{
@@ -92,10 +92,10 @@ export default class Index extends Component {
   }
   onChange=(value)=>{
     this.setState({
-      value:value
+      value:value.detail.value
     })
   }
-  onActionClick=()=>{
+  toSearch=()=>{
     console.log(this.state.value);
   }
   render () {
@@ -103,27 +103,43 @@ export default class Index extends Component {
     return (
       <View className='con'>
         <View className='header'>
-
+          <View className='avatar'>
+            <View className='avatar_img'>
+              <View className='name_n'><open-data type='userAvatarUrl' controls='{{!canIUse}}'></open-data></View>
+            </View>
+          </View>
+          <View className='name'>
+            <View className='name_n'>
+              <open-data type='userNickName' controls='{{!canIUse}}'></open-data>
+            </View>
+            <View className='crr-core'>
+              当前积分:<Text className='name_text'> {userData.score}</Text>
+            </View>
+            <View className='detail' onClick={this.toDetail}>
+              详情
+            </View>
+          </View>
+          <View className='change-record'>
+            <View className='record'>
+              兑换记录
+            </View>
+          </View>
         </View>
-        <View className='con' >
-          <View className='con_h' >
-            <View className='avatar'>
-              <View className='avatar_img'>
-                <View className='name_n'><open-data type='userAvatarUrl' controls='{{!canIUse}}'></open-data></View>
+        <View class='intexch_seachbox'>
+          <Image src={seachimg} />
+          <Input type='text'  onInput={this.onChange.bind(this)} class='intexch_seach' placeholder='请输入关键词' />
+          <View class='intexch_seach_btn' onClick={this.toSearch.bind(this)}>查询</View>
+        </View>
+        <View className='intexch_productbox'>
+          <View className='intexch_productul'>
+            {data.map((item,index)=>{
+              return <View key={index} className='intexch_productli'>
+                {item.name}
               </View>
-            </View>
-            <View className='name'>
-              <View className='name_n'><open-data type='userNickName' controls='{{!canIUse}}'></open-data></View>
-              <Text>当前积分: {userData.score}</Text>
-            </View>
-            <View className='name' style={{height:'600px'}}>
-              {data.map((item,index)=>{
-                return <View key={index}>
-                  {item.name}
-                </View>
-              })}
-            </View>
-            <View>
+            })}
+          </View>
+        </View>
+            {/* <View>
               <AtSearchBar
                 fixed={true?true:false}
                 className='search-custom'
@@ -132,11 +148,9 @@ export default class Index extends Component {
                 onChange={this.onChange.bind(this)}
                 onActionClick={this.onActionClick.bind(this)}
               />
-            </View>
+            </View> */}
             
-            <Bottom />
-          </View>
-        </View>
+        <Bottom />
         <Login />
         <Loading load={this.state.isload} />
       </View>
