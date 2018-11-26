@@ -28,6 +28,10 @@ class App extends Component {
       'pages/answer_jd/answer_jd', //经典答题结束
       'pages/answerreview/answerreview', //经典答题回顾
       'pages/scorechange/scorechange', //积分兑换
+      'pages/productdetails/productdetails', //商品详情
+      'pages/nowchange/nowchange', //立即兑换
+      'pages/changerecord/changerecord', //兑换记录
+      'pages/changesuccess/changesuccess', //兑换成功
       
     ],
     window: {

@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 
-
+export const rootUrl = "https://contest.sinoartisan.com/";
 // 排序
  // 用法 arr.sort(compare('gisTime',compare('gisTime')))
 export function compare(name, minor) {

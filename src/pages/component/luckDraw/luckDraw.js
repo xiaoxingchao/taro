@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text ,Image} from '@tarojs/components'
-import moment from 'moment'
+// import moment from 'moment'
 // import { AtButton } from 'taro-ui'
 import {showModel} from '../../../utils/tools'
 import api from '../../../service/api'
@@ -88,13 +88,27 @@ export default class Index extends Component {
     }
     return num;
   }
+  // 增加抽奖日志
+  getRewardLog=(score)=>{
+    let userId = Taro.getStorageSync('userId');
+    if(!userId) return;
+    api.post('jsonapi/reward_log/add.json', {user_id:userId,type:1,score:score}).then((res) => {
+      if (res.data.code == 0) {
+        this.props.onGetLog();
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
   // 增加分数
   addScore=(score)=>{
     let userId = Taro.getStorageSync('userId');
     if(!userId) return;
     api.post('jsonapi/iwebshop_score/addScore.json', {source:1,score:score}).then((res) => {
       if (res.data.code == 0) {
-        this.props.onGetLog();
+        this.getRewardLog(score);
       } else {
         showModel(JSON.stringify(res.errMsg))
       }
@@ -109,9 +123,9 @@ export default class Index extends Component {
       this.startFlag = false;
       let userId = Taro.getStorageSync('userId');
       if(!userId) return;
-      api.post('jsonapi/reward_log/get.json', {user_id:userId,'*create_time':moment().format('YYYY-MM-DD')}).then((res) => {
+      api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
         if (res.data.code == 0) {
-          if(res.data.data.length>=initData.num){
+          if(res.data.count>=initData.num){
             showModel('明日再来!')
             return;
           }else{
@@ -142,7 +156,6 @@ export default class Index extends Component {
                   }
                 })
               },2000)
-
             })
           }
         } else {

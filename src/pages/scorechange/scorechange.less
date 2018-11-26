@@ -97,5 +97,85 @@
 	background-color: @defaultColor;
 	color: #FFFFFF;
 	font-size: 15Px;
-	border-radius: 18Px;
+  border-radius: 18Px;
+  
 }
+
+
+.intexchangebtn{
+  float: right;
+  text-align: center;
+  line-height: 30Px;
+}
+.intexch_productbox{
+	width: 100%;
+	margin-top: 15Px;
+}
+.intexch_productul{
+	width: 100%;
+	display: flex;
+	display: -webkit-flex;
+	flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+}
+.intexch_productli{
+	padding: 8Px;
+	border-radius: 5Px;
+	background-color: #FFFFFF;
+	width: 49%;
+	margin-bottom: 10Px;
+}
+.intexch_proimg{
+  width:8rem;
+  height:8rem;
+  margin:0 auto;
+  display:block;
+}
+.intexch_proinfor{
+	width: 100%;
+	padding: 10Px 0;
+	align-items: center;
+	display:flex;
+  justify-content:space-between;
+}
+.intexch_proinfor_divL{
+	width: 60%;
+}
+// .intexch_proinfor_divL p{
+// 	width: 100%;
+// 	word-break: break-all;
+// }
+.intexch_proinfor_pT{
+	font-size: 14Px;
+	color: #000000;
+}
+.intexch_proinfor_pB{
+	margin-top: 7Px;
+	font-size: 15Px;
+	color: @defaultColor;
+}
+.intexch_proinfor .intexchangebtn{
+	width: 50Px;
+	min-width: 50Px;
+	border: 1Px solid @defaultColor;
+	color: @defaultColor;
+	font-size: 15Px;
+	padding: 0;
+  height: 30Px;
+  &:active{
+    background:rgba(0,0,0,0.2)
+  }
+} 
+.intexch_productul .view-li:nth-child(odd){
+	margin-right: 1%;
+}
+.intexch_productul .view-li:nth-child(even){
+	margin-left: 1%;
+}
+.wrap {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+  

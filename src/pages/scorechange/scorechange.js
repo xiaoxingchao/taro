@@ -1,20 +1,15 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Input,Button,Image  } from '@tarojs/components'
+import { View, Text,Input,Image,Navigator } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-// import { connect } from '@tarojs/redux'
-// import { bindActionCreators } from 'redux'
 
-import {AtSearchBar } from 'taro-ui'
-import Sign from '../component/sign/sign'
-import Model from '../component/model/model'
+// import {AtSearchBar } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
-import Avatar from '../component/avatar/avatar'
-// import api from '../../service/api'
+import api from '../../service/api'
 import './scorechange.less'
 import seachimg from '../image/seachimg.png'
 import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
-import {showModel} from '../../utils/tools'
+import {showModel,rootUrl} from '../../utils/tools'
 import { userlist } from '../../actions/counter'
 
 
@@ -47,9 +42,7 @@ export default class Index extends Component {
       isload:true,
       userData:{},
       value:'',
-      data:[
-        {id:568,name:'纯天然蔬菜大礼包',sell_price:'2000',img:'upload/2018/09/04/20180904224212855.jpg'},
-      ]
+      data:[]
     }
   }
 
@@ -70,8 +63,21 @@ export default class Index extends Component {
 
   componentDidShow () {
     this.props.onGetUserList({},this.initData);
+    this.getResult({is_del:0,is_score:1});
   }
-
+  getResult=(parame)=>{
+    api.post('jsonapi/iwebshop_goods/get.json', parame).then((res) => {
+      if (res.data.code == 0) {
+        this.setState({
+          data:res.data.data?res.data.data:[],
+        })
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
   componentDidHide () { }
   toDetail=()=>{
     Taro.navigateTo({
@@ -96,7 +102,16 @@ export default class Index extends Component {
     })
   }
   toSearch=()=>{
+    let p ={is_del:0,is_score:1};
+    p['*name'] = this.state.value;
+    this.getResult(p);
     console.log(this.state.value);
+  }
+  toNowchange=(id,virtual)=>{
+    Taro.navigateTo({
+      title:"立即兑换",
+      url: '/pages/nowchange/nowchange?id='+id+'&is_virtual='+virtual
+    })
   }
   render () {
     let {userData,data} = this.state;
@@ -133,23 +148,19 @@ export default class Index extends Component {
         <View className='intexch_productbox'>
           <View className='intexch_productul'>
             {data.map((item,index)=>{
-              return <View key={index} className='intexch_productli'>
-                {item.name}
+              return <View className='intexch_productli' key={index}>
+                <Navigator url='../productdetails/productdetails?id={{item.id}}'><Image src={rootUrl+item.img} className='intexch_proimg'></Image></Navigator>
+                <View className='intexch_proinfor displayflex_between'>
+                  <View className='intexch_proinfor_divL'>
+                    <View className='intexch_proinfor_pT'><View className='wrap'>{item.name}</View></View>
+                    <View className='intexch_proinfor_pB'><View className='wrap'>{item.sell_price}</View></View>
+                  </View>
+                  <View className='intexchangebtn' onClick={this.toNowchange.bind(this,item.id,item.is_virtual)}>兑换</View>
+                </View>
               </View>
             })}
           </View>
         </View>
-            {/* <View>
-              <AtSearchBar
-                fixed={true?true:false}
-                className='search-custom'
-                actionName='搜一下'
-                value={this.state.value}
-                onChange={this.onChange.bind(this)}
-                onActionClick={this.onActionClick.bind(this)}
-              />
-            </View> */}
-            
         <Bottom />
         <Login />
         <Loading load={this.state.isload} />
