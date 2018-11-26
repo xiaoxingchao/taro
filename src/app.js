@@ -32,6 +32,9 @@ class App extends Component {
       'pages/nowchange/nowchange', //立即兑换
       'pages/changerecord/changerecord', //兑换记录
       'pages/changesuccess/changesuccess', //兑换成功
+      'pages/changedetailsSw/changedetailsSw', //兑换详情
+
+      
       
     ],
     window: {

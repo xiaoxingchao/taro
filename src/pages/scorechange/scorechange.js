@@ -85,16 +85,11 @@ export default class Index extends Component {
       url: '/pages/scoredetails/scoredetails'
     })
   }
-  getinfo=()=>{
-
-  }
-  onShareAppMessage = (res) => {
-    console.log(res)
-    // if (res.from === 'button') {
-    //   // 来自页面内转发按钮
-
-    // }
-
+  toChangeRecord=()=>{
+    Taro.navigateTo({
+      title:"兑换记录",
+      url: '/pages/changerecord/changerecord'
+    })
   }
   onChange=(value)=>{
     this.setState({
@@ -130,12 +125,12 @@ export default class Index extends Component {
             <View className='crr-core'>
               当前积分:<Text className='name_text'> {userData.score}</Text>
             </View>
-            <View className='detail' onClick={this.toDetail}>
+            <View className='detail' onClick={this.toDetail.bind(this)}>
               详情
             </View>
           </View>
-          <View className='change-record'>
-            <View className='record'>
+          <View className='change-record' >
+            <View className='record' onClick={this.toChangeRecord.bind(this)}>
               兑换记录
             </View>
           </View>

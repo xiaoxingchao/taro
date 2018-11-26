@@ -1,10 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Image } from '@tarojs/components'
 
-import {AtCard  } from 'taro-ui'
+// import {AtCard  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
 import api from '../../service/api'
-import './changerecord.less'
+import './changedetailsSw.less'
 import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
 import {showModel,rootUrl} from '../../utils/tools'
@@ -26,7 +26,7 @@ export default class Index extends Component {
     super(props);
     this.state={
       isload:true,
-      data:[]
+      data:{}
     }
   }
 
@@ -45,7 +45,7 @@ export default class Index extends Component {
     api.post('jsonapi/iwebshop_goods/get.json', parame).then((res) => {
       if (res.data.code == 0) {
         this.setState({
-          data:res.data.data?res.data.data:[],
+          data:res.data.data?res.data.data[0]:[],
         })
       } else {
         showModel(JSON.stringify(res.errMsg))
@@ -69,23 +69,15 @@ export default class Index extends Component {
     let {data} = this.state;
     return (
       <View className='con'>
-        <View className='intexch_productbox'>
-          <View className='intexch_productul'>
-            {data.map((item,index)=>{
-              return <View className='intexch_productli' key={index}>
-                <AtCard title='2018-08-02' onClick={this.toRecordDetail.bind(this,item.id)}> 
-                  <View className='card'>
-                    <Image src={rootUrl+item.img} className='proimg' mode='widthFix'></Image>
-                    <View>
-                      <View className='intexch_proinfor_pT'><View className='wrap'>{item.name}</View></View>
-                      <View className='intexch_proinfor_pB'><View className='wrap'>{item.sell_price}积分</View></View>
-                    </View>
-                  </View>
-                  
-                </AtCard>
-              </View>
-            })}
+        <View className='exchprodetailsbox'>
+          <Image src={rootUrl+data.img} className='proimg' mode='widthFix'></Image>
+          <View className='exchproname'>
+            {data.name}
           </View>
+        </View>
+        <View className='exchdetails_infor'>
+          <View>商品价格</View>
+          <View>{data.sell_price}</View>
         </View>
         <Bottom />
         <Login />
