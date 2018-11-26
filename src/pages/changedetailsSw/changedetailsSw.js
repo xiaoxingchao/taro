@@ -4,23 +4,23 @@ import { View,Image } from '@tarojs/components'
 // import {AtCard  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
 import api from '../../service/api'
-import './changedetailsSw.less'
+
 import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
 import {showModel,rootUrl} from '../../utils/tools'
-
+import './changedetailsSw.less'
 
 /**
  *京环之声首页
  *
- * @export 
+ * @export
  * @class Index
  * @extends {Component}
  */
 
 export default class Index extends Component {
   config = {
-    navigationBarTitleText: '兑换记录',
+    navigationBarTitleText: '兑换详情',
   }
   constructor(props){
     super(props);
@@ -66,7 +66,7 @@ export default class Index extends Component {
 
 
   render () {
-    let {data} = this.state;
+    const {data} = this.state;
     return (
       <View className='con'>
         <View className='exchprodetailsbox'>
@@ -75,9 +75,39 @@ export default class Index extends Component {
             {data.name}
           </View>
         </View>
-        <View className='exchdetails_infor'>
-          <View>商品价格</View>
-          <View>{data.sell_price}</View>
+        <View className='goods-info'>
+          <View className='exchdetails_infor'>
+            <View>商品价格</View>
+            <View>{data.sell_price}</View>
+          </View>
+          <View className='exchdetails_infor'>
+            <View>兑换时间</View>
+            <View>{data.sell_price}</View>
+          </View>
+        </View>
+        <View className='goods-info'>
+          <View className='exchdetails_infor'>
+            <View>联系人</View>
+            <View>{data.sell_price}</View>
+          </View>
+          <View className='exchdetails_infor'>
+            <View>电话</View>
+            <View>{data.sell_price}</View>
+          </View>
+          <View className='exchdetails_infor'>
+            <View>收货地址</View>
+            <View>{data.sell_price}</View>
+          </View>
+        </View>
+        <View className='goods-info'>
+          <View className='exchdetails_infor'>
+            <View>快递公司</View>
+            <View>{data.sell_price}</View>
+          </View>
+          <View className='exchdetails_infor'>
+            <View>收货单号</View>
+            <View>{data.sell_price}</View>
+          </View>
         </View>
         <Bottom />
         <Login />
