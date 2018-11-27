@@ -83,10 +83,10 @@ export default class Index extends Component {
               待开发
             </View>:''
           }
-          {this.props.bg=='paihang'?<Image
+          {/* {this.props.bg=='1'?<Image
             src={bg1}
             className='model_img'
-            style={{height:'80px'}}
+            style={{height:'6rem'}}
           > 
           </Image>:<Image
             src={bg1}
@@ -94,14 +94,14 @@ export default class Index extends Component {
             mode='widthFix'
             style={{height:'auto'}}
           > 
-          </Image>}
-          {/* <Image
-            src={bg}
+          </Image>} */}
+          <Image
+            src={bg1}
             className='model_img'
             mode='widthFix'
             style={{height:'auto'}}
           > 
-          </Image> */}
+          </Image>
           <Image
             src={bg2}
             className='img2'

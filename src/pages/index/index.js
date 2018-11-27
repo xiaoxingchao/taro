@@ -177,8 +177,9 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'../answerzt/answerzt')} className='v'>
                     <Model name='竞技答题' url='../luckdraw/index' bg='jingji' />
                   </View>
-                  <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
-                    <Model name='公益答题' url='../luckdraw/index' bg='gongyi' />
+                  
+                  <View onClick={this.clickModel.bind(this,'../rankinglist/rankinglist')} className='v'>
+                    <Model name='排行榜' bg='paihang' />
                   </View>
                 </View>
                 <View className='at-col at-col-6 model_right'>
@@ -194,19 +195,22 @@ export default class Index extends Component {
                     </View>
                     <Model name='积分兑换' bg='jifen' />
                   </View>
-                  <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
-                    <Model name='京环森林' url='../luckdraw/index' bg='senlin' />
+                  <View onClick={this.clickModel.bind(this,'1')} className='v'>
+                    <Model name='公益活动' type='1' bg='gongyi' />
                   </View>
+                  {/* <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
+                    <Model name='京环森林' url='../luckdraw/index' bg='senlin' />
+                  </View> */}
                 </View>
 
               </View>
-              <View className='at-row'>
+              {/* <View className='at-row'>
                 <View className='at-col at-col-12'>
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
                     <Model name='排行榜' bg='paihang' />
                   </View>
                 </View>
-              </View>
+              </View> */}
             </View>
             <Bottom />
           </View>

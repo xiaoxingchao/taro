@@ -35,6 +35,7 @@ class App extends Component {
       'pages/changedetailsSw/changedetailsSw', //兑换详情
       'pages/answerzt/answerzt', //专题答题
       'pages/answer_zt/answer_zt', //专题答题结束
+      'pages/rankinglist/rankinglist', //排行榜
     ],
     window: {
       backgroundTextStyle: 'light',

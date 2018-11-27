@@ -5,8 +5,9 @@ import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
 import bg from '../image/lookforoppobgimg.png'
 import duobaoimg from '../image/jingdianimg.png'
-import {showModel} from '../../utils/tools'
+// import {showModel} from '../../utils/tools'
 import './answer_zt.less'
+import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
 
 export default class Index extends Component {
@@ -105,6 +106,7 @@ export default class Index extends Component {
           className='img'
         >
         </Image>
+        <Login />
         <Loading load={this.state.isload} />
       </View>
     )
