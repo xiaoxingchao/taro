@@ -159,8 +159,11 @@ export default class Index extends Component {
               </View>
             </View>
           </View>
-          
-            
+          <View>
+            {
+              1?<View className='more'>点击加载更多</View>:<View className='more'>到底了</View>
+            }
+          </View>
           
           <Bottom></Bottom>
         </ScrollView>
