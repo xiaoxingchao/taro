@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Navigator,Button,Image  } from '@tarojs/components'
+import { View, Text,Button,Image  } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import { connect } from '@tarojs/redux'
 // import { bindActionCreators } from 'redux'
@@ -76,7 +76,11 @@ export default class Index extends Component {
       url: '/pages/setup/setup'
     })
   }
-  getinfo=()=>{
+  toAnswerrule=()=>{
+    Taro.navigateTo({
+      title:"答题规则",
+      url: '/pages/answerrule/answerrule'
+    })
   }
   onShareAppMessage = (res) => {
     console.log(res)
@@ -104,6 +108,7 @@ export default class Index extends Component {
     }
     
   }
+
   render () {
     let {data} = this.state;
     return (
@@ -139,9 +144,7 @@ export default class Index extends Component {
                     </AtIcon>
                   </View>
                   <View className='info_sign'>
-                    <Navigator url='../signin/signin'>
-                      <Sign />
-                    </Navigator>
+                    <Sign />
                   </View>
                 </View>
               </View>
@@ -156,10 +159,8 @@ export default class Index extends Component {
                     微信客服
                     <Button openType='contact' className='kefu'></Button>
                   </View>
-                  <View className='at-col'>
-                    <Navigator url='../answerrule/answerrule'>
-                      答题规则
-                    </Navigator>
+                  <View className='at-col answerrule' onClick={this.toAnswerrule.bind(this)}>
+                    答题规则
                   </View>
                 </View>
               </View>
@@ -173,7 +174,7 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'1')} className='v'>
                     <Model name='夺宝答题' type='1' bg='duobao' />
                   </View>
-                  <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
+                  <View onClick={this.clickModel.bind(this,'../answerzt/answerzt')} className='v'>
                     <Model name='竞技答题' url='../luckdraw/index' bg='jingji' />
                   </View>
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
@@ -184,8 +185,8 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
                     <Model name='幸运抽奖' url='../luckdraw/index' bg='xingyun' />
                   </View>
-                  <View onClick={this.clickModel.bind(this,'../luckdraw/luckdraw')} className='v'>
-                    <Model name='专题答题' url='../luckdraw/index' bg='zhuanti' />
+                  <View onClick={this.clickModel.bind(this,'../answerzt/answerzt')} className='v'>
+                    <Model name='专题答题' bg='zhuanti' />
                   </View>
                   <View onClick={this.clickModel.bind(this,'../scorechange/scorechange')} className='v'>
                     <View className='v-text'>

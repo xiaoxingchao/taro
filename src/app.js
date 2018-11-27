@@ -33,9 +33,8 @@ class App extends Component {
       'pages/changerecord/changerecord', //兑换记录
       'pages/changesuccess/changesuccess', //兑换成功
       'pages/changedetailsSw/changedetailsSw', //兑换详情
-
-      
-      
+      'pages/answerzt/answerzt', //专题答题
+      'pages/answer_zt/answer_zt', //专题答题结束
     ],
     window: {
       backgroundTextStyle: 'light',

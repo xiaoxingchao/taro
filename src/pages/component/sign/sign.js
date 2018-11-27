@@ -15,15 +15,16 @@ export default class Index extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
-  button=()=>{
-    Taro.redirectTo({
-      url: '/pages/index/index'
+  toSign=()=>{
+    Taro.navigateTo({
+      title:"签到",
+      url: '/pages/signin/signin'
     })
   }
   render () {
     return (
-      <View className='sign'>
-        <AtIcon value='calendar' size='12' color='#08c'></AtIcon>
+      <View className='sign' onClick={this.toSign.bind(this)}>
+        <AtIcon value='calendar' size='12' color='#4ca1ff'></AtIcon>
         <Text className='text'>签到</Text>
       </View>
     )

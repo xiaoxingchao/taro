@@ -1,33 +1,18 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Image  } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
+import { View, Text,Image,Button } from '@tarojs/components'
 // import { AtList, AtListItem  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
 import Avatar from '../component/avatar/avatar'
 import bg from '../image/lookforoppobgimg.png'
-import scoreBg from '../image/score.png'
+import duobaoimg from '../image/jingdianimg.png'
 import {showModel} from '../../utils/tools'
-import './answer_jd.less'
-import { userlist } from '../../actions/counter'
+import './answer_zt.less'
 import Loading from '../component/loading/loading'
-
-@connect(
-  ({ counter }) => ({
-    counter
-  }),
-  (dispatch) => ({
-    onGetUserList(parame,fun) {
-      dispatch(userlist(parame)).then((res)=>{
-        fun(res)
-      })
-    }
-  })
-)
 
 export default class Index extends Component {
 
   config = {
-    navigationBarTitleText: '经典答题',
+    navigationBarTitleText: '专题答题',
     // 定义需要引入的第三方组件
     // usingComponents: {
     //   "van-button": "../../components/vant-weapp/dist/button/index" // 书写第三方组件的相对路径
@@ -37,12 +22,18 @@ export default class Index extends Component {
     super(props);
     this.state={
       isload:true,
-      so:0
+      success:0
     }
   }
 
   componentWillMount () { }
-
+  // 获取当前页参数
+  getCurrParame=()=>{
+    let par_id = '';
+    let arr = Taro.getCurrentPages();
+    par_id=arr[arr.length-1].options;
+    return par_id;
+  }
   componentDidMount () {
     this.setState({
       isload:false,
@@ -53,37 +44,31 @@ export default class Index extends Component {
 
   componentDidShow () {
     this.setState({
-      so:this.props.counter.jdResult?this.props.counter.jdResult.score:0
+      success:this.getCurrParame().success
     })
   }
 
   componentDidHide () { }
-  initData=(res)=>{
-    if(res.data.code===0){
-      if(res.data.data[0].jd_count>=3){
-        showModel('超过三次')
-      }else{
-        Taro.redirectTo({
-          url: '../answerjd/answerjd',
-        })
-      }
-    }
-  }
-  tojd=()=>{
-    this.props.onGetUserList({},this.initData);
-  }
   backIndex=()=>{
     Taro.redirectTo({
       url: '../index/index',
     })
   }
-  backSee=()=>{
+  toLuckdraw=()=>{
     Taro.redirectTo({
-      url: '../answerreview/answerreview',
+      url: '../luckdraw/luckdraw',
     })
   }
+  onShareAppMessage = (res) => {
+    console.log(res)
+    // if (res.from === 'button') {
+    //   // 来自页面内转发按钮
+
+    // }
+
+  }
   render () {
-    let {so} = this.state;
+    let {success} = this.state;
     return (
       <View className='con'>
         <View>
@@ -94,24 +79,25 @@ export default class Index extends Component {
             </View>
           </View>
           <View className='title'>   
-            <Text>答题结束</Text>
-          </View>
-          <View className='right_num'>
-            {so/2===0?'答题失败':'恭喜你答对'+so/2+'题'}
+            {success==='0'?'答题失败':'答题结束'}
           </View>
           <View className='answer_goodsbox'>
-            <Image
-              src={scoreBg}
+            {success==='0'?<Image
+              src={duobaoimg}
               className='score_img'
             >
-            </Image>
+            </Image>:<Image
+              src={duobaoimg}
+              className='score_img'
+            >
+            </Image>}
+            
             <View className='answer_tit'>
-              <Text>获得{so}积分</Text>
+              <Text>{success==='0'?'下次再接再厉':'恭喜你获得一次抽奖机会'}</Text>
             </View>
           </View>
-          <View className='onceagain' onClick={this.tojd.bind(this)}>再来一次</View>
-          <View className='backsee' onClick={this.backSee.bind(this)}>答题回顾</View>
-			    <View className='leaveanswer' onClick={this.backIndex.bind(this)}>离开答题</View>
+          {success==='0'?<Button open-type='share' className='onceagain'>分享给好友</Button>:<View className='onceagain' onClick={this.toLuckdraw.bind(this)}>立即抽奖</View>}
+			    <View className='leaveanswer' onClick={this.backIndex.bind(this)}>返回首页</View>
         </View>
         <Bottom></Bottom>
         <Image

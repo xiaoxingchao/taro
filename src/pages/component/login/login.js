@@ -19,7 +19,7 @@ import './login.less'
 
 export default class Index extends Component {
   state={
-    // isShow:false
+    isShow:false
   }
   componentWillMount () { }
 
@@ -27,12 +27,17 @@ export default class Index extends Component {
     let token = Taro.getStorageSync('token');
     if (!token){
       this.props.onCheckToken({type:'CHECKTOKEN',payload:{checkToken:true}})
+      this.setState({
+        isShow:true
+      })
     }
     // this.props.onCheckToken({});
   }
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () { 
+    
+  }
 
   componentDidHide () { }
 
@@ -55,6 +60,9 @@ export default class Index extends Component {
           var token = res2.data.token;
           Taro.setStorageSync("token", token);
           that.props.onCheckToken({type:'CHECKTOKEN',payload:{checkToken:false}})
+          that.setState({
+            isShow:false
+          })
           // that.hideDialog();
         } else {
           that.props.onCheckToken({type:'CHECKTOKEN',payload:{checkToken:true}})
@@ -87,7 +95,7 @@ export default class Index extends Component {
   }
   render () {
     return (
-      <View className='wx_dialog_container' hidden={!this.props.counter.checkToken}>
+      <View className='wx_dialog_container' hidden={!this.state.isShow}>
         <View className='wx-mask'></View>
         <View className='wx-dialog'>
             <View className='wx-dialog-title'>欢迎进入京环之声答题小程序</View>
