@@ -1,9 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Image  } from '@tarojs/components'
+import { View,Image,Text } from '@tarojs/components'
 // import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
 import './signin.less'
 import {getCurrentDayString,getPreMonth} from '../../utils/tools'
+import day from '../image/daydaysgin.png'
 
 const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
 export default class Index extends Component {
@@ -134,7 +135,26 @@ export default class Index extends Component {
           </View>
         </View>
         <Bottom />
-        <View className='signin_info'></View>
+        <View className='signin_info'>
+          <View className='left-img'>
+            <Image src={day} className='day-img'></Image>
+          </View>
+          <View className='right-info'>
+            <View className='top-score'>
+              <View className='over'>
+                今日签到积分:<Text className='overscore score'>10积分</Text>
+              </View>
+              <View className='daysginsta'>
+                已签到
+              </View>
+               
+            </View>
+            <View className='bottom-text'>
+              今日签到已奖励<Text className='score'>10积分</Text>
+              连续签到7天可额外奖励<Text className='score'>10积分</Text>
+            </View>
+          </View>
+        </View>
       </View>
       
     )

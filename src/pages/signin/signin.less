@@ -14,12 +14,15 @@
   }
   .signin_info{
     position: absolute;
-    top:calc(100% - 30px);
-    left:5%;
-    width:90%;
-    height:300px;
+    top:100%;
+    left:4%;
+    width:92%;
     background:#fff;
-    border-radius: 20px;
+    border-radius:5Px;
+    padding:10Px 15Px;
+    box-shadow:1Px 2Px 7Px -1Px #9e9a9a;
+    margin-top:-15Px;
+    display:flex;
   }
 }
 
@@ -42,11 +45,13 @@
     .flex-item {    
       width: 14.2%;  
       .item-content {  
-        margin: 5px;  
-        padding: 0 10px;  
+        margin: 5Px;  
+        padding: 0 10Px;  
         text-align: center;  
         height: 2rem;  
         line-height: 2rem;
+        font-size:16PX;
+        color:#9e9e9e;
       }  
     } 
   }
@@ -63,15 +68,17 @@
       width: 14.2%;
       border-radius: 50%;  
       .item-content {  
-        margin: 5px;  
-        padding: 0 15px;  
+        margin: 5Px;  
+        padding: 0 6Px;  
         text-align: center;  
         // background-color: #000;
         height: 2rem;  
         line-height: 2rem;  
+        font-size:16PX;
+        font-weight: 700;
       }  
       .grey{
-        color:#ccc;
+        color:grey;
       }
       .nowbg{
         padding: 0; 
@@ -79,11 +86,48 @@
         border-radius: 50%;
         background:rgb(77, 194, 130);
       }
-
     } 
-    
   }
-  
+}
+.left-img{
+  font-size:16PX;
+  height:4rem;
+  width:3rem;
+  .day-img{
+    height:4rem;
+    width:3rem;
+  }
+
+}
+.right-info{
+  padding-left:10PX;
+}
+.top-score{
+  display:flex;
+  justify-content: space-between;
+  .overscore{
+    font-weight:700;
+  }
+  .daysginsta{
+    display:block;
+    cursor:pointer;
+    padding:3Px 15Px;
+    white-space:nowrap;
+    color:@defaultColor;
+    border:1Px solid @defaultColor;
+    border-radius:4Px;
+    font-size:12Px;
+  }
+}
+.over{
+  font-size:12Px;
+}
+.bottom-text{
+  margin-top:8PX;
+  font-size:12Px;
+}
+.score{
+  color:@defaultColor;
 }
 
 

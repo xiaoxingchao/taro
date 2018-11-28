@@ -71,11 +71,7 @@ export default class Index extends Component {
     this.getResult({...p,...{orderType:this.state.type}},more);
   }
   componentDidShow () { 
-    this.setState({
-      page:1
-    },()=>{
-      this.handleResult(0);
-    })
+    this.handleResult(0);
   }
 
   componentDidHide () { }
