@@ -174,8 +174,8 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'1')} className='v'>
                     <Model name='夺宝答题' type='1' bg='duobao' />
                   </View>
-                  <View onClick={this.clickModel.bind(this,'../answerzt/answerzt')} className='v'>
-                    <Model name='竞技答题' url='../luckdraw/index' bg='jingji' />
+                  <View onClick={this.clickModel.bind(this,'../answerjj/answerjj')} className='v'>
+                    <Model name='竞技答题' bg='jingji' />
                   </View>
                   
                   <View onClick={this.clickModel.bind(this,'../rankinglist/rankinglist')} className='v'>

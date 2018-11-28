@@ -1,0 +1,103 @@
+
+// .con_h{
+//   height:2000px;
+// }
+.con{
+  position: relative;
+  width:100%;
+  height:100vh;
+  overflow: hidden;
+  padding-top:30Px;
+  .img{
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: -1;
+    width:100%;
+    height:100%;
+  }
+  .name_n{
+    width:100%;
+    text-align: center;
+    color:#fff;
+  }
+  .avatar{
+    width:40PX;
+    margin:5PX auto;
+  }
+  .wait-match{
+    width:12rem;
+    height:3rem;
+    margin:30PX auto;
+    .wait_img{
+      width:12rem;
+      height:3rem;
+    }
+  }
+  .start-match{
+    margin-top:30PX;
+    height:5rem;
+    width:12rem;
+    margin:30Px auto;
+    .start_img{
+      height:5rem;
+      width:12rem;
+    }
+  }
+  .lookfor{
+    width:100%;
+    padding:0 0 30PX;
+    .look_img{
+      display:block;
+      width:60PX;
+      height: 60PX;
+      margin:10PX auto;
+    }
+    .look_text{
+      text-align: center;
+      color:#FFF;
+    }
+  }
+  
+  
+  .leaveanswer{
+    width: 130Px;
+    height: 40Px;
+    line-height: 40Px;
+    text-align: center;
+    border-radius: 20Px;
+    font-size: 15Px;
+    background-color: #0062CC;
+    margin: 30Px auto 0;
+    color: #FFFFFF;
+  }
+  
+}
+
+.dotting {
+  letter-spacing:5PX;
+  display: inline-block; 
+  height: 1em; line-height: 1;
+  text-align: left;
+  vertical-align: -.25em;
+  overflow: hidden;
+}
+.dotting::before {
+  display: block;
+  content: '...\A..\A.';
+  white-space: pre-wrap;   /* 也可以是white-space: pre */
+  animation: dot 3s infinite step-start both;
+}
+@keyframes dot {
+  33% { transform: translateY(-2em); }
+  66% { transform: translateY(-1em); }
+}
+.avatar_img{
+  height:40PX;
+  width:40PX;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+
+
