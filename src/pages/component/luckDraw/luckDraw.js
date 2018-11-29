@@ -134,6 +134,7 @@ export default class Index extends Component {
       api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
         if (res.data.code == 0) {
           if(res.data.count>=res.data.canZJ){
+            _this.startFlag = true;
             showModel('明日再来!')
             return;
           }else{

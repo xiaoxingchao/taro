@@ -55,21 +55,19 @@ export default class Index extends Component {
       Taro.setStorageSync("userId", res.data.data[0].id);
       this.setState({
         data:res.data.data[0],
-        isload:false,
       })
     }
   }
   componentDidMount () {
+    this.setState({
+      isload:false,
+    })
   }
   componentWillUnmount () { }
   componentDidShow () {
-    this.setState({
-      isload:true,
-    },()=>{
-      this.props.onGetUserList({},this.initData);
-    })
+    this.props.onGetUserList({},this.initData);
+    
   }
-
   componentDidHide () { }
   signIcon=()=>{
     Taro.navigateTo({
