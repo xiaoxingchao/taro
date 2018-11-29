@@ -32,9 +32,6 @@ export default class Index extends Component {
     if(!userId) return;
     api.post('jsonapi/wx_app/getRewardSet.json', {}).then((res) => {
       if (res.data.code == 0) {
-        if(res.data.data){
-          this.props.onGetNum(res.data.data[0].num);
-        }
         this.setState({
           initData:res.data.data?res.data.data[0]:{},
         })
@@ -44,11 +41,13 @@ export default class Index extends Component {
     }).catch((errMsg) => {
       showModel('网络连接失败' + JSON.stringify(errMsg))
     })
+    
   }
   componentWillMount () { }
 
   componentDidMount () {
     this.getRewardSet();
+    this.getCurrNum();
   }
   componentWillUnmount () { }
 
@@ -88,12 +87,22 @@ export default class Index extends Component {
     }
     return num;
   }
+  //获取当前抽奖次数
+
+  getCurrNum=()=>{
+    api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
+      if (res.data.code == 0) {
+        this.props.onGetNum(res.data.canZJ-res.data.count);
+      }
+    })
+  }
   // 增加抽奖日志
   getRewardLog=(score)=>{
     let userId = Taro.getStorageSync('userId');
     if(!userId) return;
-    api.post('jsonapi/reward_log/add.json', {user_id:userId,type:1,score:score}).then((res) => {
+    api.post('jsonapi/reward_log/add.json', {user_id:userId,type:1,value:score}).then((res) => {
       if (res.data.code == 0) {
+        this.getCurrNum();
         this.props.onGetLog();
       } else {
         showModel(JSON.stringify(res.errMsg))
@@ -117,7 +126,6 @@ export default class Index extends Component {
     })
   }
   start=()=>{
-    let {initData} = this.state;
     var _this = this;
     if(this.startFlag){
       this.startFlag = false;
@@ -125,7 +133,7 @@ export default class Index extends Component {
       if(!userId) return;
       api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
         if (res.data.code == 0) {
-          if(res.data.count>=initData.num){
+          if(res.data.count>=res.data.canZJ){
             showModel('明日再来!')
             return;
           }else{

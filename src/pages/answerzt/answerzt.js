@@ -87,9 +87,23 @@ export default class Index extends Component {
     clearInterval(this.intervalId);
     if(select_ans[_this.state.now_num-1]===Number(right[0])){
       if(now_num===data.length){
-        Taro.redirectTo({
-          url: '../answer_zt/answer_zt?success=1', //答题成功
+        let userId = Taro.getStorageSync('userId');
+        if(!userId){
+          showModel('获取useid失败');
+          return;
+        };
+        api.post('jsonapi/iwebshop_question_zt_draw/add.json', {user_id:userId,num:1}).then((res) => {
+          if (res.data.code == 0) {
+            Taro.redirectTo({
+              url: '../answer_zt/answer_zt?success=1', //答题成功
+            })
+          } else {
+            showModel(JSON.stringify(res.errMsg))
+          }
+        }).catch((errMsg) => {
+          showModel("网络连接失败" + JSON.stringify(errMsg))
         })
+        
       }else{
         setTimeout(function () { _this.next_question()}, 2000 );
       }

@@ -1,10 +1,15 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Image,Text } from '@tarojs/components'
 // import { AtAvatar,AtList, AtListItem  } from 'taro-ui'
+import moment from 'moment'
 import Bottom from '../component/bottom/bottom'
+import api from '../../service/api'
 import './signin.less'
-import {getCurrentDayString,getPreMonth} from '../../utils/tools'
+import {getCurrentDayString,getPreMonth,showModel} from '../../utils/tools'
 import day from '../image/daydaysgin.png'
+import pmlogo from '../image/pmlogo.png'
+import Loading from '../component/loading/loading'
+import Login from '../component/login/login'
 
 const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
 export default class Index extends Component {
@@ -19,33 +24,70 @@ export default class Index extends Component {
   constructor(props){
     super(props);
     this.state={
+      isload:true,
       currentDayList:[],
-      active:[11,12,13]
+      active:[],
+      // data:[],
+      today:{flag:false}
     };
   }
 
   componentWillMount () { }
 
   componentDidMount () {
-    this.setSchedule();
+    this.getResult();
   }
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () { 
+    
+  }
 
   componentDidHide () { }
+  // 获取签到信息
+  getResult=()=>{
+    let userId = Taro.getStorageSync('userId');
+    if(!userId) return;
+    let p = {};
+    p.user_id = userId;
+    p['^sign_time'] = moment().format('YYYY-MM-01');
+    api.post('jsonapi/iwebshop_sign/get.json', p).then((res) => {
+      if (res.data.code == 0) {
+        let activeARR = [];
+        let today = this.state.today;
+        for(let i=0;i<res.data.data.length;i++){
+          let time = res.data.data[i].sign_time;
+          if(time){
+            if(Number(moment.parseZone(time).format('DD'))===Number(moment().format('DD'))){
+              today={...res.data.data[i],...{flag:true}}
+            }
+            activeARR.push(Number(moment.parseZone(time).format('DD')));
+          }
+        }
+        this.setState({
+          today:today,
+          active:activeARR,
+          isload:false,
+          // data:res.data.data?res.data.data:[],
+        },()=>{
+          this.setSchedule();
+        })
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
   //显示签到信息
   setSign=()=>{
-    
     let { active, currentDayList } = this.state;
-    console.log(currentDayList);
     for (let i = 0; i < currentDayList.length; i++) {
       for (let j = 0; j < active.length; j++) {
         var date = currentDayList[i]['date'];
         if (date === active[j] && !currentDayList[i]['other']) {
           currentDayList[i]['active'] = 1;
         }
-        
       }
     }
     this.setState({
@@ -86,7 +128,6 @@ export default class Index extends Component {
         }
       }
     }
-    console.log(currentDayList);
     this.setState({
       currentDayList:currentDayList,
       Y: Y,
@@ -96,16 +137,24 @@ export default class Index extends Component {
     },()=>{
       _this.setSign();
     })
-    // that.setData({
-    //   currentDayList: currentDayList,
-    //   Y: Y,
-    //   m: m,
-    //   d: d,
-    //   currentDay: currentObj.getDate(),
-    // })
+  }
+  sign=()=>{
+    let userId = Taro.getStorageSync('userId');
+    if(!userId) return;
+    let p = {};
+    p.user_id = userId;
+    api.post('jsonapi/iwebshop_sign/addA.json', p).then((res) => {
+      if (res.data.code == 0) {
+        this.getResult();
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
   }
   render () {
-    let {Y,m,d}=this.state;
+    let {Y,m,d,today}=this.state;
     return (
       <View className='all'>
         <View className='day-title'>{Y}年{m}月{d}日</View>
@@ -129,7 +178,7 @@ export default class Index extends Component {
                 cla+=' nowbg';
               }
               return <View className={clai} key={index}>
-                {item.active?<Image className='item-content' src={require('../image/pmlogo.png')}  style='width:1.5rem;height:1.5rem'></Image>:<View className={cla}>{item.date}</View>} 
+                {item.active?<Image className='item-content' src={pmlogo}  style='width:1.5rem;height:1.5rem'></Image>:<View className={cla}>{item.date}</View>}
               </View>
             })}
           </View>
@@ -144,17 +193,28 @@ export default class Index extends Component {
               <View className='over'>
                 今日签到积分:<Text className='overscore score'>10积分</Text>
               </View>
-              <View className='daysginsta'>
+              {
+                today.flag?<View className='daysginsta'>
                 已签到
+              </View>:<View className='daysginsta' onClick={this.sign.bind(this)}>
+                签到
               </View>
-               
+              }  
             </View>
             <View className='bottom-text'>
-              今日签到已奖励<Text className='score'>10积分</Text>
-              连续签到7天可额外奖励<Text className='score'>10积分</Text>
+              {
+                today.flag?<View style={{fontSize:'12px'}}>
+                <Text>今日签到已奖励</Text>
+                <Text className='score'>{today.score}积分</Text>
+              </View>:''
+              }  
+              <Text>连续签到7天可额外奖励</Text>
+              <Text className='score'>50积分</Text>
             </View>
           </View>
         </View>
+        <Login />
+        <Loading load={this.state.isload} />
       </View>
       
     )

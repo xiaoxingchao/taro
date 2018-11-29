@@ -38,7 +38,7 @@ export default class Index extends Component {
   getRewardLog=()=>{
     let userId = Taro.getStorageSync('userId');
     if(!userId) return;
-    api.post('jsonapi/reward_log/get.json', {user_id:userId,type:2}).then((res) => {
+    api.post('jsonapi/reward_log/get.json', {user_id:userId,type:1}).then((res) => {
       if (res.data.code == 0) {
         this.setState({
           logData:res.data.data?res.data.data:[],

@@ -54,15 +54,19 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    this.setState({
-      isload:false
-    })
+    api.post('jsonapi/iwebshop_score/addScore.json',{score:-2,source:3})
+      .then((res)=>{
+        if(res.data.code===0){
+          this.props.onGetJdList({},this.initData);
+        }
+      })
   }
   initData=(res)=>{
     if(res.data.code===0){
       this.setState({
         data:res.data.data,
         quTime:10,
+        isload:false
       },()=>{
         this.countdown();
       })
@@ -70,15 +74,10 @@ export default class Index extends Component {
   }
   componentWillUnmount () {
     clearInterval(this.intervalId);
-   }
+  }
 
   componentDidShow () { 
-    api.post('jsonapi/iwebshop_score/addScore.json',{score:-2,source:3})
-      .then((res)=>{
-        if(res.data.code===0){
-          this.props.onGetJdList({},this.initData);
-        }
-      })
+    
   }
 
   componentDidHide () { }
