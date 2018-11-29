@@ -49,7 +49,6 @@ export default class Index extends Component {
   componentWillUnmount () { }
 
   componentDidShow () {
-    
     let userId = Taro.getStorageSync('userId');
     if(!userId) return;
     api.post('jsonapi/iwebshop_member/get.json', {user_id:userId}).then((res) => {
