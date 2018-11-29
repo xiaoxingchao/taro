@@ -21,7 +21,7 @@ import { userlist } from '../../actions/counter'
 /**
  *京环之声首页
  *
- * @export 
+ * @export
  * @class Index
  * @extends {Component}
  */
@@ -106,7 +106,7 @@ export default class Index extends Component {
         url:a
       })
     }
-    
+
   }
 
   render () {
@@ -135,10 +135,10 @@ export default class Index extends Component {
                 </View>
                 <View className='sign'>
                   <View className='info_icon'>
-                    <AtIcon 
-                      value='user' 
+                    <AtIcon
+                      value='user'
                       size='30'
-                      color='#fff' 
+                      color='#fff'
                       onClick={this.signIcon.bind(this)}
                     >
                     </AtIcon>
@@ -177,7 +177,7 @@ export default class Index extends Component {
                   <View onClick={this.clickModel.bind(this,'../answerjj/answerjj')} className='v'>
                     <Model name='竞技答题' bg='jingji' />
                   </View>
-                  
+
                   <View onClick={this.clickModel.bind(this,'../rankinglist/rankinglist')} className='v'>
                     <Model name='排行榜' bg='paihang' />
                   </View>
