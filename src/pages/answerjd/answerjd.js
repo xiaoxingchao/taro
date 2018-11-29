@@ -92,7 +92,6 @@ export default class Index extends Component {
         quTime: time,
       })
       if (time == 0) {
-        
         clearInterval(_this.intervalId);
         _this.setState({
           select_ans:[..._this.state.select_ans,...[0]],

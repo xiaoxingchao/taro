@@ -92,7 +92,7 @@ export default class Index extends Component {
   getCurrNum=()=>{
     api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
       if (res.data.code == 0) {
-        this.props.onGetNum(res.data.canZJ-res.data.count);
+        this.props.onGetNum(res.data.ZJ_can-res.data.ZJ_count);
       }
     })
   }
@@ -133,7 +133,7 @@ export default class Index extends Component {
       if(!userId) return;
       api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
         if (res.data.code == 0) {
-          if(res.data.count>=res.data.canZJ){
+          if(res.data.ZJ_count>=res.data.ZJ_can){
             _this.startFlag = true;
             showModel('明日再来!')
             return;

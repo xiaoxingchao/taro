@@ -3,24 +3,17 @@ import { View, Text,Image  } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import { AtList, AtListItem  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
+import api from '../../service/api'
 import Avatar from '../component/avatar/avatar'
 import bg from '../image/lookforoppobgimg.png'
 import scoreBg from '../image/score.png'
 import {showModel} from '../../utils/tools'
 import './answer_jd.less'
-import { userlist } from '../../actions/counter'
 import Loading from '../component/loading/loading'
 
 @connect(
   ({ counter }) => ({
     counter
-  }),
-  (dispatch) => ({
-    onGetUserList(parame,fun) {
-      dispatch(userlist(parame)).then((res)=>{
-        fun(res)
-      })
-    }
   })
 )
 
@@ -69,8 +62,26 @@ export default class Index extends Component {
       }
     }
   }
+  // 获取答题次数
+  getCount=()=>{
+    api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
+      if (res.data.code == 0) {
+        if(res.data.JD_count>=res.data.JD_can){
+          showModel('超过三次')
+        }else{
+          Taro.redirectTo({
+            url: '../answerjd/answerjd',
+          })
+        }
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
   tojd=()=>{
-    this.props.onGetUserList({},this.initData);
+    this.getCount();
   }
   backIndex=()=>{
     Taro.redirectTo({

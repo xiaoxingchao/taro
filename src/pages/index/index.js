@@ -5,6 +5,7 @@ import { connect } from '@tarojs/redux'
 // import { bindActionCreators } from 'redux'
 
 import {AtIcon} from 'taro-ui'
+import api from '../../service/api'
 import Sign from '../component/sign/sign'
 import Model from '../component/model/model'
 import Bottom from '../component/bottom/bottom'
@@ -45,7 +46,8 @@ export default class Index extends Component {
     super(props);
     this.state={
       isload:true,
-      data:{}
+      data:{},
+      count:{}
     }
   }
 
@@ -58,6 +60,20 @@ export default class Index extends Component {
       })
     }
   }
+  // 获取答题次数
+  getCount=()=>{
+    api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
+      if (res.data.code == 0) {
+        this.setState({
+          count:res.data,
+        })
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
+    })
+  }
   componentDidMount () {
     this.setState({
       isload:false,
@@ -66,7 +82,7 @@ export default class Index extends Component {
   componentWillUnmount () { }
   componentDidShow () {
     this.props.onGetUserList({},this.initData);
-    
+    this.getCount();
   }
   componentDidHide () { }
   signIcon=()=>{
@@ -90,11 +106,19 @@ export default class Index extends Component {
 
   }
   clickModel=(a)=>{
-    let {data} = this.state;
+    let {count} = this.state;
     if(a==='1') return;
     if(a==='../answerjd/answerjd'){
-      if(data.jd_count>=3){
+      if(count.JD_count>=count.JD_can){
         showModel('超过三次')
+      }else{
+        Taro.navigateTo({
+          url:a
+        })
+      }
+    }else if(a==='../answerzt/answerzt'){
+      if(count.ZT_count>=count.ZT_can){
+        showModel('超过次数')
       }else{
         Taro.navigateTo({
           url:a
