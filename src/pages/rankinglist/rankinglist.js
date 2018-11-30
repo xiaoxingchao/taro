@@ -31,6 +31,10 @@ export default class Index extends Component {
       page:1,
       count:0
     }
+    this.styleActive={
+      backgroundColor:'#4CA1FF',
+      color:'#fff',
+    }
   }
   componentWillMount () { }
 
@@ -104,9 +108,9 @@ export default class Index extends Component {
         <View className='headbox'>
           <View>
             <View className='control'>
-              <View className={`week-rank control-rank+${type==='W'?' rank-active':''}`} onClick={this.rank.bind(this,'W')}>周排行</View>
-              <View className={`month-rank control-rank+${type==='M'?' rank-active':''}`} onClick={this.rank.bind(this,'M')}>月排行</View>
-              <View className={`score-rank control-rank+${type==='A'?' rank-active':''}`} onClick={this.rank.bind(this,'A')}>积分排名</View>
+              <View className='week-rank control-rank' style={type==='W'?this.styleActive:{}} onClick={this.rank.bind(this,'W')}>周排行</View>
+              <View className='month-rank control-rank' style={type==='M'?this.styleActive:{}} onClick={this.rank.bind(this,'M')}>月排行</View>
+              <View className='score-rank control-rank' style={type==='A'?this.styleActive:{}} onClick={this.rank.bind(this,'A')}>积分排名</View>
             </View>
           </View>
         </View>

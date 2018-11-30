@@ -54,8 +54,10 @@ export default class Index extends Component {
   componentWillMount () { }
   initData=(res)=>{
     if(res.data.code===0){
+      this.getCount();
       Taro.setStorageSync("userId", res.data.data[0].id);
       this.setState({
+        
         data:res.data.data[0],
       })
     }
@@ -65,6 +67,7 @@ export default class Index extends Component {
     api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
       if (res.data.code == 0) {
         this.setState({
+          isload:false,
           count:res.data,
         })
       } else {
@@ -75,16 +78,21 @@ export default class Index extends Component {
     })
   }
   componentDidMount () {
-    this.setState({
-      isload:false,
-    })
+    // this.setState({
+    //   isload:false,
+    // })
   }
-  componentWillUnmount () { }
+  componentWillUnmount () {
+    
+  }
   componentDidShow () {
     this.props.onGetUserList({},this.initData);
-    this.getCount();
   }
-  componentDidHide () { }
+  componentDidHide () { 
+    this.setState({
+      isload:true,
+    })
+  }
   signIcon=()=>{
     Taro.navigateTo({
       title:"setup",
@@ -112,6 +120,7 @@ export default class Index extends Component {
       if(count.JD_count>=count.JD_can){
         showModel('超过三次')
       }else{
+        
         Taro.navigateTo({
           url:a
         })
@@ -131,7 +140,10 @@ export default class Index extends Component {
     }
 
   }
-
+  handleContact (e) {
+    console.log(e.path)
+    console.log(e.query)
+  }
   render () {
     let {data} = this.state;
     return (
@@ -180,7 +192,7 @@ export default class Index extends Component {
                   </View> */}
                   <View className='at-col service'>
                     微信客服
-                    <Button openType='contact' className='kefu'></Button>
+                    <Button openType='contact' className='kefu' bindcontact='handleContact'></Button>
                   </View>
                   <View className='at-col answerrule' onClick={this.toAnswerrule.bind(this)}>
                     答题规则
