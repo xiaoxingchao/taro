@@ -54,10 +54,10 @@ export default class Index extends Component {
   componentWillMount () { }
   initData=(res)=>{
     if(res.data.code===0){
-      this.getCount();
       Taro.setStorageSync("userId", res.data.data[0].id);
       this.setState({
-        
+        isload:false,
+        count:res.data,
         data:res.data.data[0],
       })
     }
@@ -67,7 +67,6 @@ export default class Index extends Component {
     api.post('jsonapi/wx_app/rewardCount.json', {}).then((res) => {
       if (res.data.code == 0) {
         this.setState({
-          isload:false,
           count:res.data,
         })
       } else {
@@ -78,15 +77,18 @@ export default class Index extends Component {
     })
   }
   componentDidMount () {
-    // this.setState({
-    //   isload:false,
-    // })
+    if(!this.state.isload){
+      this.setState({
+        isload:false,
+      })
+    }
   }
   componentWillUnmount () {
     
   }
   componentDidShow () {
     this.props.onGetUserList({},this.initData);
+    this.getCount();
   }
   componentDidHide () { 
     this.setState({
@@ -146,6 +148,7 @@ export default class Index extends Component {
   }
   render () {
     let {data} = this.state;
+    console.log(this.state);
     return (
       <View className='index'>
         <View className='header_bg'>

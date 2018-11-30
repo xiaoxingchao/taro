@@ -12,8 +12,8 @@ export default class Index extends Component {
   }
   componentWillMount () { }
 
-  componentDidMount () { 
-    
+  componentDidMount () {
+
   }
   componentWillUnmount () { }
 
@@ -21,7 +21,9 @@ export default class Index extends Component {
 
   componentDidHide () { }
   componentWillReceiveProps(nextProps){
-    if(this.props.load!==nextProps.load){
+    // console.log('this.props',this.props);
+    // console.log('nextProps',nextProps);
+    if(this.props.load!==nextProps.load||(this.props.load===false&&nextProps.load===false)){
       this.setState({
         isload:nextProps.load
       })

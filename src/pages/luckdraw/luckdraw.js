@@ -30,9 +30,7 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    this.setState({
-      isload:false,
-    })
+    this.getRewardLog();
   }
   componentWillUnmount () { }
   getRewardLog=()=>{
@@ -41,6 +39,7 @@ export default class Index extends Component {
     api.post('jsonapi/reward_log/get.json', {user_id:userId,type:1}).then((res) => {
       if (res.data.code == 0) {
         this.setState({
+          isload:false,
           logData:res.data.data?res.data.data:[],
         })
       } else {
@@ -51,7 +50,7 @@ export default class Index extends Component {
     })
   }
   componentDidShow () {
-    this.getRewardLog();
+   
   }
   getNum=(value)=>{
     this.setState({

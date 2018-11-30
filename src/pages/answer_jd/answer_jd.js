@@ -38,6 +38,7 @@ export default class Index extends Component {
 
   componentDidMount () {
     this.setState({
+      so:this.props.counter.jdResult?this.props.counter.jdResult.score:0,
       isload:false,
     })
     
@@ -45,9 +46,6 @@ export default class Index extends Component {
   componentWillUnmount () { }
 
   componentDidShow () {
-    this.setState({
-      so:this.props.counter.jdResult?this.props.counter.jdResult.score:0
-    })
   }
 
   componentDidHide () { }

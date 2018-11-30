@@ -67,7 +67,7 @@ export default class Index extends Component {
         this.setState({
           today:today,
           active:activeARR,
-          isload:false,
+          // isload:false,
           // data:res.data.data?res.data.data:[],
         },()=>{
           this.setSchedule();
@@ -91,6 +91,7 @@ export default class Index extends Component {
       }
     }
     this.setState({
+      isload:false,
       currentDayList: currentDayList,
     })
   }
@@ -116,7 +117,6 @@ export default class Index extends Component {
         pre_d++;
       } else {
         if (f < currentDayNum) {
-          
           currentDayList[i] = { date: f + 1};
           if(d===(f + 1)){
             currentDayList[i].now = 1;
@@ -133,7 +133,6 @@ export default class Index extends Component {
       Y: Y,
       m: m,
       d: d,
-
     },()=>{
       _this.setSign();
     })
