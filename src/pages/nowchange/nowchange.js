@@ -94,17 +94,24 @@ export default class Index extends Component {
     })
   }
   componentDidHide () { }
-  toNowchange=()=>{
-    let {data}=this.state;
-    Taro.navigateTo({
-      title:"立即兑换",
-      url: '/pages/nowchange/nowchange?id='+data.id+'&is_virtual='+data.is_virtual
+  toNowchange=(value)=>{
+    let p = this.getCurrParame();
+    // console.log({...{goods_id:p.id},...value});
+    api.post('jsonapi/cashPrize/cash.json', {...{goods_id:p.id},...value}).then((res) => {
+      if (res.data.code == 0) {
+        Taro.redirectTo({
+          url: '../changesuccess/changesuccess?data=' + JSON.stringify(res.data.data[0]),
+        })
+      } else {
+        showModel(JSON.stringify(res.errMsg))
+      }
+    }).catch((errMsg) => {
+      showModel('网络连接失败' + JSON.stringify(errMsg))
     })
   }
+
   formSubmit=(e)=>{
     let score = this.props.counter.USERLIST.data.data[0].score;
-    console.log(score);
-    // let userId = Taro.getStorageSync('userId');
     let {data} = this.state;
     var value = e.detail.value;
     for(var i in value){
@@ -116,20 +123,8 @@ export default class Index extends Component {
     if(Number(score)<Number(data.sell_price)){
       showModel("积分不足");
     }else{
-
+      this.toNowchange(value);
     }
-    Taro.redirectTo({
-      url: '../changesuccess/changesuccess?id=' + data.id,
-    })
-    // api.post('jsonapi/iwebshop_member/add.json', {...{user_id:userId},...value}).then((res) => {
-    //   if (res.data.code == 0) {
-    //     Taro.navigateBack();
-    //   } else {
-    //     showModel(JSON.stringify(res.errMsg))
-    //   }
-    // }).catch((errMsg) => {
-    //   showModel('网络连接失败' + JSON.stringify(errMsg))
-    // })
   }
   render () {
     let {data,virtual,addressData} = this.state;
@@ -143,15 +138,15 @@ export default class Index extends Component {
           {virtual==='0'?<View className=''>
             <View className='mui-input-row'>
               <Label >联系人：</Label >
-              <Input type='text' placeholder='请输入...' name='true_name' value={addressData.true_name} />
+              <Input type='text' placeholder='请输入...' name='accept_name' value={addressData.true_name} />
             </View>
             <View className='mui-input-row'>
               <Label >电话：</Label >
-              <Input type='number' placeholder='请输入...' name='mobile' value={addressData.mobile} />
+              <Input type='number' placeholder='请输入...' name='tel' value={addressData.mobile} />
             </View>
             <View className='mui-input-row'>
               <Label >详细地址：</Label >
-              <Input type='text' placeholder='请输入...' name='contact_addr' value={addressData.contact_addr} />
+              <Input type='text' placeholder='请输入...' name='addr' value={addressData.contact_addr} />
             </View>
           </View>:<View className=''>
             <View className='mui-input-row'>

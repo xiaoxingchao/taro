@@ -1,9 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Image } from '@tarojs/components'
-
+import moment from 'moment'
 // import {AtCard  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
-import api from '../../service/api'
 
 import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
@@ -35,78 +34,70 @@ export default class Index extends Component {
     this.setState({
       isload:false,
     })
+    
+  }
+  // 获取当前页参数
+  getCurrParame=()=>{
+    let par_id = '';
+    let arr = Taro.getCurrentPages();
+    par_id=arr[arr.length-1].options;
+    return par_id;
   }
   componentWillUnmount () { }
 
   componentDidShow () {
-    this.getResult({is_del:0,is_score:1});
-  }
-  getResult=(parame)=>{
-    api.post('jsonapi/iwebshop_goods/get.json', parame).then((res) => {
-      if (res.data.code == 0) {
-        this.setState({
-          data:res.data.data?res.data.data[0]:[],
-        })
-      } else {
-        showModel(JSON.stringify(res.errMsg))
-      }
-    }).catch((errMsg) => {
-      showModel('网络连接失败' + JSON.stringify(errMsg))
-    })
+    let data = JSON.parse(this.getCurrParame().data);
+    if(data){
+      this.setState({
+        data:data
+      })
+    }else{
+      showModel('缺少参数!')
+    }
   }
   componentDidHide () { }
-
-  toRecordDetail=(id)=>{
-    Taro.navigateTo({
-      title:"记录详情",
-      url: '/pages/changedetailsSw/changedetailsSw?id='+id
-    })
-  }
-
-
-
   render () {
     const {data} = this.state;
     return (
       <View className='con'>
         <View className='exchprodetailsbox'>
-          <Image src={rootUrl+data.img} className='proimg' mode='widthFix'></Image>
+          <Image src={rootUrl+data.goods_img} className='proimg' mode='widthFix'></Image>
           <View className='exchproname'>
-            {data.name}
+            {data.goods_name}
           </View>
         </View>
         <View className='goods-info'>
           <View className='exchdetails_infor'>
             <View>商品价格</View>
-            <View>{data.sell_price}</View>
+            <View>{data.goods_sell_price}</View>
           </View>
           <View className='exchdetails_infor'>
             <View>兑换时间</View>
-            <View>{data.sell_price}</View>
+            <View>{moment.parseZone(data.create_time).format('YYYY-MM-DD HH:mm:ss')}</View>
           </View>
         </View>
         <View className='goods-info'>
           <View className='exchdetails_infor'>
             <View>联系人</View>
-            <View>{data.sell_price}</View>
+            <View>{data.accept_name}</View>
           </View>
           <View className='exchdetails_infor'>
             <View>电话</View>
-            <View>{data.sell_price}</View>
+            <View>{data.tel}</View>
           </View>
           <View className='exchdetails_infor'>
             <View>收货地址</View>
-            <View>{data.sell_price}</View>
+            <View>{data.addr}</View>
           </View>
         </View>
         <View className='goods-info'>
           <View className='exchdetails_infor'>
             <View>快递公司</View>
-            <View>{data.sell_price}</View>
+            <View>{data.logistics}</View>
           </View>
           <View className='exchdetails_infor'>
             <View>收货单号</View>
-            <View>{data.sell_price}</View>
+            <View>{data.logistics_no}</View>
           </View>
         </View>
         <Bottom />

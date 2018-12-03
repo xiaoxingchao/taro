@@ -1,13 +1,13 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Image } from '@tarojs/components'
-
+import moment from 'moment'
 import {AtCard  } from 'taro-ui'
 import Bottom from '../component/bottom/bottom'
 import api from '../../service/api'
 import './changerecord.less'
 import Login from '../component/login/login'
 import Loading from '../component/loading/loading'
-import {showModel,rootUrl} from '../../utils/tools'
+import {showModel,rootUrl,compare} from '../../utils/tools'
 
 
 /**
@@ -32,21 +32,24 @@ export default class Index extends Component {
 
   componentWillMount () { }
   componentDidMount () {
-    this.setState({
-      isload:false,
-    })
+    this.getResult({});
   }
   componentWillUnmount () { }
 
   componentDidShow () {
-    this.getResult({is_del:0,is_score:1});
+    
   }
   getResult=(parame)=>{
-    api.post('jsonapi/iwebshop_goods/get.json', parame).then((res) => {
+    api.post('jsonapi/cashPrize/log.json', parame).then((res) => {
       if (res.data.code == 0) {
-        this.setState({
-          data:res.data.data?res.data.data:[],
-        })
+        let data = res.data.data;
+        if(data){
+          data.sort(compare('create_time')).reverse();
+          this.setState({
+            isload:false,
+            data:data,
+          })
+        }
       } else {
         showModel(JSON.stringify(res.errMsg))
       }
@@ -56,10 +59,10 @@ export default class Index extends Component {
   }
   componentDidHide () { }
 
-  toRecordDetail=(id)=>{
+  toRecordDetail=(item)=>{
     Taro.navigateTo({
       title:"记录详情",
-      url: '/pages/changedetailsSw/changedetailsSw?id='+id
+      url: '/pages/changedetailsSw/changedetailsSw?data='+JSON.stringify(item)
     })
   }
 
@@ -73,12 +76,12 @@ export default class Index extends Component {
           <View className='intexch_productul'>
             {data.map((item,index)=>{
               return <View className='intexch_productli' key={index}>
-                <AtCard title='2018-08-02' onClick={this.toRecordDetail.bind(this,item.id)}> 
+                <AtCard title={moment.parseZone(item.create_time).format('YYYY-MM-DD HH:mm:ss')} onClick={this.toRecordDetail.bind(this,item)}> 
                   <View className='card'>
-                    <Image src={rootUrl+item.img} className='proimg' mode='widthFix'></Image>
+                    <Image src={rootUrl+item.goods_img} className='proimg' mode='widthFix'></Image>
                     <View>
-                      <View className='intexch_proinfor_pT'><View className='wrap'>{item.name}</View></View>
-                      <View className='intexch_proinfor_pB'><View className='wrap'>{item.sell_price}积分</View></View>
+                      <View className='intexch_proinfor_pT'><View className='wrap'>{item.goods_name}</View></View>
+                      <View className='intexch_proinfor_pB'><View className='wrap'>{item.goods_sell_price}积分</View></View>
                     </View>
                   </View>
                   

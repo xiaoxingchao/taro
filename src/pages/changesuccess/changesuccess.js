@@ -1,9 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View,Image} from '@tarojs/components'
-import { connect } from '@tarojs/redux'
 // import {AtSearchBar } from 'taro-ui'
+import moment from 'moment'
 import Bottom from '../component/bottom/bottom'
-import api from '../../service/api'
 import './changesuccess.less'
 import dhsuccess from '../image/dhsuccess.png'
 import Login from '../component/login/login'
@@ -18,11 +17,7 @@ import {showModel} from '../../utils/tools'
  * @class Index
  * @extends {Component}
  */
-@connect(
-  ({ counter }) => ({
-    counter
-  })
-)
+
 export default class Index extends Component {
   config = {
     navigationBarTitleText: '兑换成功',
@@ -51,26 +46,16 @@ export default class Index extends Component {
   }
   componentDidShow () {
     let p = this.getCurrParame();
-    console.log(p);
-    if(p.id){
-      this.getResult({id:p.id});
+    let data = JSON.parse(p.data);
+    console.log(data);
+    if(data){
+      this.setState({
+        data:data
+      })
     }else{
       showModel('无参数!!')
     }
     
-  }
-  getResult=(parame)=>{
-    api.post('jsonapi/iwebshop_goods/get.json', parame).then((res) => {
-      if (res.data.code == 0) {
-        this.setState({
-          data:res.data.data?res.data.data[0]:{},
-        })
-      } else {
-        showModel(JSON.stringify(res.errMsg))
-      }
-    }).catch((errMsg) => {
-      showModel('网络连接失败' + JSON.stringify(errMsg))
-    })
   }
   componentDidHide () { }
 
@@ -84,18 +69,18 @@ export default class Index extends Component {
         <View className='details'>
           <View className='details-goods'>
             <View className='goods-name'>
-              兑换商品：{data.name}
+              兑换商品：{data.goods_name}
             </View>
             <View className='goods-name'>
-              兑换时间：{data.name}
+              兑换时间：{moment.parseZone(data.create_time).format('YYYY-MM-DD HH:mm:ss')}
             </View>
             <View className='goods-name'>
-              联系人：{data.name}
+              联系人：{data.accept_name}
             </View>
             {data.is_virtual==='1'?<View className='goods-name'>
-            会员账户：{data.name}
+            会员账户：{data.order_no}
             </View>:<View className='goods-name'>
-              收货地址：{data.name}
+              收货地址：{data.addr}
             </View>}
             <View className='goods-line'>
               <View className='goods-cirL'></View>

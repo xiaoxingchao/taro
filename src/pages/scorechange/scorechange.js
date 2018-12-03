@@ -63,10 +63,10 @@ export default class Index extends Component {
 
   componentDidShow () {
     this.props.onGetUserList({},this.initData);
-    this.getResult({is_del:0,is_score:1});
+    this.getResult({is_score:1});
   }
   getResult=(parame)=>{
-    api.post('jsonapi/iwebshop_goods/get.json', parame).then((res) => {
+    api.post('jsonapi/cashPrize/getGoods.json', parame).then((res) => {
       if (res.data.code == 0) {
         this.setState({
           data:res.data.data?res.data.data:[],
@@ -97,7 +97,7 @@ export default class Index extends Component {
     })
   }
   toSearch=()=>{
-    let p ={is_del:0,is_score:1};
+    let p ={is_score:1};
     p['*name'] = this.state.value;
     this.getResult(p);
     console.log(this.state.value);
