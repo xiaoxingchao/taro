@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Image  } from '@tarojs/components'
+import { View,Image,Picker } from '@tarojs/components'
 import moment from 'moment'
 import Bottom from '../component/bottom/bottom'
 import api from '../../service/api'
@@ -24,22 +24,25 @@ export default class Index extends Component {
     this.state={
       isload:true,
       data:[],
-      style:{display:'none'}
+      style:{display:'none'},
+      parame:{
+        '^create_time':moment().format('YYYY-MM-01')
+      },
+      // time:''
     }
   }
 
   componentWillMount () { }
 
   componentDidMount () {
-    this.setState({
-      isload:false,
-    })
+    this.getResult(this.state.parame);
   }
   componentWillUnmount () { }
 
   componentDidShow () { 
-    this.getResult({});
+    
   }
+  
   getResult=(parame)=>{
     let userId = Taro.getStorageSync('userId');
     if(!userId) return;
@@ -49,6 +52,7 @@ export default class Index extends Component {
       }
       if (res.data.code == 0) {
         this.setState({
+          isload:false,
           data:res.data.data?res.data.data:[],
         })
       } else {
@@ -74,8 +78,19 @@ export default class Index extends Component {
     if(type==='4'){
       this.getResult({});
     }else{
-      this.getResult({source:Number(type)});
+      this.getResult({...{source:Number(type)}});
     }
+    this.setState({
+      style:{display:'none'}
+    })
+  }
+  onDateChange=(e)=>{
+    let value = e.detail.value;
+    console.log(e.detail.value)
+    let p={};
+    p['^create_time']=value+'-01';
+    p['~create_time']=value+'-31 23:59:59';
+    this.getResult(p);
     this.setState({
       style:{display:'none'}
     })
@@ -85,6 +100,9 @@ export default class Index extends Component {
     return (
       <View className='con'>
         <View className='header'>
+          <View>
+            
+          </View>
           <View className='btn' onClick={this.showSearch}>
             <Image src={intscreen} className='intscreen' />
           </View>
@@ -135,6 +153,12 @@ export default class Index extends Component {
               <View className='table-view-cell' onClick={this.search.bind(this,'1')}>抽奖</View>
               <View className='table-view-cell' onClick={this.search.bind(this,'2')}>兑换</View>
               <View className='table-view-cell' onClick={this.search.bind(this,'3')}>答题</View>
+              <Picker mode='date' onChange={this.onDateChange.bind(this)} fields='month'>
+                <View className='picker table-view-cell'>
+                  时间筛选
+                </View>
+              </Picker>
+              
             </View>
           </View>
         </View>
