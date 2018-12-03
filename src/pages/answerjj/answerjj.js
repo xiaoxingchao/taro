@@ -80,7 +80,7 @@ export default class Index extends Component {
             </View>
           </View>
           {
-            type==='1'?<View style={{marginBottom:'50px'}}>
+            type==='2'?<View style={{marginBottom:'50px'}}>
               <View className='start-match'>   
                 <Image
                   src={startmatch}
